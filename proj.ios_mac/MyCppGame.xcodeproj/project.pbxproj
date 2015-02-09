@@ -50,6 +50,7 @@
 		521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6319F0C34300D177D7 /* Default-736h@3x.png */; };
 		885F12981A7A92C90037814F /* MainMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 885F12961A7A92C90037814F /* MainMenuScene.cpp */; };
 		885F129B1A7A95330037814F /* Global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 885F12991A7A95330037814F /* Global.cpp */; };
+		88A328C51A89082900575160 /* Lump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88A328C31A89082800575160 /* Lump.cpp */; };
 		A26E47D3A498AB0ADAC85CF9 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 435C40AC8DC8098A3DFD0FE0 /* res */; };
 		AD9F4042A3BB98273BCD18C0 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 435C40AC8DC8098A3DFD0FE0 /* res */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -113,6 +114,8 @@
 		885F12971A7A92C90037814F /* MainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuScene.h; sourceTree = "<group>"; };
 		885F12991A7A95330037814F /* Global.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Global.cpp; sourceTree = "<group>"; };
 		885F129A1A7A95330037814F /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Global.h; sourceTree = "<group>"; };
+		88A328C31A89082800575160 /* Lump.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lump.cpp; sourceTree = "<group>"; };
+		88A328C41A89082900575160 /* Lump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lump.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -232,6 +235,8 @@
 				885F12971A7A92C90037814F /* MainMenuScene.h */,
 				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
 				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
+				88A328C31A89082800575160 /* Lump.cpp */,
+				88A328C41A89082900575160 /* Lump.h */,
 				885F12991A7A95330037814F /* Global.cpp */,
 				885F129A1A7A95330037814F /* Global.h */,
 			);
@@ -422,6 +427,7 @@
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				885F12981A7A92C90037814F /* MainMenuScene.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				88A328C51A89082900575160 /* Lump.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

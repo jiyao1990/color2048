@@ -37,6 +37,7 @@ public:
     static Color4B colorMap[colorType_Size][maxLevel];
     
     colorType _colorType;
+    Vector<Node *> lumpVec;
     
 private:
     

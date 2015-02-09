@@ -8,6 +8,7 @@
 
 #include "MainMenuScene.h"
 #include "Global.h"
+#include "Lump.h"
 
 USING_NS_CC;
 
@@ -61,25 +62,33 @@ bool MainMenuScene::init()
     gameBg->setVisible(false);
     
     
-    for (int i = 0 ; i < TileNum * TileNum; i ++) {
-        
-        float rand = random(0, 4);
-//        int index = (int) rand;
-        int index = i;
-        if (index >= maxLevel) {
-            index = i - maxLevel;
-        }
-        log("index:%d",index);
-        
-        LayerColor* tile = LayerColor::create(gGlobal->colorMap[gGlobal->_colorType][index], gameBg->getContentSize().width / (TileNum + 1), gameBg->getContentSize().height / (TileNum + 1));
-        int h = i / TileNum;
-        int r = i % TileNum;
-        
-        gameBg->addChild(tile);
-        float space = gameBg->getContentSize().width / (TileNum + 1) / (TileNum + 1);
-        tile->setPosition(Vec2(space + (tile->getContentSize().width + space) * h, space + (tile->getContentSize().height + space) * r));
-        
-    }
+//    for (int i = 0 ; i < TileNum * TileNum; i ++) {
+//        
+//        float rand = random(0, 4);
+////        int index = (int) rand;
+//        int index = i;
+//        if (index >= maxLevel) {
+//            index = i - maxLevel;
+//        }
+//        log("index:%d",index);
+//        
+//        LayerColor* tile = LayerColor::create(gGlobal->colorMap[gGlobal->_colorType][index], gameBg->getContentSize().width / (TileNum), gameBg->getContentSize().height / (TileNum));
+//        int h = i / TileNum;
+//        int r = i % TileNum;
+//        
+//        gameBg->addChild(tile);
+////        float space = gameBg->getContentSize().width / (TileNum + 1) / (TileNum + 1);
+//        float space = 0;
+//        tile->setPosition(Vec2(space + (tile->getContentSize().width + space) * h, space + (tile->getContentSize().height + space) * r));
+//        
+//    }
+    
+    int level =  random(0, 4);
+    int h =  random(0, 3);
+    int r = random(0, 3);
+    log("%d,%d,%d",level,h,r);
+    Lump* m_lump = Lump::createLump(gGlobal->_colorType, level, h, r, gameBg);
+    gGlobal->lumpVec.pushBack(m_lump);
     
     return true;
 }

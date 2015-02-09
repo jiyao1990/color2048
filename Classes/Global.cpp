@@ -19,9 +19,9 @@ Color4B Global::colorMap[colorType_Size][maxLevel] ={
         Color4B(110, 200, 100, 255),
         Color4B(80,  175, 70,  255),
         Color4B(40,  145, 50,  255),
-        Color4B(20,  115, 20,  255),
-        Color4B(12,  90,  14,  255),
-        Color4B(6,   60,  7,   255),
+        Color4B(25,  115, 25,  255),
+        Color4B(15,  90,  15,  255),
+        Color4B(10,  60,  10,  255),
         Color4B(0,   30,  0,   255),
         Color4B(0,   0,   0,   255),
     },
@@ -32,6 +32,7 @@ Color4B Global::colorMap[colorType_Size][maxLevel] ={
 Global::Global()
 {
     _colorType = colorType_green;
+    lumpVec.clear();
 }
 
 Global::~Global()
