@@ -13,7 +13,7 @@
 #include "Global.h"
 
 USING_NS_CC;
-class MainMenuScene : public cocos2d::LayerGradient
+class MainMenuScene : public LayerGradient
 {
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer

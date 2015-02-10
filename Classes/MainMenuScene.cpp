@@ -100,7 +100,63 @@ void MainMenuScene::startGame(Ref* pSender)
     startBg->runAction(MoveTo::create(0.4f, Vec2(startBg->getPositionX() , gWinSize.height)));
     
     gameBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(),MoveTo::create(0.4f, Vec2(gameBg->getPositionX(),gWinSize.height / 2 - gameBg->getContentSize().height * 0.35  )), NULL));
+
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    auto myListener = EventListenerTouchOneByOne::create();
+    
+    //如果不加入此句消息依旧会向下传递
+    myListener->setSwallowTouches(true);
+    
+    myListener->onTouchBegan = [=](Touch* touch,Event* event)
+    {
+        return true;
+    };
+    
+    myListener->onTouchMoved = [=](Touch* touch,Event* event)
+    {
+        //do something
+    };
+    
+    myListener->onTouchEnded = [=](Touch* touch,Event* event)
+    {
+        Vec2 startPos = touch->getStartLocation();
+        Vec2 endPos   = touch->getLocation();
+        
+        Vec2 difference = endPos - startPos;
+        
+        //上
+        if (difference.y > 20 && abs(difference.x) < abs(difference.y)) {
+            for (int i = 0; i < gGlobal->lumpVec.size(); i++) {
+                ((Lump*)gGlobal->lumpVec.at(i))->move(MoveUp);
+            }
+        }
+        //下
+        else if(difference.y < -20 && abs(difference.x) < abs(difference.y)){
+            for (int i = 0; i < gGlobal->lumpVec.size(); i++) {
+                ((Lump*)gGlobal->lumpVec.at(i))->move(MoveDown);
+            }
+        }
+        //左
+        else if(difference.x < -20 && abs(difference.y) < abs(difference.x)){
+            for (int i = 0; i < gGlobal->lumpVec.size(); i++) {
+                ((Lump*)gGlobal->lumpVec.at(i))->move(MoveLeft);
+            }
+
+        }
+        //右
+        else if(difference.x > 20 && abs(difference.y) < abs(difference.x)){
+            for (int i = 0; i < gGlobal->lumpVec.size(); i++) {
+                ((Lump*)gGlobal->lumpVec.at(i))->move(MoveRight);
+            }
+
+        }
+    };
+    
+    dispatcher->addEventListenerWithSceneGraphPriority(myListener,this);
 }
+
+
+
 
 
 

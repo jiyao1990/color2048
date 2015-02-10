@@ -29,7 +29,7 @@ class Lump : public Node {
 public:
     
     static Lump* createLump(const colorType colorType, const int level, const int h, const int r, Node* pr);
-    
+    void move(MoveDirection direction);
     
     
 private:

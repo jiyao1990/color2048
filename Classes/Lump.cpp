@@ -50,3 +50,27 @@ bool Lump::init()
 
     return true;
 }
+
+void Lump::move(MoveDirection direction)
+{
+    switch (direction) {
+        case MoveStop:
+            break;
+        case MoveUp:
+            this->runAction(MoveTo::create(0.2f,Vec2(this->getContentSize().width * (0.5 + m_Hor), this->getContentSize().height * (0.5 + m_Row + 1))));
+            m_Row += 1;
+            break;
+        case MoveDown:
+            this->runAction(MoveTo::create(0.2f,Vec2(this->getContentSize().width * (0.5 + m_Hor), this->getContentSize().height * (0.5 + m_Row - 1))));
+            m_Row -= 1;
+            break;
+        case MoveLeft:
+            this->runAction(MoveTo::create(0.2f,Vec2(this->getContentSize().width * (0.5 + m_Hor - 1), this->getContentSize().height * (0.5 + m_Row))));
+            m_Hor -= 1;
+            break;
+        case MoveRight:
+            this->runAction(MoveTo::create(0.2f,Vec2(this->getContentSize().width * (0.5 + m_Hor + 1), this->getContentSize().height * (0.5 + m_Row))));
+            m_Hor += 1;
+            break;
+    }
+}
