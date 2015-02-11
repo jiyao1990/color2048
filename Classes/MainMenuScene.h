@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "Global.h"
+#include "GameMap.h"
 
 USING_NS_CC;
 class MainMenuScene : public LayerGradient

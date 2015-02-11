@@ -14,7 +14,6 @@
 #define gWinSize     Director::getInstance()->getWinSize()
 #define gGlobal      Global::getInstance()
 #define maxLevel     11
-#define TileNum      4
 
 USING_NS_CC;
 using namespace std;

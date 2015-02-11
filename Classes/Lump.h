@@ -11,16 +11,7 @@
 
 #include "cocos2d.h"
 #include "Global.h"
-
-enum MoveDirection{
-    
-    MoveStop = 0,
-    MoveUp,
-    MoveDown,
-    MoveLeft,
-    MoveRight,
-    
-};
+#include "GameMap.h"
 
 USING_NS_CC;
 class Lump : public Node {
@@ -28,21 +19,20 @@ class Lump : public Node {
     
 public:
     
-    static Lump* createLump(const colorType colorType, const int level, const int h, const int r, Node* pr);
-    void move(MoveDirection direction);
+    static Lump* createLump(const colorType colorType, const int level, const int h, const int v, Node* pr);
+    void move(GridDirection direction);
     
     
 private:
-    Lump(const colorType colorType, const int level, const int h, const int r);
+    Lump(const colorType colorType, const int level, const int h, const int v);
     ~Lump();
     virtual bool init();
 
     
     colorType m_ColorType;
-    MoveDirection m_MoveDirection;
     int m_Level;
-    int m_Hor;
     int m_Row;
+    int m_Col;
     
     
 };

@@ -62,32 +62,13 @@ bool MainMenuScene::init()
     gameBg->setVisible(false);
     
     
-//    for (int i = 0 ; i < TileNum * TileNum; i ++) {
-//        
-//        float rand = random(0, 4);
-////        int index = (int) rand;
-//        int index = i;
-//        if (index >= maxLevel) {
-//            index = i - maxLevel;
-//        }
-//        log("index:%d",index);
-//        
-//        LayerColor* tile = LayerColor::create(gGlobal->colorMap[gGlobal->_colorType][index], gameBg->getContentSize().width / (TileNum), gameBg->getContentSize().height / (TileNum));
-//        int h = i / TileNum;
-//        int r = i % TileNum;
-//        
-//        gameBg->addChild(tile);
-////        float space = gameBg->getContentSize().width / (TileNum + 1) / (TileNum + 1);
-//        float space = 0;
-//        tile->setPosition(Vec2(space + (tile->getContentSize().width + space) * h, space + (tile->getContentSize().height + space) * r));
-//        
-//    }
+    
     
     int level =  random(0, 4);
-    int h =  random(0, 3);
-    int r = random(0, 3);
-    log("%d,%d,%d",level,h,r);
-    Lump* m_lump = Lump::createLump(gGlobal->_colorType, level, h, r, gameBg);
+    int row =  random(0, 3);
+    int col = random(0, 3);
+    log("%d,%d,%d",level,row,col);
+    Lump* m_lump = Lump::createLump(gGlobal->_colorType, level, row, col, gameBg);
     gGlobal->lumpVec.pushBack(m_lump);
     
     return true;
@@ -127,28 +108,34 @@ void MainMenuScene::startGame(Ref* pSender)
         //上
         if (difference.y > 20 && abs(difference.x) < abs(difference.y)) {
             for (int i = 0; i < gGlobal->lumpVec.size(); i++) {
-                ((Lump*)gGlobal->lumpVec.at(i))->move(MoveUp);
+                ((Lump*)gGlobal->lumpVec.at(i))->move(GridUp);
             }
+            //地图数据变化
+            gGameMap->changeMapByDirection(GridUp);
         }
         //下
         else if(difference.y < -20 && abs(difference.x) < abs(difference.y)){
             for (int i = 0; i < gGlobal->lumpVec.size(); i++) {
-                ((Lump*)gGlobal->lumpVec.at(i))->move(MoveDown);
+                ((Lump*)gGlobal->lumpVec.at(i))->move(GridDown);
             }
+            
+            gGameMap->changeMapByDirection(GridDown);
         }
         //左
         else if(difference.x < -20 && abs(difference.y) < abs(difference.x)){
             for (int i = 0; i < gGlobal->lumpVec.size(); i++) {
-                ((Lump*)gGlobal->lumpVec.at(i))->move(MoveLeft);
+                ((Lump*)gGlobal->lumpVec.at(i))->move(GridLeft);
             }
-
+            
+            gGameMap->changeMapByDirection(GridLeft);
         }
         //右
         else if(difference.x > 20 && abs(difference.y) < abs(difference.x)){
             for (int i = 0; i < gGlobal->lumpVec.size(); i++) {
-                ((Lump*)gGlobal->lumpVec.at(i))->move(MoveRight);
+                ((Lump*)gGlobal->lumpVec.at(i))->move(GridRight);
             }
-
+            
+            gGameMap->changeMapByDirection(GridRight);
         }
     };
     

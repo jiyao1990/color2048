@@ -48,6 +48,7 @@
 		50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A117ECD613001EB2F8 /* Icon-50.png */; };
 		521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6219F0C34300D177D7 /* Default-667h@2x.png */; };
 		521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6319F0C34300D177D7 /* Default-736h@3x.png */; };
+		884249481A8BB6180044ABE6 /* GameMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 884249461A8BB6180044ABE6 /* GameMap.cpp */; };
 		885F12981A7A92C90037814F /* MainMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 885F12961A7A92C90037814F /* MainMenuScene.cpp */; };
 		885F129B1A7A95330037814F /* Global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 885F12991A7A95330037814F /* Global.cpp */; };
 		88A328C51A89082900575160 /* Lump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88A328C31A89082800575160 /* Lump.cpp */; };
@@ -110,6 +111,8 @@
 		521A8E6319F0C34300D177D7 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
 		606A4975BBA2A15E7A8EC014 /* libcocos2d iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2d iOS.a"; path = "/Applications/Cocos/frameworks/cocos2d-x/prebuilt/ios/libcocos2d iOS.a"; sourceTree = "<absolute>"; };
 		7C6F44AB94788DFDFB07133F /* libcocos2d Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2d Mac.a"; path = "/Applications/Cocos/frameworks/cocos2d-x/prebuilt/mac/libcocos2d Mac.a"; sourceTree = "<absolute>"; };
+		884249461A8BB6180044ABE6 /* GameMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameMap.cpp; sourceTree = "<group>"; };
+		884249471A8BB6180044ABE6 /* GameMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameMap.h; sourceTree = "<group>"; };
 		885F12961A7A92C90037814F /* MainMenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainMenuScene.cpp; sourceTree = "<group>"; };
 		885F12971A7A92C90037814F /* MainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuScene.h; sourceTree = "<group>"; };
 		885F12991A7A95330037814F /* Global.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Global.cpp; sourceTree = "<group>"; };
@@ -237,6 +240,8 @@
 				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
 				88A328C31A89082800575160 /* Lump.cpp */,
 				88A328C41A89082900575160 /* Lump.h */,
+				884249461A8BB6180044ABE6 /* GameMap.cpp */,
+				884249471A8BB6180044ABE6 /* GameMap.h */,
 				885F12991A7A95330037814F /* Global.cpp */,
 				885F129A1A7A95330037814F /* Global.h */,
 			);
@@ -421,6 +426,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				884249481A8BB6180044ABE6 /* GameMap.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				885F129B1A7A95330037814F /* Global.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
