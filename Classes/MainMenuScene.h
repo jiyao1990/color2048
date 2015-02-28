@@ -26,6 +26,9 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(MainMenuScene);
     
+    //产生新的方块
+    void createNewLump();
+    
 private:
     void startGame(Ref* pSender);
     

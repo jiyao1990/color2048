@@ -63,14 +63,27 @@ bool MainMenuScene::init()
     
     
     
+//    for (int i = 0; i < 4;  i ++) {
+//        int level;
+//        int row;
+//        int col;
+//        while (true) {
+//            level =  random(0, 1);
+//            row =  random(0, 3);
+//            col = random(0, 3);
+//            log("%d,%d,%d",level,row,col);
+//            if (!gGameMap->isExist(row, col)) {
+//                break;
+//            }
+//            
+//        }
+//        
+//        Lump* m_lump = Lump::createLump(gGlobal->_colorType, level, row, col, gameBg);
+//        gGlobal->lumpVec.pushBack(m_lump);
+//    }
     
-    int level =  random(0, 4);
-    int row =  random(0, 3);
-    int col = random(0, 3);
-    log("%d,%d,%d",level,row,col);
-    Lump* m_lump = Lump::createLump(gGlobal->_colorType, level, row, col, gameBg);
-    gGlobal->lumpVec.pushBack(m_lump);
-    
+    createNewLump();
+
     return true;
 }
 
@@ -112,6 +125,8 @@ void MainMenuScene::startGame(Ref* pSender)
             }
             //地图数据变化
             gGameMap->changeMapByDirection(GridUp);
+            
+            createNewLump();
         }
         //下
         else if(difference.y < -20 && abs(difference.x) < abs(difference.y)){
@@ -120,6 +135,7 @@ void MainMenuScene::startGame(Ref* pSender)
             }
             
             gGameMap->changeMapByDirection(GridDown);
+            createNewLump();
         }
         //左
         else if(difference.x < -20 && abs(difference.y) < abs(difference.x)){
@@ -128,6 +144,7 @@ void MainMenuScene::startGame(Ref* pSender)
             }
             
             gGameMap->changeMapByDirection(GridLeft);
+            createNewLump();
         }
         //右
         else if(difference.x > 20 && abs(difference.y) < abs(difference.x)){
@@ -136,15 +153,38 @@ void MainMenuScene::startGame(Ref* pSender)
             }
             
             gGameMap->changeMapByDirection(GridRight);
+            createNewLump();
         }
     };
     
     dispatcher->addEventListenerWithSceneGraphPriority(myListener,this);
 }
 
+void MainMenuScene::createNewLump()
+{
+    int level;
+    int row;
+    int col;
+    
+    while (true) {
+        level =  random(0, 1);
+        row =  random(0, 3);
+        col = random(0, 3);
+        log("%d,%d,%d",level,row,col);
+        if (!gGameMap->isExist(row, col)) {
+            
+            gGameMap->changeMapByCoord(row, col, level);
+            break;
+            
+        }
+        
+    }
+    
+    Lump* m_lump = Lump::createLump(gGlobal->_colorType, level, row, col, gameBg);
+    gGlobal->lumpVec.pushBack(m_lump);
 
-
-
+    
+}
 
 
 

@@ -24,6 +24,13 @@ enum GridDirection{
     
 };
 
+struct UnitData {
+    
+    int ID;
+    int level;
+    
+};
+
 class GameMap {
     
     
@@ -37,13 +44,16 @@ public:
     
     int getGridCountByDirection(GridDirection dir, int row, int col);
     
+    bool isExist(int row , int col);
     
 private:
     
     GameMap();
     ~GameMap();
     
-    int MapData[MapMaxLength][MapMaxLength];
+    UnitData MapData[MapMaxLength][MapMaxLength];
+    
+//    int MapData[MapMaxLength][MapMaxLength];
     
     static GameMap* _Instance;
     

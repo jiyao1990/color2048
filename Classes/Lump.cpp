@@ -34,7 +34,7 @@ Lump* Lump::createLump(const colorType colorType, const int level, const int row
     lump->setContentSize(size);
     lump->setAnchorPoint(Vec2(0.5, 0.5));
 
-    LayerColor* tile = LayerColor::create(Color4B(255, 180, 190, 255), size.width, size.height);
+    LayerColor* tile = LayerColor::create(gGlobal->colorMap[gGlobal->_colorType][level], size.width, size.height);
     lump->addChild(tile);
 
     lump->setPosition(Vec2(lump->getContentSize().width * (0.5 + col), lump->getContentSize().height * (0.5 + row)));
