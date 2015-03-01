@@ -38,6 +38,8 @@ public:
     colorType _colorType;
     Vector<Node *> lumpVec;
     
+    int currentID;
+    
 private:
     
     

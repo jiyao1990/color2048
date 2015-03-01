@@ -19,12 +19,11 @@ class Lump : public Node {
     
 public:
     
-    static Lump* createLump(const colorType colorType, const int level, const int h, const int v, Node* pr);
+    static Lump* createLump(const colorType colorType, const int level, const int h, const int v, const int ID, Node* pr);
     void move(GridDirection direction);
-    
-    
+    CC_SYNTHESIZE(int , m_ID, ID);
 private:
-    Lump(const colorType colorType, const int level, const int h, const int v);
+    Lump(const colorType colorType, const int level, const int h, const int v, const int ID);
     ~Lump();
     virtual bool init();
 

@@ -39,8 +39,8 @@ public:
     
     static GameMap* getInstance();
     void resetMapData();
-    void changeMapByDirection(GridDirection dir);
-    void changeMapByCoord(int row, int col, int level);
+    int  changeMapByDirection(GridDirection dir);
+    void changeMapByCoord(int row, int col, int level, int ID);
     
     int getGridCountByDirection(GridDirection dir, int row, int col);
     

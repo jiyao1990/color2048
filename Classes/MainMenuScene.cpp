@@ -82,7 +82,7 @@ bool MainMenuScene::init()
 //        gGlobal->lumpVec.pushBack(m_lump);
 //    }
     
-    createNewLump();
+    createNewLump(2);
 
     return true;
 }
@@ -124,9 +124,11 @@ void MainMenuScene::startGame(Ref* pSender)
                 ((Lump*)gGlobal->lumpVec.at(i))->move(GridUp);
             }
             //地图数据变化
-            gGameMap->changeMapByDirection(GridUp);
             
-            createNewLump();
+            createNewLump(gGameMap->changeMapByDirection(GridUp));
+            
+            
+            
         }
         //下
         else if(difference.y < -20 && abs(difference.x) < abs(difference.y)){
@@ -134,8 +136,8 @@ void MainMenuScene::startGame(Ref* pSender)
                 ((Lump*)gGlobal->lumpVec.at(i))->move(GridDown);
             }
             
-            gGameMap->changeMapByDirection(GridDown);
-            createNewLump();
+            createNewLump(gGameMap->changeMapByDirection(GridDown));
+            
         }
         //左
         else if(difference.x < -20 && abs(difference.y) < abs(difference.x)){
@@ -143,8 +145,10 @@ void MainMenuScene::startGame(Ref* pSender)
                 ((Lump*)gGlobal->lumpVec.at(i))->move(GridLeft);
             }
             
-            gGameMap->changeMapByDirection(GridLeft);
-            createNewLump();
+            
+            createNewLump(gGameMap->changeMapByDirection(GridLeft));
+            
+            
         }
         //右
         else if(difference.x > 20 && abs(difference.y) < abs(difference.x)){
@@ -152,36 +156,40 @@ void MainMenuScene::startGame(Ref* pSender)
                 ((Lump*)gGlobal->lumpVec.at(i))->move(GridRight);
             }
             
-            gGameMap->changeMapByDirection(GridRight);
-            createNewLump();
+            createNewLump(gGameMap->changeMapByDirection(GridRight));
+            
         }
     };
     
     dispatcher->addEventListenerWithSceneGraphPriority(myListener,this);
 }
 
-void MainMenuScene::createNewLump()
+void MainMenuScene::createNewLump(int num)
 {
     int level;
     int row;
     int col;
-    
-    while (true) {
-        level =  random(0, 1);
-        row =  random(0, 3);
-        col = random(0, 3);
-        log("%d,%d,%d",level,row,col);
-        if (!gGameMap->isExist(row, col)) {
-            
-            gGameMap->changeMapByCoord(row, col, level);
-            break;
+    //一次出现num个
+    for (int i = 0 ; i < num ; i ++) {
+        while (true) {
+            level =  random(1, 2);
+            row =  random(0, 3);
+            col = random(0, 3);
+            log("%d,%d,%d",level,row,col);
+            if (!gGameMap->isExist(row, col)) {
+                gGlobal->currentID += 1;
+                gGameMap->changeMapByCoord(row, col, level, gGlobal->currentID);
+                break;
+                
+            }
             
         }
-        
     }
     
-    Lump* m_lump = Lump::createLump(gGlobal->_colorType, level, row, col, gameBg);
-    gGlobal->lumpVec.pushBack(m_lump);
+
+    
+//    Lump* m_lump = Lump::createLump(gGlobal->_colorType, level, row, col, gameBg);
+//    gGlobal->lumpVec.pushBack(m_lump);
 
     
 }

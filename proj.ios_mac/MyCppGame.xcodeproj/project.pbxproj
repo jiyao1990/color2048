@@ -196,7 +196,6 @@
 			isa = PBXGroup;
 			children = (
 				46880B8319C43A87006E1F66 /* Classes */,
-				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				080E96DDFE201D6D7F000001 /* ios */,
 				503AE10617EB990700D1A890 /* mac */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -227,6 +226,7 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 			);
 			name = Frameworks;
+			path = ../proj.ios_mac;
 			sourceTree = "<group>";
 		};
 		46880B8319C43A87006E1F66 /* Classes */ = {
@@ -242,6 +242,7 @@
 				88A328C41A89082900575160 /* Lump.h */,
 				884249461A8BB6180044ABE6 /* GameMap.cpp */,
 				884249471A8BB6180044ABE6 /* GameMap.h */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				885F12991A7A95330037814F /* Global.cpp */,
 				885F129A1A7A95330037814F /* Global.h */,
 			);

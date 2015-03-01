@@ -27,7 +27,7 @@ public:
     CREATE_FUNC(MainMenuScene);
     
     //产生新的方块
-    void createNewLump();
+    void createNewLump(int num);
     
 private:
     void startGame(Ref* pSender);

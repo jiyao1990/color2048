@@ -32,6 +32,7 @@ Color4B Global::colorMap[colorType_Size][maxLevel] ={
 Global::Global()
 {
     _colorType = colorType_green;
+    currentID = 0;
     lumpVec.clear();
 }
 
