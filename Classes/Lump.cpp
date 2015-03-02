@@ -36,9 +36,12 @@ Lump* Lump::createLump(const colorType colorType, const int level, const int row
 
     LayerColor* tile = LayerColor::create(gGlobal->colorMap[gGlobal->_colorType][level - 1], size.width, size.height);
     lump->addChild(tile);
+    tile->setTag(Tag_Tile);
 
     lump->setPosition(Vec2(lump->getContentSize().width * (0.5 + col), lump->getContentSize().height * (0.5 + row)));
     pr->addChild(lump);
+    lump->setScale(0.f);
+    lump->runAction(Sequence::create(CCDelayTime::create(0.2f), Spawn::create(EaseBackOut::create(ScaleTo::create(0.1f, 1)), FadeOut::create(0.1f), NULL), NULL));
     
     //更改地图数据
 //    gGameMap->changeMapByCoord(row, col, level);
@@ -52,49 +55,75 @@ bool Lump::init()
     return true;
 }
 
-void Lump::move(GridDirection direction)
+void Lump::move(GridDirection direction, int step, MyActionType actionType)
 {
-//    int count = gGameMap->getGridCountByDirection(direction, this->m_Row, this->m_Col);
+    ActionInterval* move = NULL;
     switch (direction) {
             
         case GridUp:
         {
-//            if (this->m_Level != -1) {
-//                this->runAction(MoveTo::create(0.2f,Vec2(this->getContentSize().width * (0.5 + m_Col), this->getContentSize().height * (0.5 + m_Row + count))));
-//                m_Row += count;
-//                
-//            }
+            move = MoveTo::create(0.2f,Vec2(this->getContentSize().width * (0.5 + m_Col), this->getContentSize().height * (0.5 + m_Row + step)));
+            m_Row += step;
         }
             break;
         case GridDown:
         {
-//            if (this->m_Level != -1) {
-//                this->runAction(MoveTo::create(0.2f,Vec2(this->getContentSize().width * (0.5 + m_Col), this->getContentSize().height * (0.5 + m_Row - count))));
-//                m_Row -= count;
-//            }
+            move = MoveTo::create(0.2f,Vec2(this->getContentSize().width * (0.5 + m_Col), this->getContentSize().height * (0.5 + m_Row - step)));
+            m_Row -= step;
         }
             break;
         case GridLeft:
         {
-//            if (this->m_Level != -1) {
-//                this->runAction(MoveTo::create(0.2f,Vec2(this->getContentSize().width * (0.5 + m_Col - count), this->getContentSize().height * (0.5 + m_Row))));
-//                m_Col -= count;
-//            }
+            move = MoveTo::create(0.2f,Vec2(this->getContentSize().width * (0.5 + m_Col - step), this->getContentSize().height * (0.5 + m_Row)));
+            m_Col -= step;
         }
             break;
         case GridRight:
         {
-//            if (this->m_Level != -1) {
-//                this->runAction(MoveTo::create(0.2f,Vec2(this->getContentSize().width * (0.5 + m_Col + count), this->getContentSize().height * (0.5 + m_Row))));
-//                m_Col += count;
-//            }
+            move = MoveTo::create(0.2f,Vec2(this->getContentSize().width * (0.5 + m_Col + step), this->getContentSize().height * (0.5 + m_Row)));
+            m_Col += step;
         }
             break;
     }
 
+    doAction(move, actionType);
     
 }
 
+void Lump::changeColor(int level)
+{
+    if (m_Level != level) {
+        m_Level = level;
+    }else{
+        return;
+    }
+    this->setLocalZOrder(1);
+    this->getChildByTag(Tag_Tile)->runAction(TintTo::create(0.2f, gGlobal->colorMap[gGlobal->_colorType][m_Level - 1].r, gGlobal->colorMap[gGlobal->_colorType][m_Level - 1].g, gGlobal->colorMap[gGlobal->_colorType][m_Level - 1].b));
+    
+}
+
+void Lump::doAction(ActionInterval *action , MyActionType actionType)
+{
+    switch (actionType) {
+        case MyActionType_Null:
+            this->runAction(action);
+            break;
+            
+        case MyActionType_Fade:
+            this->setLocalZOrder(0);
+            this->runAction(Sequence::create(action, CallFunc::create(CC_CALLBACK_0(Lump::removeSelf, this)), NULL));
+            break;
+            
+        case MyActionType_LvUp:
+            this->runAction(Sequence::create(action, CallFunc::create(CC_CALLBACK_0(Lump::changeColor, this, m_Level + 1)), NULL));
+            break;
+    }
+}
+
+void Lump::removeSelf()
+{
+    this->removeFromParent();
+}
 
 
 

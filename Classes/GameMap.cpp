@@ -7,6 +7,7 @@
 //
 
 #include "GameMap.h"
+#include "Lump.h"
 
 GameMap* GameMap::_Instance = NULL;
 
@@ -61,55 +62,44 @@ int GameMap::changeMapByDirection(GridDirection dir)
 {
     bool isCombine = false;
     bool isMove = false;
+    int step = 0;
+    int tempLevel = 0;
     switch (dir) {
         case GridUp:
             for (int col = 0 ; col < MapMaxLength; col ++) {
                 
-                //                //取出竖排
-                //                std::vector<UnitData> vec;
-                //                for (int row = MapMaxLength - 1; row >= 0 ; row --) {
-                //                    if (MapData[row][col].level != 0) {
-                //                        vec.push_back(MapData[row][col]);
-                //                    }
-                //                }
-                //
-                //                //合成方块
-                //                for (std::vector<UnitData>::iterator it = vec.end() - 1; it != vec.begin() - 1; it --) {
-                //
-                //                    if ((*it).level == (*(it - 1)).level) {
-                //                        (*it).level += 1;
-                //                        vec.erase(it - 1);
-                //                        flag = false;
-                //                    }
-                //
-                //
-                //                }
-                //
-                //                //存放竖排方块
-                //                for (int row = MapMaxLength - 1; row >= 0; row --) {
-                //                    if (!vec.empty()) {
-                //                        MapData[row][col] = vec.front();
-                //                        vec.erase(vec.begin());
-                //                    }else{
-                //                        MapData[row][col].level = 0;
-                //                        MapData[row][col].ID = 0;
-                //                    }
-                //                }
                 for (int row = MapMaxLength - 1; row >= 0; row --) {
                     
                     if (MapData[row][col].level != 0) {
-                        
+                        tempLevel = MapData[row][col].level;
                         //合成
                         if (row > 0) {
                             int i = row - 1;
                             while (i != -1) {
-                                if (MapData[row][col].level == MapData[i][col].level) {
-                                    MapData[row][col].level += 1;
+                                if (tempLevel == MapData[i][col].level) {
+                                    MapData[row][col].level = tempLevel + 1;
+                                    
+                                    int m = row + 1;
+                                    while (m < MapMaxLength) {
+                                        if (MapData[m][col].level == 0) {
+                                            step++;
+                                        }
+                                        m ++;
+                                    }
+                                    
+                                    //被消除的方块移动
+                                    Lump* lump = (Lump *)gGlobal->lumpMap.find(MapData[i][col].ID)->second;
+                                    lump->move(dir, abs(row - i) + step, MyActionType_Fade);
+                                    gGlobal->lumpMap.erase(MapData[i][col].ID);
+                                    //升级方块变色
+                                    Lump* lump2 = (Lump *)gGlobal->lumpMap.find(MapData[row][col].ID)->second;
+                                    lump2->changeColor(MapData[row][col].level);
+                                    
                                     MapData[i][col].level = 0;
                                     MapData[i][col].ID = 0;
                                     isCombine = true;
-                                    break;
-                                }else if (MapData[i][col].level != 0) {
+                                    i --;
+                                }else if (MapData[i][col].level != tempLevel && MapData[i][col].level != 0) {
                                     break;
                                 }else{
                                     i --;
@@ -124,6 +114,9 @@ int GameMap::changeMapByDirection(GridDirection dir)
                             if (MapData[i][col].level == 0) {
                                 
                                 MapData[i][col] = MapData[row][col];
+                                Lump* lump = (Lump *)gGlobal->lumpMap.find(MapData[i][col].ID)->second;
+                                lump->move(dir, abs(row - i), MyActionType_Null);
+                                
                                 MapData[row][col].level = 0;
                                 MapData[row][col].ID = 0;
                                 isMove = true;
@@ -146,22 +139,38 @@ int GameMap::changeMapByDirection(GridDirection dir)
                 
                 //                std::vector<UnitData> vec;
                 for (int row = 0; row < MapMaxLength ; row ++) {
-                    //                    if (MapData[row][col].level != 0) {
-                    //                        vec.push_back(MapData[row][col]);
-                    //                    }
+                    
                     if (MapData[row][col].level != 0) {
-                        
+                        tempLevel = MapData[row][col].level;
                         //合成
                         if (row < MapMaxLength - 1) {
                             int i = row + 1;
                             while (i != MapMaxLength) {
-                                if (MapData[row][col].level == MapData[i][col].level) {
-                                    MapData[row][col].level += 1;
+                                if (tempLevel == MapData[i][col].level) {
+                                    MapData[row][col].level = tempLevel + 1;
+                                    
+                                    int m = row - 1;
+                                    while (m >= 0) {
+                                        if (MapData[m][col].level == 0) {
+                                            step++;
+                                        }
+                                        m --;
+                                    }
+                                    
+                                    //被消除的方块移动
+                                    Lump* lump = (Lump *)gGlobal->lumpMap.find(MapData[i][col].ID)->second;
+                                    lump->move(dir, abs(row - i) + step, MyActionType_Fade);
+                                    gGlobal->lumpMap.erase(MapData[i][col].ID);
+                                    //升级方块变色
+                                    Lump* lump2 = (Lump *)gGlobal->lumpMap.find(MapData[row][col].ID)->second;
+                                    lump2->changeColor(MapData[row][col].level);
+                                    
                                     MapData[i][col].level = 0;
                                     MapData[i][col].ID = 0;
                                     isCombine = true;
-                                    break;
-                                }else if (MapData[i][col].level != 0) {
+                                    
+                                    i ++;
+                                }else if (MapData[i][col].level != tempLevel && MapData[i][col].level != 0) {
                                     break;
                                 }else{
                                     i ++;
@@ -175,6 +184,8 @@ int GameMap::changeMapByDirection(GridDirection dir)
                             if (MapData[i][col].level == 0) {
                                 
                                 MapData[i][col] = MapData[row][col];
+                                Lump* lump = (Lump *)gGlobal->lumpMap.find(MapData[i][col].ID)->second;
+                                lump->move(dir, abs(row - i), MyActionType_Null);
                                 MapData[row][col].level = 0;
                                 MapData[row][col].ID = 0;
                                 isMove = true;
@@ -187,28 +198,6 @@ int GameMap::changeMapByDirection(GridDirection dir)
                     }
                 }
                 
-                //                //合成方块
-                //                for (std::vector<UnitData>::iterator it = vec.end() - 1; it != vec.begin() - 1; it --) {
-                //
-                //                    if ((*it).level == (*(it - 1)).level) {
-                //                        (*it).level += 1;
-                //                        vec.erase(it - 1);
-                //                        flag = false;
-                //                    }
-                //
-                //
-                //                }
-                //
-                //                for (int row = 0; row < MapMaxLength ; row ++) {
-                //                    if (!vec.empty()) {
-                //                        MapData[row][col] = vec.front();
-                //                        vec.erase(vec.begin());
-                //                    }else{
-                //                        MapData[row][col].level = 0;
-                //                        MapData[row][col].ID = 0;
-                //                    }
-                //                }
-                
             }
             break;
         case GridLeft:
@@ -216,22 +205,38 @@ int GameMap::changeMapByDirection(GridDirection dir)
                 
                 //                std::vector<UnitData> vec;
                 for (int col = 0; col < MapMaxLength ; col ++) {
-                    //                    if (MapData[row][col].level != 0) {
-                    //                        vec.push_back(MapData[row][col]);
-                    //                    }
+                    
                     if (MapData[row][col].level != 0) {
-                        
+                        tempLevel = MapData[row][col].level;
                         //合成
                         if (col < MapMaxLength - 1) {
                             int i = col + 1;
                             while (i != MapMaxLength) {
-                                if (MapData[row][col].level == MapData[row][i].level) {
-                                    MapData[row][col].level += 1;
+                                if (tempLevel == MapData[row][i].level) {
+                                    MapData[row][col].level = tempLevel + 1;
+                                    
+                                    int m = col - 1;
+                                    while (m >= 0) {
+                                        if (MapData[row][m].level == 0) {
+                                            step++;
+                                        }
+                                        m --;
+                                    }
+                                    
+                                    //被消除的方块移动
+                                    Lump* lump = (Lump *)gGlobal->lumpMap.find(MapData[row][i].ID)->second;
+                                    lump->move(dir, abs(col - i) + step, MyActionType_Fade);
+                                    gGlobal->lumpMap.erase(MapData[row][i].ID);
+                                    //升级方块变色
+                                    Lump* lump2 = (Lump *)gGlobal->lumpMap.find(MapData[row][col].ID)->second;
+                                    lump2->changeColor(MapData[row][col].level);
+                                    
                                     MapData[row][i].level = 0;
                                     MapData[row][i].ID = 0;
                                     isCombine = true;
-                                    break;
-                                }else if (MapData[row][i].level != 0) {
+                                    
+                                    i ++;
+                                }else if (MapData[row][i].level != tempLevel && MapData[row][i].level != 0) {
                                     break;
                                 }else{
                                     i ++;
@@ -245,6 +250,8 @@ int GameMap::changeMapByDirection(GridDirection dir)
                             if (MapData[row][i].level == 0) {
                                 
                                 MapData[row][i] = MapData[row][col];
+                                Lump* lump = (Lump *)gGlobal->lumpMap.find(MapData[row][i].ID)->second;
+                                lump->move(dir, abs(col - i), MyActionType_Null);
                                 MapData[row][col].level = 0;
                                 MapData[row][col].ID = 0;
                                 isMove = true;
@@ -257,51 +264,43 @@ int GameMap::changeMapByDirection(GridDirection dir)
                     }
                 }
                 
-                //                //合成方块
-                //                for (std::vector<UnitData>::iterator it = vec.end() - 1; it != vec.begin() - 1; it --) {
-                //
-                //                    if ((*it).level == (*(it - 1)).level) {
-                //                        (*it).level += 1;
-                //                        vec.erase(it - 1);
-                //                        flag = false;
-                //                    }
-                //
-                //
-                //                }
-                //
-                //                for (int col = 0; col < MapMaxLength ; col ++) {
-                //                    if (!vec.empty()) {
-                //                        MapData[row][col] = vec.front();
-                //                        vec.erase(vec.begin());
-                //                    }else{
-                //                        MapData[row][col].level = 0;
-                //                        MapData[row][col].ID = 0;
-                //                    }
-                //                }
-                
             }
             break;
         case GridRight:
             for (int row = 0 ; row < MapMaxLength; row ++) {
                 
-                //                std::vector<UnitData> vec;
                 for (int col = MapMaxLength - 1; col >= 0; col --) {
-                    //                    if (MapData[row][col].level != 0) {
-                    //                        vec.push_back(MapData[row][col]);
-                    //                    }
+                    
                     if (MapData[row][col].level != 0) {
-                        
+                        tempLevel = MapData[row][col].level;
                         //合成
                         if (col > 0) {
                             int i = col - 1;
                             while (i != -1) {
-                                if (MapData[row][col].level == MapData[row][i].level) {
-                                    MapData[row][col].level += 1;
+                                if (tempLevel == MapData[row][i].level) {
+                                    MapData[row][col].level = tempLevel + 1;
+                                    
+                                    int m = col + 1;
+                                    while (m < MapMaxLength) {
+                                        if (MapData[row][m].level == 0) {
+                                            step++;
+                                        }
+                                        m ++;
+                                    }
+                                    
+                                    //被消除的方块移动
+                                    Lump* lump = (Lump *)gGlobal->lumpMap.find(MapData[row][i].ID)->second;
+                                    lump->move(dir, abs(col - i) + step, MyActionType_Fade);
+                                    gGlobal->lumpMap.erase(MapData[row][i].ID);
+                                    //升级方块变色
+                                    Lump* lump2 = (Lump *)gGlobal->lumpMap.find(MapData[row][col].ID)->second;
+                                    lump2->changeColor(MapData[row][col].level);
+                                    
                                     MapData[row][i].level = 0;
                                     MapData[row][i].ID = 0;
                                     isCombine = true;
-                                    break;
-                                }else if (MapData[row][i].level != 0) {
+                                    i --;
+                                }else if (MapData[row][i].level != tempLevel && MapData[row][i].level != 0) {
                                     break;
                                 }else{
                                     i --;
@@ -315,6 +314,8 @@ int GameMap::changeMapByDirection(GridDirection dir)
                             if (MapData[row][i].level == 0) {
                                 
                                 MapData[row][i] = MapData[row][col];
+                                Lump* lump = (Lump *)gGlobal->lumpMap.find(MapData[row][i].ID)->second;
+                                lump->move(dir, abs(col - i), MyActionType_Null);
                                 MapData[row][col].level = 0;
                                 MapData[row][col].ID = 0;
                                 isMove = true;
@@ -326,29 +327,7 @@ int GameMap::changeMapByDirection(GridDirection dir)
                         
                     }
                 }
-                
-                //                //合成方块
-                //                for (std::vector<UnitData>::iterator it = vec.end() - 1; it != vec.begin() - 1; it --) {
-                //
-                //                    if ((*it).level == (*(it - 1)).level) {
-                //                        (*it).level += 1;
-                //                        vec.erase(it - 1);
-                //                        flag = false;
-                //                    }
-                //
-                //
-                //                }
-                //
-                //                for (int col = MapMaxLength - 1; col >= 0; col --) {
-                //                    if (!vec.empty()) {
-                //                        MapData[row][col] = vec.front();
-                //                        vec.erase(vec.begin());
-                //                    }else{
-                //                        MapData[row][col].level = 0;
-                //                        MapData[row][col].ID = 0;
-                //                    }
-                //                }
-                
+               
             }
             break;
     }
@@ -364,7 +343,7 @@ int GameMap::changeMapByDirection(GridDirection dir)
     }else if(!isMove){
         return 0;
     }else{
-        return 2;
+        return 1;
     }
     
 }

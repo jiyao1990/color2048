@@ -33,7 +33,7 @@ Global::Global()
 {
     _colorType = colorType_green;
     currentID = 0;
-    lumpVec.clear();
+    lumpMap.clear();
 }
 
 Global::~Global()

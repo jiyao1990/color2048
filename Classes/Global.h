@@ -10,6 +10,7 @@
 #define __MyCppGame__Global__
 
 #include "cocos2d.h"
+#include <iostream>
 
 #define gWinSize     Director::getInstance()->getWinSize()
 #define gGlobal      Global::getInstance()
@@ -36,7 +37,7 @@ public:
     static Color4B colorMap[colorType_Size][maxLevel];
     
     colorType _colorType;
-    Vector<Node *> lumpVec;
+    map< int, Node* > lumpMap;
     
     int currentID;
     
