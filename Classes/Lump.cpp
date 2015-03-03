@@ -125,5 +125,15 @@ void Lump::removeSelf()
     this->removeFromParent();
 }
 
+int Lump::getCol()
+{
+    return m_Col;
+}
+
+int Lump::getRow()
+{
+    return m_Row;
+}
+
 
 

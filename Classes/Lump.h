@@ -34,6 +34,9 @@ public:
     void changeColor(int level);
     
     CC_SYNTHESIZE(int , m_ID, ID);
+    CC_SYNTHESIZE(int , m_Level, Level);
+    int getCol();
+    int getRow();
 private:
     Lump(const colorType colorType, const int level, const int h, const int v, const int ID);
     ~Lump();
@@ -43,7 +46,6 @@ private:
     void removeSelf();
     
     colorType m_ColorType;
-    int m_Level;
     int m_Row;
     int m_Col;
     

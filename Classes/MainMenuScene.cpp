@@ -9,6 +9,7 @@
 #include "MainMenuScene.h"
 #include "Global.h"
 #include "Lump.h"
+#include "Interface.h"
 
 USING_NS_CC;
 
@@ -38,11 +39,11 @@ bool MainMenuScene::init()
 //    this->initWithColor(Color4B(66, 66, 66, 255), gWinSize.width, gWinSize.height);
     this->initWithColor(Color4B(45,45,45,255), Color4B(65,65,65,255));
     
-    startBg = LayerColor::create(Color4B(163, 230, 125, 255), gWinSize.width * 2 / 3, gWinSize.width * 2 / 3);
+    startBg = LayerColor::create(gGlobal->colorMap[gGlobal->_colorType][2], gWinSize.width * 2 / 3, gWinSize.width * 2 / 3);
     this->addChild(startBg);
-    startBg->setPosition(Vec2(gWinSize.width / 2 - startBg->getContentSize().width / 2, gWinSize.height * 0.45));
+    startBg->setPosition(Vec2(gWinSize.width / 2 - startBg->getContentSize().width / 2, (gWinSize.height - startBg->getContentSize().height) / 2 + (gWinSize.height - startBg->getContentSize().height) / 5));
     
-    auto startTTF = Label::createWithSystemFont("玩", "黑体", startBg->getContentSize().width / 7);
+    auto startTTF = Label::createWithSystemFont("开始", "黑体", startBg->getContentSize().width / 7);
     startTTF->setTextColor(Color4B(44, 44, 44, 255));
     startBg->addChild(startTTF);
     startTTF->setPosition(Vec2(startBg->getContentSize().width / 2, startBg->getContentSize().height / 2));
@@ -60,6 +61,24 @@ bool MainMenuScene::init()
     this->addChild(gameBg);
     gameBg->setPosition(Vec2(gWinSize.width / 2 - gameBg->getContentSize().width / 2, gWinSize.height));
     gameBg->setVisible(false);
+    
+    
+    auto menuDownBg = LayerColor::create(Color4B(44, 44, 44, 255), gWinSize.width, (gWinSize.height - startBg->getContentSize().height) / 5);
+    this->addChild(menuDownBg);
+    
+    colorTTF = Label::createWithSystemFont("更换颜色", "Arial", menuDownBg->getContentSize().height * 2 / 5);
+//    colorTTF->enableOutline(gGlobal->colorMap[gGlobal->_colorType][2]);
+    colorTTF->setTextColor(gGlobal->colorMap[gGlobal->_colorType][0]);
+    menuDownBg->addChild(colorTTF);
+    colorTTF->setPosition(Vec2(menuDownBg->getContentSize().width / 2, menuDownBg->getContentSize().height / 2));
+    
+    auto colorItem = MenuItem::create(CC_CALLBACK_1(MainMenuScene::colorItemCallBack, this));
+    colorItem->setContentSize(menuDownBg->getContentSize());
+    colorItem->setPosition(menuDownBg->getContentSize() / 2);
+    
+    auto menuDown = Menu::create(colorItem, NULL);
+    menuDown->setPosition(Vec2(0, 0));
+    menuDownBg->addChild(menuDown);
     
     
     
@@ -93,7 +112,7 @@ void MainMenuScene::startGame(Ref* pSender)
     startItem->setEnabled(false);
     startBg->runAction(MoveTo::create(0.4f, Vec2(startBg->getPositionX() , gWinSize.height)));
     
-    gameBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(),MoveTo::create(0.4f, Vec2(gameBg->getPositionX(),gWinSize.height / 2 - gameBg->getContentSize().height * 0.35  )), NULL));
+    gameBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(),MoveTo::create(0.4f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + (gWinSize.height - gameBg->getContentSize().height) / 5) ), NULL));
 
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     auto myListener = EventListenerTouchOneByOne::create();
@@ -120,11 +139,9 @@ void MainMenuScene::startGame(Ref* pSender)
         
         //上
         if (difference.y > 20 && abs(difference.x) < abs(difference.y)) {
-//            for (int i = 0; i < gGlobal->lumpVec.size(); i++) {
-//                ((Lump*)gGlobal->lumpVec.at(i))->move(GridUp);
-//            }
-            //地图数据变化
-//            gGameMap->changeMapByDirection(GridUp);
+            
+            setLumpPosition();
+            setLumpColor();
             createNewLump(gGameMap->changeMapByDirection(GridUp));
             
             
@@ -132,30 +149,23 @@ void MainMenuScene::startGame(Ref* pSender)
         }
         //下
         else if(difference.y < -20 && abs(difference.x) < abs(difference.y)){
-//            for (int i = 0; i < gGlobal->lumpVec.size(); i++) {
-//                ((Lump*)gGlobal->lumpVec.at(i))->move(GridDown);
-//            }
-//            gGameMap->changeMapByDirection(GridDown);
+            setLumpPosition();
+            setLumpColor();
             createNewLump(gGameMap->changeMapByDirection(GridDown));
             
         }
         //左
         else if(difference.x < -20 && abs(difference.y) < abs(difference.x)){
-//            for (int i = 0; i < gGlobal->lumpVec.size(); i++) {
-//                ((Lump*)gGlobal->lumpVec.at(i))->move(GridLeft);
-//            }
-            
-//            gGameMap->changeMapByDirection(GridLeft);
+            setLumpPosition();
+            setLumpColor();
             createNewLump(gGameMap->changeMapByDirection(GridLeft));
             
             
         }
         //右
         else if(difference.x > 20 && abs(difference.y) < abs(difference.x)){
-//            for (int i = 0; i < gGlobal->lumpVec.size(); i++) {
-//                ((Lump*)gGlobal->lumpVec.at(i))->move(GridRight);
-//            }
-//            gGameMap->changeMapByDirection(GridRight);
+            setLumpPosition();
+            setLumpColor();
             createNewLump(gGameMap->changeMapByDirection(GridRight));
             
         }
@@ -171,7 +181,7 @@ void MainMenuScene::createNewLump(int num)
     int col;
     //一次出现num个
     for (int i = 0 ; i < num ; i ++) {
-        while (true) {
+        while (!gGameMap->isFull()) {
             level =  random(1, 2);
             row =  random(0, 3);
             col = random(0, 3);
@@ -187,10 +197,67 @@ void MainMenuScene::createNewLump(int num)
             
         }
     }
+    
+    if (gGameMap->isFail()) {
+        
+//        resetGame();
+        log("fail");
+        
+    }
 
     
 }
 
+void MainMenuScene::colorItemCallBack(Ref* pSender)
+{
+//    gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowAd, "");
+    if (gGlobal->_colorType < colorType_Size - 1) {
+        gGlobal->_colorType = (colorType)(gGlobal->_colorType + 1);
+    }else{
+        gGlobal->_colorType = colorType_green;
+    }
+    
+    startBg->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][2]));
+    colorTTF->setTextColor(gGlobal->colorMap[gGlobal->_colorType][0]);
+
+    setLumpColor();
+}
+
+
+void MainMenuScene::setLumpPosition()
+{
+    
+    for (map< int, Node* >::iterator it = gGlobal->lumpMap.begin(); it != gGlobal->lumpMap.end(); it ++) {
+        Lump* lump = (Lump *)it->second;
+        lump->stopAllActions();
+        lump->setScale(1.f);
+        lump->setPosition(Vec2(lump->getContentSize().width * (0.5 + lump->getCol()), lump->getContentSize().height * (0.5 + lump->getRow())));
+        
+    }
+}
+
+void MainMenuScene::setLumpColor()
+{
+    
+    for (map< int, Node* >::iterator it = gGlobal->lumpMap.begin(); it != gGlobal->lumpMap.end(); it ++) {
+        Lump* lump = (Lump *)it->second;
+        lump->stopAllActions();
+        lump->getChildByTag(Tag_Tile)->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][lump->getLevel() - 1]));
+        
+    }
+}
+
+void MainMenuScene::resetGame()
+{
+    gGameMap->resetMapData();
+    for (map< int, Node* >::iterator it = gGlobal->lumpMap.begin(); it != gGlobal->lumpMap.end(); it ++) {
+        Lump* lump = (Lump *)it->second;
+        lump->stopAllActions();
+        lump->removeFromParent();
+    }
+    gGlobal->lumpMap.clear();
+    createNewLump(2);
+}
 
 
 

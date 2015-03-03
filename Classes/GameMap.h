@@ -46,6 +46,9 @@ public:
     
     bool isExist(int row , int col);
     
+    bool isFull();
+    bool isFail();
+    
 private:
     
     GameMap();

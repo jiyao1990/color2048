@@ -343,7 +343,7 @@ int GameMap::changeMapByDirection(GridDirection dir)
     }else if(!isMove){
         return 0;
     }else{
-        return 1;
+        return 2;
     }
     
 }
@@ -405,5 +405,55 @@ int GameMap::getGridCountByDirection(GridDirection dir, int row, int col)
 bool GameMap::isExist(int row , int col)
 {
     return (MapData[row][col].level != 0);
+}
+
+bool GameMap::isFull()
+{
+    for (int col = 0 ; col < MapMaxLength; col ++) {
+        
+        for (int row = 0 ; row < MapMaxLength; row ++) {
+            
+            if (MapData[row][col].ID == 0) {
+                return  false;
+            }
+            
+        }
+    }
+    
+    return true;
+}
+
+bool GameMap::isFail()
+{
+    if (isFull()) {
+        
+        for (int col = 0 ; col < MapMaxLength; col ++) {
+            
+            for (int row = 0 ; row < MapMaxLength; row ++) {
+                
+                if (col > 0) {
+                    
+                    if (MapData[row][col].level == MapData[row][col - 1].level) {
+                        return false;
+                    }
+                    
+                }
+                
+                if (row > 0) {
+                    
+                    if (MapData[row][col].level == MapData[row - 1][col].level) {
+                        return false;
+                    }
+                    
+                }
+                
+            }
+        }
+        
+        
+        return true;
+    }
+    
+    return false;
 }
 

@@ -30,6 +30,8 @@
 
 @implementation AppController
 
+static GADInterstitial *interstitial;
+static RootViewController *viewController;
 #pragma mark -
 #pragma mark Application lifecycle
 
@@ -61,6 +63,7 @@ static AppDelegate s_sharedApplication;
     _viewController.wantsFullScreenLayout = YES;
     _viewController.view = eaglView;
 
+    viewController = _viewController;
     // Set RootViewController to window
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
     {
@@ -82,7 +85,14 @@ static AppDelegate s_sharedApplication;
     cocos2d::Director::getInstance()->setOpenGLView(glview);
 
     app->run();
+    
+    
+//    广告单元ID：ca-app-pub-1771996690526222/5470976596
+    
+    //admob
+    [self loadAdmob];
 
+    
     return YES;
 }
 
@@ -142,5 +152,51 @@ static AppDelegate s_sharedApplication;
     [super dealloc];
 }
 
++ (void)showInterstitial {
+
+    if ([interstitial isReady]) {
+        [interstitial presentFromRootViewController:viewController];
+    }
+}
+
+
+- (void)interstitialDidReceiveAd:(GADInterstitial *)ad
+{
+    
+}
+
+- (void)interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error
+{
+    [self loadAdmob];
+}
+
+#pragma mark Display-Time Lifecycle Notifications
+- (void)interstitialWillPresentScreen:(GADInterstitial *)ad
+{
+    
+}
+
+- (void)interstitialWillDismissScreen:(GADInterstitial *)ad
+{
+    
+}
+
+- (void)interstitialDidDismissScreen:(GADInterstitial *)ad
+{
+    [self loadAdmob];
+}
+
+- (void)interstitialWillLeaveApplication:(GADInterstitial *)ad
+{
+    
+}
+
+- (void)loadAdmob{
+    interstitial = [[GADInterstitial alloc] init];
+    interstitial.adUnitID = @"ca-app-pub-1771996690526222/5470976596";
+    [interstitial setDelegate:self];
+    GADRequest *request = [GADRequest request];
+    [interstitial loadRequest:request];
+}
 
 @end

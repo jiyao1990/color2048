@@ -29,12 +29,19 @@ public:
     //产生新的方块
     void createNewLump(int num);
     
+    //重新开始游戏
+    void resetGame();
+    
 private:
     void startGame(Ref* pSender);
+    void colorItemCallBack(Ref* pSender);
+    void setLumpPosition();
+    void setLumpColor();
     
     //menu
     LayerColor* startBg;
     MenuItem* startItem;
+    Label* colorTTF;
     
     //game
     LayerColor* gameBg;
