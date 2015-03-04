@@ -67,10 +67,10 @@ bool MainMenuScene::init()
     //分数
     char buffer[64];
     sprintf(buffer,"当前得分:%ld",gGlobal->score);
-    scoreTTF = Label::createWithSystemFont(buffer, "黑体", gameBg->getContentSize().width / 12);
+    scoreTTF = Label::createWithSystemFont(buffer, "黑体", gameBg->getContentSize().width / 14);
     scoreTTF->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
     gameBg->addChild(scoreTTF);
-    scoreTTF->setPosition(Vec2(gameBg->getContentSize().width / 2, gameBg->getContentSize().height + gameBg->getContentSize().width / 8));
+    scoreTTF->setPosition(Vec2(gameBg->getContentSize().width / 2, gameBg->getContentSize().height + scoreTTF->getContentSize().height / 2 + 50 ));
     
     
     auto menuDownBg = LayerColor::create(Color4B(44, 44, 44, 255), gWinSize.width, (gWinSize.height - startBg->getContentSize().height) / 5);
