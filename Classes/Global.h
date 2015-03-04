@@ -41,6 +41,8 @@ public:
     
     int currentID;
     
+    long score;
+    
 private:
     
     

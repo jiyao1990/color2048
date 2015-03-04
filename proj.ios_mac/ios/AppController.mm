@@ -90,6 +90,7 @@ static AppDelegate s_sharedApplication;
 //    广告单元ID：ca-app-pub-1771996690526222/5470976596
     
     //admob
+    adCounts = 0;
     [self loadAdmob];
 
     
@@ -192,8 +193,13 @@ static AppDelegate s_sharedApplication;
 }
 
 - (void)loadAdmob{
+    adCounts ++;
     interstitial = [[GADInterstitial alloc] init];
-    interstitial.adUnitID = @"ca-app-pub-1771996690526222/5470976596";
+    if (adCounts % 2 == 0) {
+        interstitial.adUnitID = @"ca-app-pub-1771996690526222/5470976596";
+    }else{
+        interstitial.adUnitID = @"ca-app-pub-9911143712135979/8942918444";
+    }
     [interstitial setDelegate:self];
     GADRequest *request = [GADRequest request];
     [interstitial loadRequest:request];

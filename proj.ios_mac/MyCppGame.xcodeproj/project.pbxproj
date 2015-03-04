@@ -13,8 +13,6 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
-		46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
-		46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -62,6 +60,7 @@
 		88725E841AA6076F00FCAEFA /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88725E831AA6076F00FCAEFA /* StoreKit.framework */; };
 		88725E861AA6077300FCAEFA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88725E851AA6077300FCAEFA /* SystemConfiguration.framework */; };
 		88725E881AA6078400FCAEFA /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88725E871AA6078400FCAEFA /* GoogleMobileAds.framework */; };
+		8894509F1AA76324005A3DCE /* TipLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8894509D1AA76324005A3DCE /* TipLayer.cpp */; };
 		88A328C51A89082900575160 /* Lump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88A328C31A89082800575160 /* Lump.cpp */; };
 		88D04EC71AA614EF001AD6E4 /* Interface_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88D04EC41AA614EF001AD6E4 /* Interface_ios.mm */; };
 		88D04EC81AA614EF001AD6E4 /* Interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88D04EC51AA614EF001AD6E4 /* Interface.cpp */; };
@@ -86,8 +85,6 @@
 		435C40AC8DC8098A3DFD0FE0 /* res */ = {isa = PBXFileReference; lastKnownFileType = "?"; name = res; path = ../res; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
-		46880B8719C43A87006E1F66 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE0FA17EB989F00D1A890 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = SOURCE_ROOT; };
@@ -141,6 +138,8 @@
 		88725E831AA6076F00FCAEFA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		88725E851AA6077300FCAEFA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		88725E871AA6078400FCAEFA /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "../../../Downloads/GoogleMobileAdsSdkiOS-7.0-2.0/GoogleMobileAds.framework"; sourceTree = "<group>"; };
+		8894509D1AA76324005A3DCE /* TipLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TipLayer.cpp; sourceTree = "<group>"; };
+		8894509E1AA76324005A3DCE /* TipLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipLayer.h; sourceTree = "<group>"; };
 		88A328C31A89082800575160 /* Lump.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lump.cpp; sourceTree = "<group>"; };
 		88A328C41A89082900575160 /* Lump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lump.h; sourceTree = "<group>"; };
 		88D04EC41AA614EF001AD6E4 /* Interface_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Interface_ios.mm; sourceTree = "<group>"; };
@@ -288,9 +287,9 @@
 				88D04EC61AA614EF001AD6E4 /* Interface.h */,
 				885F12961A7A92C90037814F /* MainMenuScene.cpp */,
 				885F12971A7A92C90037814F /* MainMenuScene.h */,
-				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
-				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
 				88A328C31A89082800575160 /* Lump.cpp */,
+				8894509D1AA76324005A3DCE /* TipLayer.cpp */,
+				8894509E1AA76324005A3DCE /* TipLayer.h */,
 				88A328C41A89082900575160 /* Lump.h */,
 				884249461A8BB6180044ABE6 /* GameMap.cpp */,
 				884249471A8BB6180044ABE6 /* GameMap.h */,
@@ -482,12 +481,12 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				88D04EC71AA614EF001AD6E4 /* Interface_ios.mm in Sources */,
 				884249481A8BB6180044ABE6 /* GameMap.cpp in Sources */,
-				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				885F129B1A7A95330037814F /* Global.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				885F12981A7A92C90037814F /* MainMenuScene.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				8894509F1AA76324005A3DCE /* TipLayer.cpp in Sources */,
 				88A328C51A89082900575160 /* Lump.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -498,7 +497,6 @@
 			files = (
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
-				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

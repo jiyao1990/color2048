@@ -80,6 +80,7 @@ int GameMap::changeMapByDirection(GridDirection dir)
                                     MapData[row][col].level = tempLevel + 1;
                                     
                                     int m = row + 1;
+                                    step = 0;
                                     while (m < MapMaxLength) {
                                         if (MapData[m][col].level == 0) {
                                             step++;
@@ -94,6 +95,8 @@ int GameMap::changeMapByDirection(GridDirection dir)
                                     //升级方块变色
                                     Lump* lump2 = (Lump *)gGlobal->lumpMap.find(MapData[row][col].ID)->second;
                                     lump2->changeColor(MapData[row][col].level);
+                                    
+                                    gGlobal->score += MapData[i][col].level;
                                     
                                     MapData[i][col].level = 0;
                                     MapData[i][col].ID = 0;
@@ -150,6 +153,7 @@ int GameMap::changeMapByDirection(GridDirection dir)
                                     MapData[row][col].level = tempLevel + 1;
                                     
                                     int m = row - 1;
+                                    step = 0;
                                     while (m >= 0) {
                                         if (MapData[m][col].level == 0) {
                                             step++;
@@ -164,6 +168,8 @@ int GameMap::changeMapByDirection(GridDirection dir)
                                     //升级方块变色
                                     Lump* lump2 = (Lump *)gGlobal->lumpMap.find(MapData[row][col].ID)->second;
                                     lump2->changeColor(MapData[row][col].level);
+                                    
+                                    gGlobal->score += MapData[i][col].level;
                                     
                                     MapData[i][col].level = 0;
                                     MapData[i][col].ID = 0;
@@ -216,6 +222,7 @@ int GameMap::changeMapByDirection(GridDirection dir)
                                     MapData[row][col].level = tempLevel + 1;
                                     
                                     int m = col - 1;
+                                    step = 0;
                                     while (m >= 0) {
                                         if (MapData[row][m].level == 0) {
                                             step++;
@@ -230,6 +237,8 @@ int GameMap::changeMapByDirection(GridDirection dir)
                                     //升级方块变色
                                     Lump* lump2 = (Lump *)gGlobal->lumpMap.find(MapData[row][col].ID)->second;
                                     lump2->changeColor(MapData[row][col].level);
+                                    
+                                    gGlobal->score += MapData[row][i].level;
                                     
                                     MapData[row][i].level = 0;
                                     MapData[row][i].ID = 0;
@@ -281,6 +290,7 @@ int GameMap::changeMapByDirection(GridDirection dir)
                                     MapData[row][col].level = tempLevel + 1;
                                     
                                     int m = col + 1;
+                                    step = 0;
                                     while (m < MapMaxLength) {
                                         if (MapData[row][m].level == 0) {
                                             step++;
@@ -295,6 +305,8 @@ int GameMap::changeMapByDirection(GridDirection dir)
                                     //升级方块变色
                                     Lump* lump2 = (Lump *)gGlobal->lumpMap.find(MapData[row][col].ID)->second;
                                     lump2->changeColor(MapData[row][col].level);
+                                    
+                                    gGlobal->score += MapData[row][i].level;
                                     
                                     MapData[row][i].level = 0;
                                     MapData[row][i].ID = 0;

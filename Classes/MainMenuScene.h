@@ -31,21 +31,32 @@ public:
     
     //重新开始游戏
     void resetGame();
+    //首页
+    void backHome();
     
 private:
     void startGame(Ref* pSender);
     void colorItemCallBack(Ref* pSender);
+    void homeCallBack(Ref* pSender);
     void setLumpPosition();
     void setLumpColor();
+    void resetData();
+    void gameOver();
     
+    int gameOverCount;
     //menu
     LayerColor* startBg;
     MenuItem* startItem;
-    Label* colorTTF;
+//    Label* colorTTF;
+    MenuItemImage* btn_change;
+    MenuItemImage* btn_home;
+    MenuItemImage* btn_weibo;
     
     //game
     LayerColor* gameBg;
     Vector<LayerColor*> vec;
+    Label* scoreTTF;
+    EventListenerTouchOneByOne* myListener;
 };
 
 #endif /* defined(__MyCppGame__MainMenuScene__) */

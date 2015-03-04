@@ -43,6 +43,7 @@ Lump* Lump::createLump(const colorType colorType, const int level, const int row
     lump->setScale(0.f);
     lump->runAction(Sequence::create(CCDelayTime::create(0.2f), Spawn::create(EaseBackOut::create(ScaleTo::create(0.1f, 1)), FadeOut::create(0.1f), NULL), NULL));
     
+    lump->setLocalZOrder(1);
     //更改地图数据
 //    gGameMap->changeMapByCoord(row, col, level);
     
@@ -97,7 +98,6 @@ void Lump::changeColor(int level)
     }else{
         return;
     }
-    this->setLocalZOrder(1);
     this->getChildByTag(Tag_Tile)->runAction(TintTo::create(0.2f, gGlobal->colorMap[gGlobal->_colorType][m_Level - 1].r, gGlobal->colorMap[gGlobal->_colorType][m_Level - 1].g, gGlobal->colorMap[gGlobal->_colorType][m_Level - 1].b));
     
 }

@@ -10,6 +10,7 @@
 #include "Global.h"
 #include "Lump.h"
 #include "Interface.h"
+#include "TipLayer.h"
 
 USING_NS_CC;
 
@@ -35,7 +36,7 @@ bool MainMenuScene::init()
     if (!LayerColor::init()) {
         return false;
     }
-    
+    gameOverCount = 0;
 //    this->initWithColor(Color4B(66, 66, 66, 255), gWinSize.width, gWinSize.height);
     this->initWithColor(Color4B(45,45,45,255), Color4B(65,65,65,255));
     
@@ -47,7 +48,7 @@ bool MainMenuScene::init()
     startTTF->setTextColor(Color4B(44, 44, 44, 255));
     startBg->addChild(startTTF);
     startTTF->setPosition(Vec2(startBg->getContentSize().width / 2, startBg->getContentSize().height / 2));
-    
+
     
     startItem = MenuItem::create(CC_CALLBACK_1(MainMenuScene::startGame, this));
     startItem->setContentSize(startBg->getContentSize());
@@ -63,59 +64,65 @@ bool MainMenuScene::init()
     gameBg->setVisible(false);
     
     
+    //分数
+    char buffer[64];
+    sprintf(buffer,"当前得分:%ld",gGlobal->score);
+    scoreTTF = Label::createWithSystemFont(buffer, "黑体", gameBg->getContentSize().width / 12);
+    scoreTTF->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
+    gameBg->addChild(scoreTTF);
+    scoreTTF->setPosition(Vec2(gameBg->getContentSize().width / 2, gameBg->getContentSize().height + gameBg->getContentSize().width / 8));
+    
+    
     auto menuDownBg = LayerColor::create(Color4B(44, 44, 44, 255), gWinSize.width, (gWinSize.height - startBg->getContentSize().height) / 5);
     this->addChild(menuDownBg);
     
-    colorTTF = Label::createWithSystemFont("更换颜色", "Arial", menuDownBg->getContentSize().height * 2 / 5);
-//    colorTTF->enableOutline(gGlobal->colorMap[gGlobal->_colorType][2]);
-    colorTTF->setTextColor(gGlobal->colorMap[gGlobal->_colorType][0]);
-    menuDownBg->addChild(colorTTF);
-    colorTTF->setPosition(Vec2(menuDownBg->getContentSize().width / 2, menuDownBg->getContentSize().height / 2));
+    btn_change = MenuItemImage::create("res/change.png", "res/change.png", CC_CALLBACK_1(MainMenuScene::colorItemCallBack, this));
+    btn_change->setPosition(menuDownBg->getContentSize() / 2);
+    btn_change->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
     
-    auto colorItem = MenuItem::create(CC_CALLBACK_1(MainMenuScene::colorItemCallBack, this));
-    colorItem->setContentSize(menuDownBg->getContentSize());
-    colorItem->setPosition(menuDownBg->getContentSize() / 2);
+    btn_home = MenuItemImage::create("res/home.png", "res/home.png", CC_CALLBACK_1(MainMenuScene::homeCallBack, this));
+    btn_home->setPosition(Vec2(menuDownBg->getContentSize().width  / 4, menuDownBg->getContentSize().height / 2));
+    btn_home->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
+    btn_home->setEnabled(false);
+    btn_home->setOpacity(0);
     
-    auto menuDown = Menu::create(colorItem, NULL);
+    btn_weibo = MenuItemImage::create("res/weibo.png", "res/weibo.png", CC_CALLBACK_1(MainMenuScene::colorItemCallBack, this));
+    btn_weibo->setPosition(Vec2(menuDownBg->getContentSize().width * 3 / 4, menuDownBg->getContentSize().height / 2));
+    btn_weibo->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
+    btn_weibo->setEnabled(false);
+    btn_weibo->setOpacity(0);
+    
+    auto menuDown = Menu::create(btn_change, btn_home, btn_weibo, NULL);
     menuDown->setPosition(Vec2(0, 0));
     menuDownBg->addChild(menuDown);
     
-    
-    
-//    for (int i = 0; i < 4;  i ++) {
-//        int level;
-//        int row;
-//        int col;
-//        while (true) {
-//            level =  random(0, 1);
-//            row =  random(0, 3);
-//            col = random(0, 3);
-//            log("%d,%d,%d",level,row,col);
-//            if (!gGameMap->isExist(row, col)) {
-//                break;
-//            }
-//            
-//        }
-//        
-//        Lump* m_lump = Lump::createLump(gGlobal->_colorType, level, row, col, gameBg);
-//        gGlobal->lumpVec.pushBack(m_lump);
-//    }
-    
-    createNewLump(2);
-
     return true;
 }
 
 void MainMenuScene::startGame(Ref* pSender)
 {
-//    startBg->runAction(TintTo::create(0.5f, startBg->getColor().r / 1.5, startBg->getColor().g / 1.5, startBg->getColor().b / 1.5));
+    
+    resetData();
+    
+    btn_change->setEnabled(false);
+    btn_change->runAction(Sequence::create(FadeOut::create(0.2),Hide::create(),NULL));
+    
+    btn_weibo->setEnabled(true);
+    btn_weibo->runAction(Sequence::create(Show::create(),FadeIn::create(0.2),NULL));
+    
+    btn_home->setEnabled(true);
+    btn_home->runAction(Sequence::create(Show::create(),FadeIn::create(0.2),NULL));
+    
+    
+    
+    
     startItem->setEnabled(false);
-    startBg->runAction(MoveTo::create(0.4f, Vec2(startBg->getPositionX() , gWinSize.height)));
+    startBg->runAction(Sequence::create(MoveTo::create(0.4f, Vec2(startBg->getPositionX() , gWinSize.height)),Hide::create(),NULL));
     
     gameBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(),MoveTo::create(0.4f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + (gWinSize.height - gameBg->getContentSize().height) / 5) ), NULL));
 
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
-    auto myListener = EventListenerTouchOneByOne::create();
+    
+    myListener = EventListenerTouchOneByOne::create();
     
     //如果不加入此句消息依旧会向下传递
     myListener->setSwallowTouches(true);
@@ -169,9 +176,13 @@ void MainMenuScene::startGame(Ref* pSender)
             createNewLump(gGameMap->changeMapByDirection(GridRight));
             
         }
+        
+        char buffer[64];
+        sprintf(buffer,"当前得分:%ld",gGlobal->score);
+        scoreTTF->setString(buffer);
     };
     
-    dispatcher->addEventListenerWithSceneGraphPriority(myListener,this);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(myListener,this);
 }
 
 void MainMenuScene::createNewLump(int num)
@@ -198,9 +209,12 @@ void MainMenuScene::createNewLump(int num)
         }
     }
     
-    if (gGameMap->isFail()) {
+    if (gGameMap->isFail() && !this->getActionByTag(1000)) {
         
-//        resetGame();
+        ActionInterval* action = Sequence::create(DelayTime::create(2.f),CallFunc::create(CC_CALLBACK_0(MainMenuScene::gameOver, this)), NULL);
+        action->setTag(1000);
+        this->runAction(action);
+        
         log("fail");
         
     }
@@ -216,13 +230,37 @@ void MainMenuScene::colorItemCallBack(Ref* pSender)
     }else{
         gGlobal->_colorType = colorType_green;
     }
-    
     startBg->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][2]));
-    colorTTF->setTextColor(gGlobal->colorMap[gGlobal->_colorType][0]);
-
+    btn_change->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
+    btn_home->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
+    btn_weibo->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
+    scoreTTF->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
     setLumpColor();
 }
 
+void MainMenuScene::homeCallBack(Ref* pSender)
+{
+    this->addChild(TipLayer::createLayer(TipType_BackToHome, this));
+}
+
+void MainMenuScene::backHome()
+{
+    btn_change->setEnabled(true);
+    btn_change->runAction(Sequence::create(Show::create(),FadeIn::create(0.2),NULL));
+    
+    btn_weibo->setEnabled(false);
+    btn_weibo->runAction(Sequence::create(FadeOut::create(0.2),Hide::create(),NULL));
+    
+    btn_home->setEnabled(false);
+    btn_home->runAction(Sequence::create(FadeOut::create(0.2),Hide::create(),NULL));
+    
+    startItem->setEnabled(true);
+    startBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(),MoveTo::create(0.4f, Vec2(gWinSize.width / 2 - startBg->getContentSize().width / 2, (gWinSize.height - startBg->getContentSize().height) / 2 + (gWinSize.height - startBg->getContentSize().height) / 5)), NULL));
+    
+    gameBg->runAction(Sequence::create(MoveTo::create(0.4f, Vec2(gWinSize.width / 2 - gameBg->getContentSize().width / 2, gWinSize.height)),Hide::create(),NULL));
+    
+    Director::getInstance()->getEventDispatcher()->removeEventListener(myListener);
+}
 
 void MainMenuScene::setLumpPosition()
 {
@@ -249,6 +287,17 @@ void MainMenuScene::setLumpColor()
 
 void MainMenuScene::resetGame()
 {
+    gameBg->runAction(Sequence::create(
+                                       MoveTo::create(0.2f, Vec2(gWinSize.width / 2 - gameBg->getContentSize().width / 2, gWinSize.height)),
+                                       CallFunc::create(CC_CALLBACK_0(MainMenuScene::resetData, this)),
+                                       MoveTo::create(0.2f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + (gWinSize.height - gameBg->getContentSize().height) / 5)),
+                                       NULL));
+    
+ 
+}
+
+void MainMenuScene::resetData()
+{
     gGameMap->resetMapData();
     for (map< int, Node* >::iterator it = gGlobal->lumpMap.begin(); it != gGlobal->lumpMap.end(); it ++) {
         Lump* lump = (Lump *)it->second;
@@ -257,7 +306,20 @@ void MainMenuScene::resetGame()
     }
     gGlobal->lumpMap.clear();
     createNewLump(2);
+    
+    gGlobal->score = 0;
+    char buffer[64];
+    sprintf(buffer,"当前得分:%ld",gGlobal->score);
+    scoreTTF->setString(buffer);
 }
 
+void MainMenuScene::gameOver()
+{
+    gameOverCount ++;
+    this->addChild(TipLayer::createLayer(TipType_GameOver, this));
+    if (gameOverCount % 3 == 2) {
+        gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowAd, "");
+    }
+}
 
 
