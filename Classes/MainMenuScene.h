@@ -38,6 +38,7 @@ private:
     void startGame(Ref* pSender);
     void colorItemCallBack(Ref* pSender);
     void homeCallBack(Ref* pSender);
+    void shareCallBack(Ref* pSender);
     void setLumpPosition();
     void setLumpColor();
     void resetData();

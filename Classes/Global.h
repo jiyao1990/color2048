@@ -11,19 +11,48 @@
 
 #include "cocos2d.h"
 #include <iostream>
+#include "cocos-ext.h"
 
 #define gWinSize     Director::getInstance()->getWinSize()
 #define gGlobal      Global::getInstance()
 #define maxLevel     11
 
+#define screenShotImageName     "screenShot.jpg"
+
 USING_NS_CC;
+USING_NS_CC_EXT;
+using namespace  rapidjson;
 using namespace std;
+
+/**
+ *  转化字符类函数
+ */
+template <class T>
+std::string toString(T _T){
+    std::stringstream _ss;
+    _ss << _T;
+    return _ss.str();
+}
 
 enum colorType{
     colorType_green = 0,
     colorType_blue,
     colorType_red,
     colorType_Size,
+};
+
+class JsonPair : public Ref
+{
+public:
+    static JsonPair* create(string key, string value);
+    
+    JsonPair();
+    
+    CC_SYNTHESIZE(string, m_key, Key);
+    CC_SYNTHESIZE(string, m_value, Value);
+    
+private:
+    JsonPair(string key, string value);
 };
 
 class Global : public Node{
@@ -42,6 +71,24 @@ public:
     int currentID;
     
     long score;
+    
+    string highScore;
+    
+    bool isHomeAdSwitch;
+    
+    void saveScreenshot(Node* node, const std::string& fileName,const std::function<void(const std::string&)>& callback);
+    
+    string getJsonStr(JsonPair* jsonPair, ...) CC_REQUIRES_NULL_TERMINATION;
+    
+    /**
+     *  字符串去除非法字符 (" \n\r\t")空格 回车换行 制表符
+     *
+     *  @param str 待处理字符串
+     *  @param 0   从第几位开始,默认从头开始
+     *
+     *  @return 返回处理好的串
+     */
+    string trim(string str, string::size_type pos = 0);
     
 private:
     

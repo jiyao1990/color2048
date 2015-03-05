@@ -98,7 +98,7 @@ bool TipLayer::init(TipType type, MainMenuScene* mainMenu)
         case TipType_GameOver:
         {
             char buffer[64];
-            sprintf(buffer,"当前得分:%ld",gGlobal->score);
+            sprintf(buffer,"本次得分:%ld",gGlobal->score);
             auto scoreTTF = Label::createWithSystemFont(buffer, "黑体", 40);
             scoreTTF->setPosition(Vec2(bg->getContentSize().width / 2 , contentTTF->getPositionY() - contentTTF->getContentSize().height - scoreTTF->getContentSize().height));
             bg->addChild(scoreTTF);

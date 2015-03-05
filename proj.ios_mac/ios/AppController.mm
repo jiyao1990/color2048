@@ -27,11 +27,16 @@
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
+#import "MobClick.h"
+#import "UMSocial_Sdk_Extra_Frameworks/Sina/UMSocialSinaHandler.h"
+#import "UMSocial_Sdk_Extra_Frameworks/UMSocial_ScreenShot_Sdk/UMSocialScreenShoter.h"
+#import "../../Classes/MainMenuScene.h"
 
 @implementation AppController
 
 static GADInterstitial *interstitial;
 static RootViewController *viewController;
+static UIImage *screenShotImg;
 #pragma mark -
 #pragma mark Application lifecycle
 
@@ -86,15 +91,33 @@ static AppDelegate s_sharedApplication;
 
     app->run();
     
-    
-//    广告单元ID：ca-app-pub-1771996690526222/5470976596
-    
+    //友盟统计
+    [MobClick startWithAppkey:@"54f7ecf7fd98c5404e000c53" reportPolicy:BATCH channelId:@""];
+    [UMSocialData setAppKey:@"54f7ecf7fd98c5404e000c53"];
+    //友盟参数
+    [MobClick updateOnlineConfig];
+    [MobClick getConfigParams:@"AdSwitch"];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineConfigCallBack:) name:UMOnlineConfigDidFinishedNotification object:nil];
     //admob
     adCounts = 0;
     [self loadAdmob];
-
     
+    //微博sso
+    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
     return YES;
+}
+
+- (void)onlineConfigCallBack:(NSNotification *)notification {
+    NSLog(@"online config has fininshed and params = %@", notification.userInfo);
+    if ([notification.userInfo isEqual:@"open"]) {
+        
+        gGlobal->isHomeAdSwitch = true;
+        
+    }else{
+        
+        gGlobal->isHomeAdSwitch = false;
+        
+    }
 }
 
 
@@ -128,6 +151,9 @@ static AppDelegate s_sharedApplication;
      Called as part of  transition from the background to the inactive state: here you can undo many of the changes made on entering the background.
      */
     cocos2d::Application::getInstance()->applicationWillEnterForeground();
+    if (gGlobal->isHomeAdSwitch) {
+        [AppController showInterstitial];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -203,6 +229,47 @@ static AppDelegate s_sharedApplication;
     [interstitial setDelegate:self];
     GADRequest *request = [GADRequest request];
     [interstitial loadRequest:request];
+}
+
++ (void)share:(NSString*)imgPath ShareText:(NSString*)text
+{
+    
+    UIImage* img = [UIImage imageWithContentsOfFile:imgPath] ;
+    
+
+    [[UMSocialControllerService defaultControllerService] setShareText:text shareImage:img socialUIDelegate:self];
+    //设置分享内容和回调对象
+    [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(viewController,[UMSocialControllerService defaultControllerService],YES);
+}
+
++ (void)screenShot
+{
+    screenShotImg = [[UMSocialScreenShoterDefault screenShoter] getScreenShot];
+}
+
++ (void)saveScore:(NSString*)score
+{
+    NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
+    [defaults setObject:score forKey:@"score"];
+}
+
++ (NSString*)readScore
+{
+    NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
+    NSString *score = [defaults objectForKey:@"score"];
+    return score;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return  [UMSocialSnsService handleOpenURL:url];
+}
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    return  [UMSocialSnsService handleOpenURL:url];
 }
 
 @end

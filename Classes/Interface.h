@@ -10,10 +10,15 @@
 #define __MyCppGame__Interface__
 
 #include <stdio.h>
+#include "jsons.h"
 
 #define  gInterface Interface::instance()
 
-#define INTERFACE_CALL_FUNCNAME_ShowAd  "showAd"
+#define INTERFACE_CALL_FUNCNAME_ShowAd       "showAd"
+#define INTERFACE_CALL_FUNCNAME_Share        "share"
+#define INTERFACE_CALL_FUNCNAME_ScreenShot   "screenShot"
+#define INTERFACE_CALL_FUNCNAME_SaveScore    "saveScore"
+#define INTERFACE_CALL_FUNCNAME_ReadScore    "readScore"
 
 
 using namespace std;
@@ -24,6 +29,9 @@ public:
     static Interface* instance();
     // 公共跨平台接口
     string callPlatformFunction(string functionName, string jsonContent);
+    
+     Json::Value getJsonRoot(string jsonContent);
+    
 private:
     Interface();
     ~Interface();

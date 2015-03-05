@@ -86,7 +86,7 @@ bool MainMenuScene::init()
     btn_home->setEnabled(false);
     btn_home->setOpacity(0);
     
-    btn_weibo = MenuItemImage::create("res/weibo.png", "res/weibo.png", CC_CALLBACK_1(MainMenuScene::colorItemCallBack, this));
+    btn_weibo = MenuItemImage::create("res/weibo.png", "res/weibo.png", CC_CALLBACK_1(MainMenuScene::shareCallBack, this));
     btn_weibo->setPosition(Vec2(menuDownBg->getContentSize().width * 3 / 4, menuDownBg->getContentSize().height / 2));
     btn_weibo->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
     btn_weibo->setEnabled(false);
@@ -211,6 +211,11 @@ void MainMenuScene::createNewLump(int num)
     
     if (gGameMap->isFail() && !this->getActionByTag(1000)) {
         
+        
+        if (atoi(gGlobal->highScore.c_str()) < gGlobal->score) {
+            gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_SaveScore, toString(gGlobal->score));
+        }
+        
         ActionInterval* action = Sequence::create(DelayTime::create(2.f),CallFunc::create(CC_CALLBACK_0(MainMenuScene::gameOver, this)), NULL);
         action->setTag(1000);
         this->runAction(action);
@@ -317,9 +322,39 @@ void MainMenuScene::gameOver()
 {
     gameOverCount ++;
     this->addChild(TipLayer::createLayer(TipType_GameOver, this));
-    if (gameOverCount % 3 == 2) {
+    if (gameOverCount % 3 == 1) {
         gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowAd, "");
     }
+}
+
+void MainMenuScene::shareCallBack(Ref* pSender)
+{
+//    gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ScreenShot, "");
+
+    char jpg[20];
+    
+    sprintf(jpg, "image-%d.jpg", 1);
+    
+    
+    
+    //截屏后的回调函数，这里显示在左下角
+    
+    auto callback = [&](const std::string& fullPath){
+        
+        CCLOG("Image saved %s", fullPath.c_str());
+
+        char buffer[140] = "2048也可以如此优雅，融合吧小色块~O(∩_∩)O。搜索《2048:色块融合》一起搅基吧~";
+        
+        string str = gGlobal->getJsonStr(JsonPair::create("imagePath", fullPath),
+                                         JsonPair::create("shareText", buffer),
+                                         NULL);
+        
+        gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_Share, str);
+        
+        
+    };
+    gGlobal->saveScreenshot(this, jpg, callback);
+    
 }
 
 
