@@ -49,7 +49,7 @@ bool TipLayer::init(TipType type, MainMenuScene* mainMenu)
     this->addChild(bg);
     bg->setPosition(Vec2((gWinSize.width - bg->getContentSize().width)/ 2, gWinSize.height));
     
-    auto contentTTF = Label::createWithSystemFont("是否结束当前游戏?", "黑体", 40);
+    auto contentTTF = Label::createWithSystemFont("是否结束当前游戏?", "黑体", bg->getContentSize().width / 13.56);
     contentTTF->setPosition(Vec2(bg->getContentSize().width / 2 , bg->getContentSize().height * 3 / 4));
     bg->addChild(contentTTF);
     contentTTF->enableShadow();
@@ -105,12 +105,12 @@ bool TipLayer::init(TipType type, MainMenuScene* mainMenu)
             bg->runAction(EaseBounceOut::create(MoveTo::create(0.2f, Vec2((gWinSize.width - bg->getContentSize().width)/ 2 , (gWinSize.height - bg->getContentSize().height)/ 2))));
             char buffer[64];
             sprintf(buffer,"本次得分:%d",gGlobal->score);
-            auto scoreTTF = Label::createWithSystemFont(buffer, "黑体", 40);
+            auto scoreTTF = Label::createWithSystemFont(buffer, "黑体", bg->getContentSize().width / 13.56);
             scoreTTF->setPosition(Vec2(bg->getContentSize().width / 2 , contentTTF->getPositionY() - contentTTF->getContentSize().height - scoreTTF->getContentSize().height));
             bg->addChild(scoreTTF);
             scoreTTF->enableShadow();
             contentTTF->setString("游戏结束");
-            contentTTF->setSystemFontSize(60);
+            contentTTF->setSystemFontSize(bg->getContentSize().width / 18.75);
             btnTTF1->setString("炫耀一下");
             btnTTF2->setString("重新开始");
         }
@@ -121,12 +121,12 @@ bool TipLayer::init(TipType type, MainMenuScene* mainMenu)
             bg->runAction(EaseBounceOut::create(MoveTo::create(0.2f, Vec2((gWinSize.width - bg->getContentSize().width)/ 2 , (gWinSize.height - bg->getContentSize().height)/ 2))));
             char buffer[64];
             sprintf(buffer,"本次得分:%d",gGlobal->score);
-            auto scoreTTF = Label::createWithSystemFont(buffer, "黑体", 40);
+            auto scoreTTF = Label::createWithSystemFont(buffer, "黑体", bg->getContentSize().width / 13.56);
             scoreTTF->setPosition(Vec2(bg->getContentSize().width / 2 , contentTTF->getPositionY() - contentTTF->getContentSize().height - scoreTTF->getContentSize().height));
             bg->addChild(scoreTTF);
             scoreTTF->enableShadow();
             contentTTF->setString("厉害!完成!佩服!");
-            contentTTF->setSystemFontSize(60);
+            contentTTF->setSystemFontSize(bg->getContentSize().width / 9.375);
             btnTTF1->setString("炫耀一下");
             btnTTF2->setString("重新开始");
         }
@@ -166,7 +166,7 @@ bool TipLayer::init(TipType type, MainMenuScene* mainMenu)
             shareText.append("。真是有意义的一天啊!");
             
             contentTTF->setString("你得到的方块秘密:\n\n" + shareText + "\n\n点击炫耀一下可以分享到微博哦~");
-            contentTTF->setSystemFontSize(30);
+            contentTTF->setSystemFontSize(bg->getContentSize().width / 18.75);
             contentTTF->setDimensions(bg->getContentSize().width - 50, 0);
             btnTTF1->setString("知道了");
             btnBg2->setVisible(false);

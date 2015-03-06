@@ -20,6 +20,9 @@
 
 #define screenShotImageName     "screenShot.jpg"
 
+#define Data_HighScore          "score"
+#define Data_LoginCount         "LoginCount"
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace  rapidjson;

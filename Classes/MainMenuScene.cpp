@@ -12,8 +12,6 @@
 #include "Interface.h"
 #include "TipLayer.h"
 
-USING_NS_CC;
-
 // there's no 'id' in cpp, so we recommend returning the class instance pointer
 cocos2d::Scene* MainMenuScene::createScene()
 {
@@ -69,7 +67,7 @@ bool MainMenuScene::init()
     scoreTTF = Label::createWithSystemFont(buffer, "黑体", gameBg->getContentSize().width / 14);
     scoreTTF->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
     gameBg->addChild(scoreTTF);
-    scoreTTF->setPosition(Vec2(gameBg->getContentSize().width / 2, gameBg->getContentSize().height + scoreTTF->getContentSize().height / 2 + (gWinSize.height - gameBg->getContentSize().height) / 5 ));
+    scoreTTF->setPosition(Vec2(gameBg->getContentSize().width / 2, gameBg->getContentSize().height + scoreTTF->getContentSize().height / 2 + gameBg->getContentSize().width / 12));
     scoreTTF->enableShadow();
     
     auto menuDownBg = LayerColor::create(Color4B(44, 44, 44, 255), gWinSize.width, (gWinSize.height - startBg->getContentSize().height) / 5);
@@ -95,12 +93,12 @@ bool MainMenuScene::init()
     menuDown->setPosition(Vec2(0, 0));
     menuDownBg->addChild(menuDown);
     
-    auto highScoreBg = LayerColor::create(Color4B(44, 44, 44, 180), gWinSize.width, 60);
+    auto highScoreBg = LayerColor::create(Color4B(44, 44, 44, 180), gWinSize.width, gameBg->getContentSize().width / 10);
     this->addChild(highScoreBg);
     highScoreBg->setPosition(Vec2(0, menuDownBg->getContentSize().height));
     
     
-    highScoreTTF = Label::createWithSystemFont("您的最高得分:" + gGlobal->highScore, "黑体", 40);
+    highScoreTTF = Label::createWithSystemFont("您的最高得分:" + gGlobal->highScore, "黑体", gameBg->getContentSize().width / 15);
     highScoreTTF->setPosition(highScoreBg->getContentSize()/2);
     highScoreBg->addChild(highScoreTTF);
     highScoreTTF->enableShadow();
@@ -128,7 +126,7 @@ void MainMenuScene::startGame(Ref* pSender)
     startItem->setEnabled(false);
     startBg->runAction(Sequence::create(MoveTo::create(0.4f, Vec2(startBg->getPositionX() , gWinSize.height)),Hide::create(),NULL));
     
-    gameBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(),MoveTo::create(0.4f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + 50) ), NULL));
+    gameBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(),MoveTo::create(0.4f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + gameBg->getContentSize().width / 12) ), NULL));
 
     
     myListener = EventListenerTouchOneByOne::create();
@@ -226,7 +224,12 @@ void MainMenuScene::createNewLump(int num)
         if (atoi(gGlobal->highScore.c_str()) < gGlobal->score) {
             gGlobal->highScore = toString(gGlobal->score);
             highScoreTTF->setString("您的最高得分:" + gGlobal->highScore);
-            gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_SaveScore, toString(gGlobal->highScore));
+            
+            string str = gGlobal->getJsonStr(JsonPair::create("name", Data_HighScore),
+                                             JsonPair::create("value", gGlobal->highScore),
+                                             NULL);
+            
+            gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_SaveData, str);
         }
         
         ActionInterval* action = Sequence::create(DelayTime::create(2.f),CallFunc::create(CC_CALLBACK_0(MainMenuScene::gameOver, this)), NULL);
@@ -242,7 +245,12 @@ void MainMenuScene::createNewLump(int num)
         if (atoi(gGlobal->highScore.c_str()) < gGlobal->score) {
             gGlobal->highScore = toString(gGlobal->score);
             highScoreTTF->setString("您的最高得分:" + gGlobal->highScore);
-            gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_SaveScore, toString(gGlobal->highScore));
+            
+            string str = gGlobal->getJsonStr(JsonPair::create("name", Data_HighScore),
+                                             JsonPair::create("value", gGlobal->highScore),
+                                             NULL);
+            
+            gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_SaveData, str);
         }
         
         ActionInterval* action = Sequence::create(DelayTime::create(2.f),CallFunc::create(CC_CALLBACK_0(MainMenuScene::gameWin, this)), NULL);
@@ -322,7 +330,7 @@ void MainMenuScene::resetGame()
     gameBg->runAction(Sequence::create(
                                        MoveTo::create(0.2f, Vec2(gWinSize.width / 2 - gameBg->getContentSize().width / 2, gWinSize.height)),
                                        CallFunc::create(CC_CALLBACK_0(MainMenuScene::resetData, this)),
-                                       MoveTo::create(0.2f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + 50)),
+                                       MoveTo::create(0.2f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + gameBg->getContentSize().width / 12)),
                                        NULL));
     
  

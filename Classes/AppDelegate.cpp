@@ -1,5 +1,7 @@
 #include "AppDelegate.h"
 #include "MainMenuScene.h"
+#include "Interface.h"
+#include "FirstScene.h"
 
 USING_NS_CC;
 
@@ -40,8 +42,33 @@ bool AppDelegate::applicationDidFinishLaunching() {
     FileUtils::getInstance()->addSearchPath("res");
 
     // create a scene. it's an autorelease object
-    auto scene = MainMenuScene::createScene();
+    Scene* scene;
+    
+    if (gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ReadData, Data_HighScore) == "") {
+        gGlobal->highScore = "0";
+    }else{
+        gGlobal->highScore = gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ReadData, Data_HighScore);
+    }
 
+    string loginCountStr = gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ReadData, Data_LoginCount);
+    int loginCount;
+    if (loginCountStr == "") {
+        loginCount = 0;
+    }else{
+        loginCount = atoi(loginCountStr.c_str());
+    }
+    if (loginCount == 0) {
+        scene = FirstScene::createScene();
+    }else{
+        loginCount += 1;
+        CCLOG("打开次数：%d",loginCount);
+        string str = gGlobal->getJsonStr(JsonPair::create("name", Data_LoginCount),
+                                         JsonPair::create("value", toString(loginCount)),
+                                         NULL);
+        
+        gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_SaveData, str);
+        scene = MainMenuScene::createScene();
+    }
     // run
     director->runWithScene(scene);
 

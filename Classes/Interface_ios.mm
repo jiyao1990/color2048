@@ -25,17 +25,23 @@ string Interface::callPlatformFunction(string functionName, string jsonContent)
         
     }else if(INTERFACE_CALL_FUNCNAME_ScreenShot == functionName){
         [AppController screenShot];
-    }else if(INTERFACE_CALL_FUNCNAME_SaveScore == functionName){
-        NSString* nsStr = [NSString stringWithUTF8String:jsonContent.c_str()];
-        [AppController saveScore:nsStr];
+    }else if(INTERFACE_CALL_FUNCNAME_SaveData == functionName){
         
-    }else if(INTERFACE_CALL_FUNCNAME_ReadScore == functionName){
-        NSString* nsStr = [AppController readScore];
+        Json::Value root = getJsonRoot(jsonContent);
+        string name = root["name"].asString();
+        string value = root["value"].asString();
+        NSString* nsStr1 = [NSString stringWithUTF8String:name.c_str()];
+        NSString* nsStr2 = [NSString stringWithUTF8String:value.c_str()];
+        [AppController saveData:nsStr1 value:nsStr2];
+        
+    }else if(INTERFACE_CALL_FUNCNAME_ReadData == functionName){
+        NSString* nsStr1 = [NSString stringWithUTF8String:jsonContent.c_str()];
+        NSString* nsStr = [AppController readData:nsStr1];
         if (nsStr != nil) {
             string str = [nsStr UTF8String];
             return str;
         }
-        return "0";
+        return "";
     }
     return "";
 }

@@ -16,7 +16,7 @@
 + (void)showInterstitial;
 + (void)share:(NSString*)imgPath ShareText:(NSString*)text;
 + (void)screenShot;
-+ (void)saveScore:(NSString*)score;
-+ (NSString*)readScore;
++ (void)saveData:(NSString*)name value:(NSString*)value;
++ (NSString*)readData:(NSString *)name;
 @end
 

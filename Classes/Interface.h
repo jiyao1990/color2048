@@ -17,8 +17,8 @@
 #define INTERFACE_CALL_FUNCNAME_ShowAd       "showAd"
 #define INTERFACE_CALL_FUNCNAME_Share        "share"
 #define INTERFACE_CALL_FUNCNAME_ScreenShot   "screenShot"
-#define INTERFACE_CALL_FUNCNAME_SaveScore    "saveScore"
-#define INTERFACE_CALL_FUNCNAME_ReadScore    "readScore"
+#define INTERFACE_CALL_FUNCNAME_SaveData     "saveData"
+#define INTERFACE_CALL_FUNCNAME_ReadData     "readData"
 
 
 using namespace std;

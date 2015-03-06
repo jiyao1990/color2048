@@ -247,17 +247,17 @@ static AppDelegate s_sharedApplication;
     screenShotImg = [[UMSocialScreenShoterDefault screenShoter] getScreenShot];
 }
 
-+ (void)saveScore:(NSString*)score
++ (void)saveData:(NSString*)name value:(NSString*)value
 {
     NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
-    [defaults setObject:score forKey:@"score"];
+    [defaults setObject:value forKey:name];
 }
 
-+ (NSString*)readScore
++ (NSString*)readData:(NSString *)name
 {
     NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
-    NSString *score = [defaults objectForKey:@"score"];
-    return score;
+    NSString *value = [defaults objectForKey:name];
+    return value;
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
