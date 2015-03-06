@@ -7,6 +7,7 @@
 //
 
 #include "TipLayer.h"
+#include "GameMap.h"
 
 
 LayerColor* TipLayer::createLayer(TipType type, MainMenuScene* mainMenu)
@@ -31,11 +32,11 @@ bool TipLayer::init(TipType type, MainMenuScene* mainMenu)
     if (!LayerColor::init()) {
         return false;
     }
+    shareText = "";
     m_Type = type;
     m_MainMenu = mainMenu;
     
     this->initWithColor(Color4B(0, 0, 0, 0), gWinSize.width, gWinSize.height);
-    this->runAction(FadeTo::create(0.1f, 200));
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
     listener->onTouchBegan = [=](Touch* touch,Event* event)
@@ -47,7 +48,6 @@ bool TipLayer::init(TipType type, MainMenuScene* mainMenu)
     bg = LayerColor::create(gGlobal->colorMap[gGlobal->_colorType][8], gWinSize.width * 3 / 4, gWinSize.height / 2);
     this->addChild(bg);
     bg->setPosition(Vec2((gWinSize.width - bg->getContentSize().width)/ 2, gWinSize.height));
-    bg->runAction(EaseBounceOut::create(MoveTo::create(0.2f, Vec2((gWinSize.width - bg->getContentSize().width)/ 2 , (gWinSize.height - bg->getContentSize().height)/ 2))));
     
     auto contentTTF = Label::createWithSystemFont("是否结束当前游戏?", "黑体", 40);
     contentTTF->setPosition(Vec2(bg->getContentSize().width / 2 , bg->getContentSize().height * 3 / 4));
@@ -89,6 +89,9 @@ bool TipLayer::init(TipType type, MainMenuScene* mainMenu)
     switch (type) {
         case TipType_BackToHome:
         {
+            
+            this->runAction(FadeTo::create(0.1f, 200));
+            bg->runAction(EaseBounceOut::create(MoveTo::create(0.2f, Vec2((gWinSize.width - bg->getContentSize().width)/ 2 , (gWinSize.height - bg->getContentSize().height)/ 2))));
             contentTTF->setString("是否结束当前游戏?");
             btnTTF1->setString("否");
             btnTTF2->setString("是");
@@ -97,16 +100,80 @@ bool TipLayer::init(TipType type, MainMenuScene* mainMenu)
             
         case TipType_GameOver:
         {
+            
+            this->runAction(FadeTo::create(0.1f, 200));
+            bg->runAction(EaseBounceOut::create(MoveTo::create(0.2f, Vec2((gWinSize.width - bg->getContentSize().width)/ 2 , (gWinSize.height - bg->getContentSize().height)/ 2))));
             char buffer[64];
-            sprintf(buffer,"本次得分:%ld",gGlobal->score);
+            sprintf(buffer,"本次得分:%d",gGlobal->score);
             auto scoreTTF = Label::createWithSystemFont(buffer, "黑体", 40);
             scoreTTF->setPosition(Vec2(bg->getContentSize().width / 2 , contentTTF->getPositionY() - contentTTF->getContentSize().height - scoreTTF->getContentSize().height));
             bg->addChild(scoreTTF);
             scoreTTF->enableShadow();
-            contentTTF->setString("游戏失败");
+            contentTTF->setString("游戏结束");
             contentTTF->setSystemFontSize(60);
-            btnTTF1->setString("返回首页");
+            btnTTF1->setString("炫耀一下");
             btnTTF2->setString("重新开始");
+        }
+            break;
+        case TipType_GameWin:
+        {
+            this->runAction(FadeTo::create(0.1f, 200));
+            bg->runAction(EaseBounceOut::create(MoveTo::create(0.2f, Vec2((gWinSize.width - bg->getContentSize().width)/ 2 , (gWinSize.height - bg->getContentSize().height)/ 2))));
+            char buffer[64];
+            sprintf(buffer,"本次得分:%d",gGlobal->score);
+            auto scoreTTF = Label::createWithSystemFont(buffer, "黑体", 40);
+            scoreTTF->setPosition(Vec2(bg->getContentSize().width / 2 , contentTTF->getPositionY() - contentTTF->getContentSize().height - scoreTTF->getContentSize().height));
+            bg->addChild(scoreTTF);
+            scoreTTF->enableShadow();
+            contentTTF->setString("厉害!完成!佩服!");
+            contentTTF->setSystemFontSize(60);
+            btnTTF1->setString("炫耀一下");
+            btnTTF2->setString("重新开始");
+        }
+            break;
+        case TipType_Tips:
+        {
+            this->runAction(FadeTo::create(0.1f, 100));
+            
+            shareText.append("今天");
+            for (int row = 0; row < MapMaxLength; row ++) {
+                for (int col = 0; col < MapMaxLength ; col ++) {
+                    
+                    int id = 0 ;
+                    if (gGameMap->getDataLevel(row, col) == 0) {
+                        id =  random(0, 4);
+                    }else{
+                        id = gGameMap->getDataId(row, col) % TextCount;
+                    }
+                    
+                    shareText.append(gGlobal->shareText[col][gGameMap->getDataLevel(row, col)][id]);
+                }
+                switch (row) {
+                    case 0:
+                        shareText.append(",然后");
+                        break;
+                    case 1:
+                        shareText.append(",之后");
+                        break;
+                    case 2:
+                        shareText.append(",最后");
+                        break;
+                    case 3:
+                        
+                        break;
+                }
+            }
+            shareText.append("。真是有意义的一天啊!");
+            
+            contentTTF->setString("你得到的方块秘密:\n\n" + shareText + "\n\n点击炫耀一下可以分享到微博哦~");
+            contentTTF->setSystemFontSize(30);
+            contentTTF->setDimensions(bg->getContentSize().width - 50, 0);
+            btnTTF1->setString("知道了");
+            btnBg2->setVisible(false);
+            bg->setContentSize(Size(gWinSize.width * 3 / 4, gWinSize.width * 3 / 4));
+            bg->setPosition(Vec2((gWinSize.width - bg->getContentSize().width)/ 2, (gWinSize.height - bg->getContentSize().height)/ 2));
+            contentTTF->setPosition(Vec2(bg->getContentSize().width / 2 , bg->getContentSize().height / 2 + btnBg1->getContentSize().height / 2));
+            
         }
             break;
     }
@@ -126,6 +193,12 @@ void TipLayer::okCallBack(Ref* pSender)
             this->runAction(Sequence::create(FadeTo::create(0.2f, 0),CallFunc::create(CC_CALLBACK_0(MainMenuScene::resetGame, m_MainMenu)),RemoveSelf::create(), NULL));
             bg->runAction(MoveTo::create(0.2f, Vec2((gWinSize.width - bg->getContentSize().width)/2, - bg->getContentSize().height)));
             break;
+        case TipType_GameWin:
+            this->runAction(Sequence::create(FadeTo::create(0.2f, 0),CallFunc::create(CC_CALLBACK_0(MainMenuScene::resetGame, m_MainMenu)),RemoveSelf::create(), NULL));
+            bg->runAction(MoveTo::create(0.2f, Vec2((gWinSize.width - bg->getContentSize().width)/2, - bg->getContentSize().height)));
+            break;
+        case TipType_Tips:
+            break;
     }
 }
 
@@ -142,7 +215,88 @@ void TipLayer::removeSelf(Ref* pSender)
             
         case TipType_GameOver:
         {
-            this->runAction(Sequence::create(FadeTo::create(0.2f, 0),CallFunc::create(CC_CALLBACK_0(MainMenuScene::backHome, m_MainMenu)),RemoveSelf::create(), NULL));
+            if (shareText == "") {
+                shareText.append("今天");
+                for (int row = 0; row < MapMaxLength; row ++) {
+                    for (int col = 0; col < MapMaxLength ; col ++) {
+                        
+                        int id = 0 ;
+                        if (gGameMap->getDataLevel(row, col) == 0) {
+                            id =  random(0, 4);
+                        }else{
+                            id = gGameMap->getDataId(row, col) % TextCount;
+                        }
+                        
+                        
+                        shareText.append(gGlobal->shareText[col][gGameMap->getDataLevel(row, col)][id]);
+                    }
+                    switch (row) {
+                        case 0:
+                            shareText.append(",然后");
+                            break;
+                        case 1:
+                            shareText.append(",之后");
+                            break;
+                        case 2:
+                            shareText.append(",最后");
+                            break;
+                        case 3:
+                            
+                            break;
+                    }
+                }
+                shareText.append("。真是有意义的一天啊!");
+                
+                shareText.append("————我的得分为" + toString(gGlobal->score) + "分，via 方块密码:2048");
+                
+                
+            }
+            m_MainMenu->share(shareText);
+        }
+            break;
+            
+        case TipType_GameWin:
+        {
+            if (shareText == "") {
+                shareText.append("今天");
+                for (int row = 0; row < MapMaxLength; row ++) {
+                    for (int col = 0; col < MapMaxLength ; col ++) {
+                        
+                        int id = 0 ;
+                        if (gGameMap->getDataLevel(row, col) == 0) {
+                            id =  random(0, 4);
+                        }else{
+                            id = gGameMap->getDataId(row, col) % TextCount;
+                        }
+                        
+                        
+                        shareText.append(gGlobal->shareText[col][gGameMap->getDataLevel(row, col)][id]);
+                    }
+                    switch (row) {
+                        case 0:
+                            shareText.append(",然后");
+                            break;
+                        case 1:
+                            shareText.append(",之后");
+                            break;
+                        case 2:
+                            shareText.append(",最后");
+                            break;
+                        case 3:
+                            
+                            break;
+                    }
+                }
+                shareText.append("。真是有意义的一天啊!");
+                
+                shareText.append("————小伙伴们颤抖吧！我已经成功黑化了！我的得分为" + toString(gGlobal->score) + "分！求超越！via 方块密码:2048");
+            }
+            m_MainMenu->share(shareText);
+        }
+            break;
+        case TipType_Tips:
+        {
+            this->runAction(Sequence::create(FadeTo::create(0.2f, 0),RemoveSelf::create(), NULL));
             bg->runAction(MoveTo::create(0.2f, Vec2((gWinSize.width - bg->getContentSize().width)/2, - bg->getContentSize().height)));
         }
             break;

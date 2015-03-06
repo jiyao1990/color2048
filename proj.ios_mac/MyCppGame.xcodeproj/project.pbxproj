@@ -39,6 +39,7 @@
 		88725E841AA6076F00FCAEFA /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88725E831AA6076F00FCAEFA /* StoreKit.framework */; };
 		88725E861AA6077300FCAEFA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88725E851AA6077300FCAEFA /* SystemConfiguration.framework */; };
 		88725E881AA6078400FCAEFA /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88725E871AA6078400FCAEFA /* GoogleMobileAds.framework */; };
+		88762E371AA9DFFB00E94657 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88762E361AA9DFFB00E94657 /* InfoPlist.strings */; };
 		8894509F1AA76324005A3DCE /* TipLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8894509D1AA76324005A3DCE /* TipLayer.cpp */; };
 		88A328C51A89082900575160 /* Lump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88A328C31A89082800575160 /* Lump.cpp */; };
 		88D04EC71AA614EF001AD6E4 /* Interface_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88D04EC41AA614EF001AD6E4 /* Interface_ios.mm */; };
@@ -135,6 +136,7 @@
 		88725E831AA6076F00FCAEFA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		88725E851AA6077300FCAEFA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		88725E871AA6078400FCAEFA /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "../../../Downloads/GoogleMobileAdsSdkiOS-7.0-2.0/GoogleMobileAds.framework"; sourceTree = "<group>"; };
+		88762E361AA9DFFB00E94657 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		8894509D1AA76324005A3DCE /* TipLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TipLayer.cpp; sourceTree = "<group>"; };
 		8894509E1AA76324005A3DCE /* TipLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipLayer.h; sourceTree = "<group>"; };
 		88A328C31A89082800575160 /* Lump.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lump.cpp; sourceTree = "<group>"; };
@@ -405,6 +407,7 @@
 			isa = PBXGroup;
 			children = (
 				88D1AE3B1AA83189000F5FA9 /* Default-568h@2x.png */,
+				88762E361AA9DFFB00E94657 /* InfoPlist.strings */,
 				88D1AE3C1AA83189000F5FA9 /* Default-667h@2x.png */,
 				88D1AE3D1AA83189000F5FA9 /* Default-736h@3x.png */,
 				88D1AE3E1AA83189000F5FA9 /* Default.png */,
@@ -689,6 +692,7 @@
 				88D1AEB41AA89337000F5FA9 /* json_internalmap.inl in Resources */,
 				88D1AE931AA8341B000F5FA9 /* UMSocialSDKResourcesNew.bundle in Resources */,
 				88D1AE5B1AA83189000F5FA9 /* Icon-144.png in Resources */,
+				88762E371AA9DFFB00E94657 /* InfoPlist.strings in Resources */,
 				88D1AE901AA8341B000F5FA9 /* UMSLoginViewController.xib in Resources */,
 				88D1AEB31AA89337000F5FA9 /* json_internalarray.inl in Resources */,
 				88D1AE551AA83189000F5FA9 /* Default-736h@3x.png in Resources */,

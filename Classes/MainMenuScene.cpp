@@ -48,7 +48,6 @@ bool MainMenuScene::init()
     startTTF->setTextColor(Color4B(44, 44, 44, 255));
     startBg->addChild(startTTF);
     startTTF->setPosition(Vec2(startBg->getContentSize().width / 2, startBg->getContentSize().height / 2));
-
     
     startItem = MenuItem::create(CC_CALLBACK_1(MainMenuScene::startGame, this));
     startItem->setContentSize(startBg->getContentSize());
@@ -66,12 +65,12 @@ bool MainMenuScene::init()
     
     //分数
     char buffer[64];
-    sprintf(buffer,"当前得分:%ld",gGlobal->score);
+    sprintf(buffer,"当前得分:%d",gGlobal->score);
     scoreTTF = Label::createWithSystemFont(buffer, "黑体", gameBg->getContentSize().width / 14);
     scoreTTF->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
     gameBg->addChild(scoreTTF);
-    scoreTTF->setPosition(Vec2(gameBg->getContentSize().width / 2, gameBg->getContentSize().height + scoreTTF->getContentSize().height / 2 + 50 ));
-    
+    scoreTTF->setPosition(Vec2(gameBg->getContentSize().width / 2, gameBg->getContentSize().height + scoreTTF->getContentSize().height / 2 + (gWinSize.height - gameBg->getContentSize().height) / 5 ));
+    scoreTTF->enableShadow();
     
     auto menuDownBg = LayerColor::create(Color4B(44, 44, 44, 255), gWinSize.width, (gWinSize.height - startBg->getContentSize().height) / 5);
     this->addChild(menuDownBg);
@@ -96,6 +95,16 @@ bool MainMenuScene::init()
     menuDown->setPosition(Vec2(0, 0));
     menuDownBg->addChild(menuDown);
     
+    auto highScoreBg = LayerColor::create(Color4B(44, 44, 44, 180), gWinSize.width, 60);
+    this->addChild(highScoreBg);
+    highScoreBg->setPosition(Vec2(0, menuDownBg->getContentSize().height));
+    
+    
+    highScoreTTF = Label::createWithSystemFont("您的最高得分:" + gGlobal->highScore, "黑体", 40);
+    highScoreTTF->setPosition(highScoreBg->getContentSize()/2);
+    highScoreBg->addChild(highScoreTTF);
+    highScoreTTF->enableShadow();
+    
     return true;
 }
 
@@ -119,7 +128,7 @@ void MainMenuScene::startGame(Ref* pSender)
     startItem->setEnabled(false);
     startBg->runAction(Sequence::create(MoveTo::create(0.4f, Vec2(startBg->getPositionX() , gWinSize.height)),Hide::create(),NULL));
     
-    gameBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(),MoveTo::create(0.4f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + (gWinSize.height - gameBg->getContentSize().height) / 5) ), NULL));
+    gameBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(),MoveTo::create(0.4f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + 50) ), NULL));
 
     
     myListener = EventListenerTouchOneByOne::create();
@@ -129,6 +138,9 @@ void MainMenuScene::startGame(Ref* pSender)
     
     myListener->onTouchBegan = [=](Touch* touch,Event* event)
     {
+        if (gGameMap->isWin) {
+            return false;
+        }
         return true;
     };
     
@@ -178,7 +190,7 @@ void MainMenuScene::startGame(Ref* pSender)
         }
         
         char buffer[64];
-        sprintf(buffer,"当前得分:%ld",gGlobal->score);
+        sprintf(buffer,"当前得分:%d",gGlobal->score);
         scoreTTF->setString(buffer);
     };
     
@@ -210,10 +222,11 @@ void MainMenuScene::createNewLump(int num)
     }
     
     if (gGameMap->isFail() && !this->getActionByTag(1000)) {
-        
-        
+        gGlobal->saveScreenshot(this, screenShotImageName);
         if (atoi(gGlobal->highScore.c_str()) < gGlobal->score) {
-            gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_SaveScore, toString(gGlobal->score));
+            gGlobal->highScore = toString(gGlobal->score);
+            highScoreTTF->setString("您的最高得分:" + gGlobal->highScore);
+            gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_SaveScore, toString(gGlobal->highScore));
         }
         
         ActionInterval* action = Sequence::create(DelayTime::create(2.f),CallFunc::create(CC_CALLBACK_0(MainMenuScene::gameOver, this)), NULL);
@@ -221,6 +234,20 @@ void MainMenuScene::createNewLump(int num)
         this->runAction(action);
         
         log("fail");
+        
+    }
+    
+    if (gGameMap->isWin && !this->getActionByTag(1000)) {
+        gGlobal->saveScreenshot(this, screenShotImageName);
+        if (atoi(gGlobal->highScore.c_str()) < gGlobal->score) {
+            gGlobal->highScore = toString(gGlobal->score);
+            highScoreTTF->setString("您的最高得分:" + gGlobal->highScore);
+            gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_SaveScore, toString(gGlobal->highScore));
+        }
+        
+        ActionInterval* action = Sequence::create(DelayTime::create(2.f),CallFunc::create(CC_CALLBACK_0(MainMenuScene::gameWin, this)), NULL);
+        action->setTag(1000);
+        this->runAction(action);
         
     }
 
@@ -295,7 +322,7 @@ void MainMenuScene::resetGame()
     gameBg->runAction(Sequence::create(
                                        MoveTo::create(0.2f, Vec2(gWinSize.width / 2 - gameBg->getContentSize().width / 2, gWinSize.height)),
                                        CallFunc::create(CC_CALLBACK_0(MainMenuScene::resetData, this)),
-                                       MoveTo::create(0.2f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + (gWinSize.height - gameBg->getContentSize().height) / 5)),
+                                       MoveTo::create(0.2f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + 50)),
                                        NULL));
     
  
@@ -314,7 +341,7 @@ void MainMenuScene::resetData()
     
     gGlobal->score = 0;
     char buffer[64];
-    sprintf(buffer,"当前得分:%ld",gGlobal->score);
+    sprintf(buffer,"当前得分:%d",gGlobal->score);
     scoreTTF->setString(buffer);
 }
 
@@ -322,39 +349,65 @@ void MainMenuScene::gameOver()
 {
     gameOverCount ++;
     this->addChild(TipLayer::createLayer(TipType_GameOver, this));
+    this->addChild(TipLayer::createLayer(TipType_Tips, this));
     if (gameOverCount % 3 == 1) {
         gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowAd, "");
     }
 }
 
+void MainMenuScene::gameWin()
+{
+    this->addChild(TipLayer::createLayer(TipType_GameWin, this));
+    this->addChild(TipLayer::createLayer(TipType_Tips, this));
+}
+
 void MainMenuScene::shareCallBack(Ref* pSender)
 {
-//    gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ScreenShot, "");
-
-    char jpg[20];
-    
-    sprintf(jpg, "image-%d.jpg", 1);
-    
-    
-    
-    //截屏后的回调函数，这里显示在左下角
-    
-    auto callback = [&](const std::string& fullPath){
+    btn_weibo->setEnabled(false);
+    string text = "我的最高得分为" + gGlobal->highScore + "分,优雅的融合~可以获取到专属你玩到的秘密~快来一起玩吧~via 方块密码:2048";
+    auto callback = [=](const std::string& fullPath){
         
         CCLOG("Image saved %s", fullPath.c_str());
-
-        char buffer[140] = "2048也可以如此优雅，融合吧小色块~O(∩_∩)O。搜索《2048:色块融合》一起搅基吧~";
+        CCLOG("%s",text.c_str());
         
         string str = gGlobal->getJsonStr(JsonPair::create("imagePath", fullPath),
-                                         JsonPair::create("shareText", buffer),
+                                         JsonPair::create("shareText", text),
                                          NULL);
         
         gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_Share, str);
         
-        
+        btn_weibo->setEnabled(true);
     };
-    gGlobal->saveScreenshot(this, jpg, callback);
-    
+    gGlobal->saveScreenshot(this, screenShotImageName, callback);
 }
 
+//分享
+void MainMenuScene::share(string text)
+{
+    auto fullPath = FileUtils::getInstance()->getWritablePath() + screenShotImageName;
+    
+    CCLOG("Image saved %s", fullPath.c_str());
+    CCLOG("%s",text.c_str());
+    
+    string str = gGlobal->getJsonStr(JsonPair::create("imagePath", fullPath),
+                                     JsonPair::create("shareText", text),
+                                     NULL);
+    
+    gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_Share, str);
+    
+//    auto callback = [=](const std::string& fullPath){
+//        
+//        CCLOG("Image saved %s", fullPath.c_str());
+//        CCLOG("%s",text.c_str());
+//        
+//        string str = gGlobal->getJsonStr(JsonPair::create("imagePath", fullPath),
+//                                         JsonPair::create("shareText", text),
+//                                         NULL);
+//        
+//        gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_Share, str);
+//        
+//        
+//    };
+//    gGlobal->saveScreenshot(this, screenShotImageName, callback);
+}
 

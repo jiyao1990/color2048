@@ -19,7 +19,8 @@ enum TipType{
     
     TipType_BackToHome,
     TipType_GameOver,
-    
+    TipType_GameWin,
+    TipType_Tips,
 };
 
 class TipLayer : public LayerColor
@@ -35,6 +36,7 @@ private:
     MainMenuScene* m_MainMenu;
     LayerColor* bg;
     
+    string shareText;
 };
 
 #endif /* defined(__MyCppGame__TipLayer__) */

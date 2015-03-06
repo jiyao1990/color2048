@@ -49,6 +49,11 @@ public:
     bool isFull();
     bool isFail();
     
+    bool isWin;
+    
+    int getDataLevel(int row, int col);
+    int getDataId(int row, int col);
+    
 private:
     
     GameMap();

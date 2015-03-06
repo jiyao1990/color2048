@@ -35,6 +35,7 @@ string Interface::callPlatformFunction(string functionName, string jsonContent)
             string str = [nsStr UTF8String];
             return str;
         }
+        return "0";
     }
     return "";
 }

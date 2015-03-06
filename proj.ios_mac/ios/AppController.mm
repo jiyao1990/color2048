@@ -96,7 +96,7 @@ static AppDelegate s_sharedApplication;
     [UMSocialData setAppKey:@"54f7ecf7fd98c5404e000c53"];
     //友盟参数
     [MobClick updateOnlineConfig];
-    [MobClick getConfigParams:@"AdSwitch"];
+//    [MobClick getConfigParams:@"AdSwitch"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineConfigCallBack:) name:UMOnlineConfigDidFinishedNotification object:nil];
     //admob
     adCounts = 0;
@@ -109,7 +109,7 @@ static AppDelegate s_sharedApplication;
 
 - (void)onlineConfigCallBack:(NSNotification *)notification {
     NSLog(@"online config has fininshed and params = %@", notification.userInfo);
-    if ([notification.userInfo isEqual:@"open"]) {
+    if ([[notification.userInfo objectForKey:@"AdSwitch"] isEqual:@"open"]) {
         
         gGlobal->isHomeAdSwitch = true;
         
@@ -221,10 +221,10 @@ static AppDelegate s_sharedApplication;
 - (void)loadAdmob{
     adCounts ++;
     interstitial = [[GADInterstitial alloc] init];
-    if (adCounts % 2 == 0) {
-        interstitial.adUnitID = @"ca-app-pub-1771996690526222/5470976596";
-    }else{
+    if (adCounts % 3 == 0) {
         interstitial.adUnitID = @"ca-app-pub-9911143712135979/8942918444";
+    }else{
+        interstitial.adUnitID = @"ca-app-pub-1771996690526222/5470976596";
     }
     [interstitial setDelegate:self];
     GADRequest *request = [GADRequest request];

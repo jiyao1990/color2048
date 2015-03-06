@@ -33,6 +33,8 @@ public:
     void resetGame();
     //首页
     void backHome();
+    //分享
+    void share(string text);
     
 private:
     void startGame(Ref* pSender);
@@ -43,6 +45,7 @@ private:
     void setLumpColor();
     void resetData();
     void gameOver();
+    void gameWin();
     
     int gameOverCount;
     //menu
@@ -57,6 +60,7 @@ private:
     LayerColor* gameBg;
     Vector<LayerColor*> vec;
     Label* scoreTTF;
+    Label* highScoreTTF;
     EventListenerTouchOneByOne* myListener;
 };
 

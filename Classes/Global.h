@@ -16,6 +16,7 @@
 #define gWinSize     Director::getInstance()->getWinSize()
 #define gGlobal      Global::getInstance()
 #define maxLevel     11
+#define TextCount    5
 
 #define screenShotImageName     "screenShot.jpg"
 
@@ -64,19 +65,20 @@ public:
 
     static Global* getInstance();
     static Color4B colorMap[colorType_Size][maxLevel];
+    static string shareText[][maxLevel + 1][TextCount];
     
     colorType _colorType;
     map< int, Node* > lumpMap;
     
     int currentID;
     
-    long score;
+    int score;
     
     string highScore;
     
     bool isHomeAdSwitch;
     
-    void saveScreenshot(Node* node, const std::string& fileName,const std::function<void(const std::string&)>& callback);
+    void saveScreenshot(Node* node, const std::string& fileName,const std::function<void(const std::string&)>& callback = NULL);
     
     string getJsonStr(JsonPair* jsonPair, ...) CC_REQUIRES_NULL_TERMINATION;
     

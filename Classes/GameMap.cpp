@@ -46,6 +46,7 @@ void GameMap::resetMapData()
     for (int i = MapMaxLength - 1; i >= 0; i--) {
         printf("|%d,%d,%d,%d|====|%d,%d,%d,%d|\n",MapData[i][0].level,MapData[i][1].level,MapData[i][2].level,MapData[i][3].level,MapData[i][0].ID,MapData[i][1].ID,MapData[i][2].ID,MapData[i][3].ID);
     }
+    isWin = false;
 }
 
 void GameMap::changeMapByCoord(int row, int col, int level, int ID)
@@ -78,6 +79,10 @@ int GameMap::changeMapByDirection(GridDirection dir)
                             while (i != -1) {
                                 if (tempLevel == MapData[i][col].level) {
                                     MapData[row][col].level = tempLevel + 1;
+                                    
+                                    if (MapData[row][col].level >= maxLevel) {
+                                        isWin = true;
+                                    }
                                     
                                     int m = row + 1;
                                     step = 0;
@@ -152,6 +157,10 @@ int GameMap::changeMapByDirection(GridDirection dir)
                                 if (tempLevel == MapData[i][col].level) {
                                     MapData[row][col].level = tempLevel + 1;
                                     
+                                    if (MapData[row][col].level >= maxLevel) {
+                                        isWin = true;
+                                    }
+                                    
                                     int m = row - 1;
                                     step = 0;
                                     while (m >= 0) {
@@ -221,6 +230,10 @@ int GameMap::changeMapByDirection(GridDirection dir)
                                 if (tempLevel == MapData[row][i].level) {
                                     MapData[row][col].level = tempLevel + 1;
                                     
+                                    if (MapData[row][col].level >= maxLevel) {
+                                        isWin = true;
+                                    }
+                                    
                                     int m = col - 1;
                                     step = 0;
                                     while (m >= 0) {
@@ -288,6 +301,10 @@ int GameMap::changeMapByDirection(GridDirection dir)
                             while (i != -1) {
                                 if (tempLevel == MapData[row][i].level) {
                                     MapData[row][col].level = tempLevel + 1;
+                                    
+                                    if (MapData[row][col].level >= maxLevel) {
+                                        isWin = true;
+                                    }
                                     
                                     int m = col + 1;
                                     step = 0;
@@ -467,5 +484,15 @@ bool GameMap::isFail()
     }
     
     return false;
+}
+
+int GameMap::getDataLevel(int row, int col)
+{
+    return MapData[row][col].level;
+}
+
+int GameMap::getDataId(int row, int col)
+{
+    return MapData[row][col].ID;
 }
 
