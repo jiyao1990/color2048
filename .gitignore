@@ -4,3 +4,7 @@ proj.android/obj
 proj.android/res
 proj.android/assets
 proj.android/gen
+
+proj.android/libs/armeabi
+ 
+*.xcbkptlist

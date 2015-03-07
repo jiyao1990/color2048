@@ -66,9 +66,6 @@ public class JYGameActivity extends Cocos2dxActivity {
 
 		this.loadAdmob();
 
-		
-//		
-		// 我的  
 	}
 
 	@Override

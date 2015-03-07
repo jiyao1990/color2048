@@ -15,6 +15,7 @@ public class Platform_android {
 		if(functionName.equals("showAd")){
 			
 			mContext.displayInterstitial();
+			return "1";
 
 		}else if(functionName.equals("share")){
 			Log.d("share======", jsonContent);

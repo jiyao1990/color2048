@@ -13,7 +13,8 @@ string Interface::callPlatformFunction(string functionName, string jsonContent)
 {
     if (INTERFACE_CALL_FUNCNAME_ShowAd == functionName)
     {
-        [AppController showInterstitial];
+        bool flag = [AppController showInterstitial];
+        return to_string(flag);
     }else if(INTERFACE_CALL_FUNCNAME_Share == functionName){
         CCLOG("%s",jsonContent.c_str());
         Json::Value root = getJsonRoot(jsonContent);

@@ -181,10 +181,13 @@ static AppDelegate s_sharedApplication;
     [super dealloc];
 }
 
-+ (void)showInterstitial {
++ (BOOL)showInterstitial {
 
     if ([interstitial isReady]) {
         [interstitial presentFromRootViewController:viewController];
+        return YES;
+    }else{
+        return NO;
     }
 }
 

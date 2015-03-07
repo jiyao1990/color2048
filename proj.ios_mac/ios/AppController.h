@@ -13,7 +13,7 @@
 @property(nonatomic, readonly) RootViewController* viewController;
 
 
-+ (void)showInterstitial;
++ (BOOL)showInterstitial;
 + (void)share:(NSString*)imgPath ShareText:(NSString*)text;
 + (void)screenShot;
 + (void)saveData:(NSString*)name value:(NSString*)value;

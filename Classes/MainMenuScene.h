@@ -52,6 +52,7 @@ private:
     void gameWin();
     
     int gameOverCount;
+    bool isFail;
     //menu
     LayerColor* startBg;
     MenuItem* startItem;

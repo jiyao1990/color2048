@@ -2,6 +2,7 @@
 #include "MainMenuScene.h"
 #include "Interface.h"
 #include "FirstScene.h"
+#include "LogoScene.h"
 
 USING_NS_CC;
 
@@ -51,6 +52,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
     string loginCountStr = gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ReadData, Data_LoginCount);
+
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    scene = LogoScene::createScene();
+#else
     int loginCount;
     if (loginCountStr == "") {
         loginCount = 0;
@@ -80,6 +86,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         gGlobal->isHomeAdSwitch = false;
         
     }
+#endif
     
     // run
     director->runWithScene(scene);

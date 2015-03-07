@@ -35,6 +35,7 @@ bool MainMenuScene::init()
         return false;
     }
     gameOverCount = 0;
+    isFail = false;
 //    this->initWithColor(Color4B(66, 66, 66, 255), gWinSize.width, gWinSize.height);
     this->initWithColor(Color4B(45,45,45,255), Color4B(65,65,65,255));
     
@@ -137,7 +138,7 @@ void MainMenuScene::startGame(Ref* pSender)
     
     myListener->onTouchBegan = [=](Touch* touch,Event* event)
     {
-        if (gGameMap->isWin) {
+        if (gGameMap->isWin || isFail) {
             return false;
         }
         return true;
@@ -221,6 +222,7 @@ void MainMenuScene::createNewLump(int num)
     }
     
     if (gGameMap->isFail() && !this->getActionByTag(1000)) {
+        isFail = true;
         gGlobal->saveScreenshot(this, screenShotImageName);
         if (atoi(gGlobal->highScore.c_str()) < gGlobal->score) {
             gGlobal->highScore = toString(gGlobal->score);
@@ -354,6 +356,7 @@ void MainMenuScene::resetData()
     char buffer[64];
     sprintf(buffer,"当前得分:%d",gGlobal->score);
     scoreTTF->setString(buffer);
+    isFail = false;
 }
 
 void MainMenuScene::gameOver()
@@ -362,7 +365,10 @@ void MainMenuScene::gameOver()
     this->addChild(TipLayer::createLayer(TipType_GameOver, this));
     this->addChild(TipLayer::createLayer(TipType_Tips, this));
     if (gameOverCount % 3 == 1) {
-        gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowAd, "");
+        string flag = gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowAd, "");
+        if (flag == "0") {
+            gameOverCount --;
+        }
     }
 }
 
