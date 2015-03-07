@@ -101,7 +101,7 @@ bool FirstScene::init()
                 
                 string str = gGlobal->getJsonStr(JsonPair::create("name", Data_LoginCount),
                                                  JsonPair::create("value", "1"),
-                                                 NULL);
+                                                 nullptr);
                 
                 gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_SaveData, str);
                 //跳转

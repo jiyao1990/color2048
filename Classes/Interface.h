@@ -11,6 +11,8 @@
 
 #include <stdio.h>
 #include "jsons.h"
+#include "cocos2d.h"
+#include "cocos-ext.h"
 
 #define  gInterface Interface::instance()
 
@@ -22,6 +24,9 @@
 
 
 using namespace std;
+using namespace cocos2d;
+using namespace extension;
+
 class Interface {
     
     

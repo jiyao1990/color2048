@@ -64,14 +64,14 @@ bool AppDelegate::applicationDidFinishLaunching() {
         CCLOG("打开次数：%d",loginCount);
         string str = gGlobal->getJsonStr(JsonPair::create("name", Data_LoginCount),
                                          JsonPair::create("value", toString(loginCount)),
-                                         NULL);
+                                         nullptr);
         
         gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_SaveData, str);
         scene = MainMenuScene::createScene();
     }
     // run
     director->runWithScene(scene);
-
+ 
     return true;
 }
 

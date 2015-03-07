@@ -25,6 +25,7 @@
 		5087E76B17EB910900C73F5D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
 		5087E78917EB974C00C73F5D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5087E78817EB974C00C73F5D /* AppKit.framework */; };
 		5087E78B17EB975400C73F5D /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5087E78A17EB975400C73F5D /* OpenGL.framework */; };
+		880AB8751AAB05990057E013 /* Interface_android.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880AB8731AAB05990057E013 /* Interface_android.cpp */; };
 		884249481A8BB6180044ABE6 /* GameMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 884249461A8BB6180044ABE6 /* GameMap.cpp */; };
 		885F12981A7A92C90037814F /* MainMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 885F12961A7A92C90037814F /* MainMenuScene.cpp */; };
 		885F129B1A7A95330037814F /* Global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 885F12991A7A95330037814F /* Global.cpp */; };
@@ -103,6 +104,7 @@
 		5087E78A17EB975400C73F5D /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		606A4975BBA2A15E7A8EC014 /* libcocos2d iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2d iOS.a"; path = "/Applications/Cocos/frameworks/cocos2d-x/prebuilt/ios/libcocos2d iOS.a"; sourceTree = "<absolute>"; };
 		7C6F44AB94788DFDFB07133F /* libcocos2d Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2d Mac.a"; path = "/Applications/Cocos/frameworks/cocos2d-x/prebuilt/mac/libcocos2d Mac.a"; sourceTree = "<absolute>"; };
+		880AB8731AAB05990057E013 /* Interface_android.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Interface_android.cpp; sourceTree = "<group>"; };
 		884249461A8BB6180044ABE6 /* GameMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameMap.cpp; sourceTree = "<group>"; };
 		884249471A8BB6180044ABE6 /* GameMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameMap.h; sourceTree = "<group>"; };
 		885F12961A7A92C90037814F /* MainMenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainMenuScene.cpp; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				88D04EC41AA614EF001AD6E4 /* Interface_ios.mm */,
 				88D04EC51AA614EF001AD6E4 /* Interface.cpp */,
+				880AB8731AAB05990057E013 /* Interface_android.cpp */,
 				88D04EC61AA614EF001AD6E4 /* Interface.h */,
 				885F12961A7A92C90037814F /* MainMenuScene.cpp */,
 				885F12971A7A92C90037814F /* MainMenuScene.h */,
@@ -666,6 +669,7 @@
 				88D1AEB51AA89337000F5FA9 /* json_reader.cpp in Sources */,
 				88D1AE671AA83189000F5FA9 /* RootViewController.mm in Sources */,
 				88D1AEB81AA89337000F5FA9 /* json_writer.cpp in Sources */,
+				880AB8751AAB05990057E013 /* Interface_android.cpp in Sources */,
 				884249481A8BB6180044ABE6 /* GameMap.cpp in Sources */,
 				88D1AEB61AA89337000F5FA9 /* json_value.cpp in Sources */,
 				885F129B1A7A95330037814F /* Global.cpp in Sources */,
@@ -732,7 +736,7 @@
 					"/Applications/Cocos/frameworks/cocos2d-x/cocos/platform/ios/Simulation",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"/Applications/Cocos/frameworks/cocos2d-x/prebuilt/ios",
 					"$(PROJECT_DIR)",
@@ -788,7 +792,7 @@
 					"/Applications/Cocos/frameworks/cocos2d-x/cocos/platform/ios/Simulation",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"/Applications/Cocos/frameworks/cocos2d-x/prebuilt/ios",
 					"$(PROJECT_DIR)",

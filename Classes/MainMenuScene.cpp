@@ -51,7 +51,7 @@ bool MainMenuScene::init()
     startItem->setContentSize(startBg->getContentSize());
     startItem->setPosition(startBg->getContentSize() / 2);
     
-    auto menu = Menu::create(startItem, NULL);
+    auto menu = Menu::create(startItem,nullptr);
     menu->setPosition(Vec2(0, 0));
     startBg->addChild(menu);
     
@@ -89,7 +89,7 @@ bool MainMenuScene::init()
     btn_weibo->setEnabled(false);
     btn_weibo->setOpacity(0);
     
-    auto menuDown = Menu::create(btn_change, btn_home, btn_weibo, NULL);
+    auto menuDown = Menu::create(btn_change, btn_home, btn_weibo,nullptr);
     menuDown->setPosition(Vec2(0, 0));
     menuDownBg->addChild(menuDown);
     
@@ -112,21 +112,21 @@ void MainMenuScene::startGame(Ref* pSender)
     resetData();
     
     btn_change->setEnabled(false);
-    btn_change->runAction(Sequence::create(FadeOut::create(0.2),Hide::create(),NULL));
+    btn_change->runAction(Sequence::create(FadeOut::create(0.2),Hide::create(),nullptr));
     
     btn_weibo->setEnabled(true);
-    btn_weibo->runAction(Sequence::create(Show::create(),FadeIn::create(0.2),NULL));
+    btn_weibo->runAction(Sequence::create(Show::create(),FadeIn::create(0.2),nullptr));
     
     btn_home->setEnabled(true);
-    btn_home->runAction(Sequence::create(Show::create(),FadeIn::create(0.2),NULL));
+    btn_home->runAction(Sequence::create(Show::create(),FadeIn::create(0.2),nullptr));
     
     
     
     
     startItem->setEnabled(false);
-    startBg->runAction(Sequence::create(MoveTo::create(0.4f, Vec2(startBg->getPositionX() , gWinSize.height)),Hide::create(),NULL));
+    startBg->runAction(Sequence::create(MoveTo::create(0.4f, Vec2(startBg->getPositionX() , gWinSize.height)),Hide::create(),nullptr));
     
-    gameBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(),MoveTo::create(0.4f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + gameBg->getContentSize().width / 12) ), NULL));
+    gameBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(),MoveTo::create(0.4f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + gameBg->getContentSize().width / 12) ),nullptr));
 
     
     myListener = EventListenerTouchOneByOne::create();
@@ -227,12 +227,12 @@ void MainMenuScene::createNewLump(int num)
             
             string str = gGlobal->getJsonStr(JsonPair::create("name", Data_HighScore),
                                              JsonPair::create("value", gGlobal->highScore),
-                                             NULL);
+                                             nullptr);
             
             gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_SaveData, str);
         }
         
-        ActionInterval* action = Sequence::create(DelayTime::create(2.f),CallFunc::create(CC_CALLBACK_0(MainMenuScene::gameOver, this)), NULL);
+        ActionInterval* action = Sequence::create(DelayTime::create(2.f),CallFunc::create(CC_CALLBACK_0(MainMenuScene::gameOver, this)),nullptr);
         action->setTag(1000);
         this->runAction(action);
         
@@ -248,12 +248,12 @@ void MainMenuScene::createNewLump(int num)
             
             string str = gGlobal->getJsonStr(JsonPair::create("name", Data_HighScore),
                                              JsonPair::create("value", gGlobal->highScore),
-                                             NULL);
+                                             nullptr);
             
             gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_SaveData, str);
         }
         
-        ActionInterval* action = Sequence::create(DelayTime::create(2.f),CallFunc::create(CC_CALLBACK_0(MainMenuScene::gameWin, this)), NULL);
+        ActionInterval* action = Sequence::create(DelayTime::create(2.f),CallFunc::create(CC_CALLBACK_0(MainMenuScene::gameWin, this)),nullptr);
         action->setTag(1000);
         this->runAction(action);
         
@@ -286,18 +286,18 @@ void MainMenuScene::homeCallBack(Ref* pSender)
 void MainMenuScene::backHome()
 {
     btn_change->setEnabled(true);
-    btn_change->runAction(Sequence::create(Show::create(),FadeIn::create(0.2),NULL));
+    btn_change->runAction(Sequence::create(Show::create(),FadeIn::create(0.2),nullptr));
     
     btn_weibo->setEnabled(false);
-    btn_weibo->runAction(Sequence::create(FadeOut::create(0.2),Hide::create(),NULL));
+    btn_weibo->runAction(Sequence::create(FadeOut::create(0.2),Hide::create(),nullptr));
     
     btn_home->setEnabled(false);
-    btn_home->runAction(Sequence::create(FadeOut::create(0.2),Hide::create(),NULL));
+    btn_home->runAction(Sequence::create(FadeOut::create(0.2),Hide::create(),nullptr));
     
     startItem->setEnabled(true);
-    startBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(),MoveTo::create(0.4f, Vec2(gWinSize.width / 2 - startBg->getContentSize().width / 2, (gWinSize.height - startBg->getContentSize().height) / 2 + (gWinSize.height - startBg->getContentSize().height) / 5)), NULL));
+    startBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(),MoveTo::create(0.4f, Vec2(gWinSize.width / 2 - startBg->getContentSize().width / 2, (gWinSize.height - startBg->getContentSize().height) / 2 + (gWinSize.height - startBg->getContentSize().height) / 5)),nullptr));
     
-    gameBg->runAction(Sequence::create(MoveTo::create(0.4f, Vec2(gWinSize.width / 2 - gameBg->getContentSize().width / 2, gWinSize.height)),Hide::create(),NULL));
+    gameBg->runAction(Sequence::create(MoveTo::create(0.4f, Vec2(gWinSize.width / 2 - gameBg->getContentSize().width / 2, gWinSize.height)),Hide::create(),nullptr));
     
     Director::getInstance()->getEventDispatcher()->removeEventListener(myListener);
 }
@@ -331,7 +331,7 @@ void MainMenuScene::resetGame()
                                        MoveTo::create(0.2f, Vec2(gWinSize.width / 2 - gameBg->getContentSize().width / 2, gWinSize.height)),
                                        CallFunc::create(CC_CALLBACK_0(MainMenuScene::resetData, this)),
                                        MoveTo::create(0.2f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + gameBg->getContentSize().width / 12)),
-                                       NULL));
+                                       nullptr));
     
  
 }
@@ -380,7 +380,7 @@ void MainMenuScene::shareCallBack(Ref* pSender)
         
         string str = gGlobal->getJsonStr(JsonPair::create("imagePath", fullPath),
                                          JsonPair::create("shareText", text),
-                                         NULL);
+                                         nullptr);
         
         gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_Share, str);
         
@@ -399,7 +399,7 @@ void MainMenuScene::share(string text)
     
     string str = gGlobal->getJsonStr(JsonPair::create("imagePath", fullPath),
                                      JsonPair::create("shareText", text),
-                                     NULL);
+                                     nullptr);
     
     gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_Share, str);
     

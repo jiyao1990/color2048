@@ -108,15 +108,45 @@ def copy_files(src, dst):
 def copy_resources(app_android_root):
 
     # remove app_android_root/assets if it exists
-    assets_dir = os.path.join(app_android_root, "assets")
+    assets_dir = os.path.join(app_android_root, "assets/res")
     if os.path.isdir(assets_dir):
         shutil.rmtree(assets_dir)
 
     # copy resources
     os.mkdir(assets_dir)
-    resources_dir = os.path.join(app_android_root, "../Resources")
+    resources_dir = os.path.join(app_android_root, "../res")
     if os.path.isdir(resources_dir):
         copy_files(resources_dir, assets_dir)
+
+def copy_icon(app_android_root):
+
+    # remove app_android_root/assets if it exists
+    dstfile = os.path.join(app_android_root, "res/drawable-hdpi/icon.png")
+    if os.path.exists(dstfile):
+         os.remove(dstfile)
+    # copy resources
+    srcfile = os.path.join(app_android_root, "../proj.ios_mac/MyCppGame iOS/Images.xcassets/AppIcon.appiconset/Icon-72.png")
+    if not srcfile.startswith('.') and not srcfile.endswith('.gz') and os.path.isfile(srcfile):
+        shutil.copy(srcfile,  dstfile)
+
+            # remove app_android_root/assets if it exists
+    dstfile = os.path.join(app_android_root, "res/drawable-mdpi/icon.png")
+    if os.path.exists(dstfile):
+        os.remove(dstfile)
+    # copy resources
+    srcfile = os.path.join(app_android_root, "../proj.ios_mac/MyCppGame iOS/Images.xcassets/AppIcon.appiconset/Icon-50.png")
+    if not srcfile.startswith('.') and not srcfile.endswith('.gz') and os.path.isfile(srcfile):
+        shutil.copy(srcfile,  dstfile)
+
+
+            # remove app_android_root/assets if it exists
+    dstfile = os.path.join(app_android_root, "res/drawable-ldpi/icon.png")
+    if os.path.exists(dstfile):
+        os.remove(dstfile)
+    # copy resources
+    srcfile = os.path.join(app_android_root, "../proj.ios_mac/MyCppGame iOS/Images.xcassets/AppIcon.appiconset/Icon-29.png")
+    if not srcfile.startswith('.') and not srcfile.endswith('.gz') and os.path.isfile(srcfile):
+        shutil.copy(srcfile,  dstfile)
 
 def build(ndk_build_param,android_platform,build_mode):
 
@@ -129,6 +159,7 @@ def build(ndk_build_param,android_platform,build_mode):
 
     app_android_root = current_dir
     copy_resources(app_android_root)
+    copy_icon(app_android_root)
     
     if android_platform is not None:
 				sdk_root = check_environment_variables_sdk()

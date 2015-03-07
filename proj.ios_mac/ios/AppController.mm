@@ -104,6 +104,8 @@ static AppDelegate s_sharedApplication;
     
     //微博sso
     [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+    
+    [NSThread sleepForTimeInterval:1.0];   //设置进程停止2秒
     return YES;
 }
 

@@ -28,3 +28,16 @@ Interface* Interface::instance()
     }
     return Interface::_instance;
 }
+
+
+Json::Value Interface::getJsonRoot(string jsonContent)
+{
+    Json::Value root;
+    Json::Reader reader;
+    
+    bool isParseOK = reader.parse(jsonContent, root, false);
+    
+    CCAssert(isParseOK, "Interface::getJsonRoot error!!");
+    
+    return root;
+}

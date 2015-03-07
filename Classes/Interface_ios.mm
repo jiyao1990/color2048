@@ -45,15 +45,3 @@ string Interface::callPlatformFunction(string functionName, string jsonContent)
     }
     return "";
 }
-
-Json::Value Interface::getJsonRoot(string jsonContent)
-{
-    Json::Value root;
-    Json::Reader reader;
-    
-    bool isParseOK = reader.parse(jsonContent, root, false);
-    
-    CCAssert(isParseOK, "Interface::getJsonRoot error!!");
-    
-    return root;
-}
