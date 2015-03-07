@@ -196,7 +196,9 @@ static AppDelegate s_sharedApplication;
 
 - (void)interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error
 {
-    [self loadAdmob];
+    if ([error code]  == kGADErrorNetworkError || [error code] == kGADErrorInternalError) {
+        [self loadAdmob];
+    }
 }
 
 #pragma mark Display-Time Lifecycle Notifications

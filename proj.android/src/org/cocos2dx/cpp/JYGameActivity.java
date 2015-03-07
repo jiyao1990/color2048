@@ -37,6 +37,7 @@ import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListene
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.UMSsoHandler;
 
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -44,11 +45,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
-
+import com.google.android.gms.ads.*;
+import com.jiyao.android.color2048.R;
 
 public class JYGameActivity extends Cocos2dxActivity {
 
 	UMSocialService mController;
+	private InterstitialAd interstitial;
+	private int adCounts = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Platform_android.mContext = this;
@@ -58,6 +62,10 @@ public class JYGameActivity extends Cocos2dxActivity {
 		MobclickAgent.getConfigParams( this, "AdSwitch" );
 		//友盟分享
 		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+		
+
+		this.loadAdmob();
+
 		
 //		
 		// 我的  
@@ -169,4 +177,52 @@ public class JYGameActivity extends Cocos2dxActivity {
 		return value;
 	}
 	
+	  // Invoke displayInterstitial() when you are ready to display an interstitial.
+	public void displayInterstitial() {
+
+		Runnable RunThread = new Runnable() {
+			public void run() {
+				if (interstitial.isLoaded()) {
+					interstitial.show();
+				}
+			}
+		};
+		this.runOnUiThread(RunThread);
+
+	}
+	
+	void loadAdmob() {
+		adCounts ++;
+		String unitID;
+	    if (adCounts % 2 == 0) {
+	    	unitID = this.getString(R.string.ad_unit_id_p);
+	    }else{
+	    	unitID = this.getString(R.string.ad_unit_id_m);
+	    }
+		interstitial = new InterstitialAd(this);
+		
+		interstitial.setAdUnitId(unitID);
+		interstitial.setAdListener(new AdListener() {
+
+			@Override
+			public void onAdClosed() {
+				loadAdmob();
+				super.onAdClosed();
+			}
+
+			@Override
+			public void onAdFailedToLoad(int errorCode) {
+				if(errorCode == AdRequest.ERROR_CODE_INTERNAL_ERROR || errorCode == AdRequest.ERROR_CODE_NETWORK_ERROR){
+					loadAdmob();
+				}
+				super.onAdFailedToLoad(errorCode);
+			}
+
+		});
+
+		// Create ad request.
+		AdRequest adRequest = new AdRequest.Builder().build();
+		// Begin loading your interstitial.
+		interstitial.loadAd(adRequest);
+	}
 }

@@ -13,6 +13,8 @@ public class Platform_android {
 	public static String callPlatformFunc(String functionName,final String jsonContent){
 		
 		if(functionName.equals("showAd")){
+			
+			mContext.displayInterstitial();
 
 		}else if(functionName.equals("share")){
 			Log.d("share======", jsonContent);

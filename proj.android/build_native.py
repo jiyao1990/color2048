@@ -120,6 +120,15 @@ def copy_resources(app_android_root):
 
 def copy_icon(app_android_root):
 
+            # remove app_android_root/assets if it exists
+    dstfile = os.path.join(app_android_root, "res/drawable-xhdpi/icon.png")
+    if os.path.exists(dstfile):
+        os.remove(dstfile)
+    # copy resources
+    srcfile = os.path.join(app_android_root, "../proj.ios_mac/MyCppGame iOS/Images.xcassets/AppIcon.appiconset/Icon-100.png")
+    if not srcfile.startswith('.') and not srcfile.endswith('.gz') and os.path.isfile(srcfile):
+        shutil.copy(srcfile,  dstfile)
+
     # remove app_android_root/assets if it exists
     dstfile = os.path.join(app_android_root, "res/drawable-hdpi/icon.png")
     if os.path.exists(dstfile):

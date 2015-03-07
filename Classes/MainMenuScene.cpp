@@ -278,12 +278,6 @@ void MainMenuScene::colorItemCallBack(Ref* pSender)
     scoreTTF->runAction(TintTo::create(0.2f, gGlobal->colorMap[gGlobal->_colorType][0].r, gGlobal->colorMap[gGlobal->_colorType][0].g, gGlobal->colorMap[gGlobal->_colorType][0].b));
     highScoreTTF->runAction(TintTo::create(0.2f, gGlobal->colorMap[gGlobal->_colorType][0].r, gGlobal->colorMap[gGlobal->_colorType][0].g, gGlobal->colorMap[gGlobal->_colorType][0].b));
     
-//    startBg->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][2]));
-//    btn_change->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
-//    btn_home->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
-//    btn_weibo->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
-//    scoreTTF->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
-//    highScoreTTF->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
     setLumpColor();
 }
 
