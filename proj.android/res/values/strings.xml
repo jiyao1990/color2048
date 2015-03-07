@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MyCppGame</string>
+    <string name="app_name">方块秘密:2048</string>
+    <string name="ad_unit_id_p">ca-app-pub-9911143712135979/6485319641</string>
+    <string name="ad_unit_id_m">ca-app-pub-1771996690526222/9520582990</string>
 </resources>

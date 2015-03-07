@@ -36,6 +36,10 @@ public:
     //分享
     void share(string text);
     
+
+    virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
+
+    
 private:
     void startGame(Ref* pSender);
     void colorItemCallBack(Ref* pSender);

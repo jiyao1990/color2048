@@ -42,6 +42,11 @@ string Interface::callPlatformFunction(string functionName, string jsonContent)
             return str;
         }
         return "";
+    }else if(INTERFACE_CALL_FUNCNAME_GetUMParams == functionName){
+        NSString* nsStr1 = [NSString stringWithUTF8String:jsonContent.c_str()];
+        NSString* nsStr2 = [AppController getUMParams:nsStr1];
+        string str = [nsStr2 UTF8String];
+        return str;
     }
     return "";
 }

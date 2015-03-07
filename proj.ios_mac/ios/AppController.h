@@ -18,5 +18,6 @@
 + (void)screenShot;
 + (void)saveData:(NSString*)name value:(NSString*)value;
 + (NSString*)readData:(NSString *)name;
++ (NSString*)getUMParams:(NSString*)key;
 @end
 

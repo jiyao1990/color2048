@@ -100,6 +100,7 @@ bool MainMenuScene::init()
     
     highScoreTTF = Label::createWithSystemFont("您的最高得分:" + gGlobal->highScore, "黑体", gameBg->getContentSize().width / 15);
     highScoreTTF->setPosition(highScoreBg->getContentSize()/2);
+    highScoreTTF->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
     highScoreBg->addChild(highScoreTTF);
     highScoreTTF->enableShadow();
     
@@ -270,11 +271,19 @@ void MainMenuScene::colorItemCallBack(Ref* pSender)
     }else{
         gGlobal->_colorType = colorType_green;
     }
-    startBg->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][2]));
-    btn_change->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
-    btn_home->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
-    btn_weibo->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
-    scoreTTF->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
+    startBg->runAction(TintTo::create(0.2f, gGlobal->colorMap[gGlobal->_colorType][2].r, gGlobal->colorMap[gGlobal->_colorType][2].g, gGlobal->colorMap[gGlobal->_colorType][2].b));
+    btn_change->runAction(TintTo::create(0.2f, gGlobal->colorMap[gGlobal->_colorType][0].r, gGlobal->colorMap[gGlobal->_colorType][0].g, gGlobal->colorMap[gGlobal->_colorType][0].b));
+    btn_home->runAction(TintTo::create(0.2f, gGlobal->colorMap[gGlobal->_colorType][0].r, gGlobal->colorMap[gGlobal->_colorType][0].g, gGlobal->colorMap[gGlobal->_colorType][0].b));
+    btn_weibo->runAction(TintTo::create(0.2f, gGlobal->colorMap[gGlobal->_colorType][0].r, gGlobal->colorMap[gGlobal->_colorType][0].g, gGlobal->colorMap[gGlobal->_colorType][0].b));
+    scoreTTF->runAction(TintTo::create(0.2f, gGlobal->colorMap[gGlobal->_colorType][0].r, gGlobal->colorMap[gGlobal->_colorType][0].g, gGlobal->colorMap[gGlobal->_colorType][0].b));
+    highScoreTTF->runAction(TintTo::create(0.2f, gGlobal->colorMap[gGlobal->_colorType][0].r, gGlobal->colorMap[gGlobal->_colorType][0].g, gGlobal->colorMap[gGlobal->_colorType][0].b));
+    
+//    startBg->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][2]));
+//    btn_change->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
+//    btn_home->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
+//    btn_weibo->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
+//    scoreTTF->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
+//    highScoreTTF->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
     setLumpColor();
 }
 
@@ -403,19 +412,12 @@ void MainMenuScene::share(string text)
     
     gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_Share, str);
     
-//    auto callback = [=](const std::string& fullPath){
-//        
-//        CCLOG("Image saved %s", fullPath.c_str());
-//        CCLOG("%s",text.c_str());
-//        
-//        string str = gGlobal->getJsonStr(JsonPair::create("imagePath", fullPath),
-//                                         JsonPair::create("shareText", text),
-//                                         NULL);
-//        
-//        gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_Share, str);
-//        
-//        
-//    };
-//    gGlobal->saveScreenshot(this, screenShotImageName, callback);
+}
+
+void MainMenuScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
+{
+    if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
+        gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowDialog, "确定要退出游戏吗?");
+    }
 }
 

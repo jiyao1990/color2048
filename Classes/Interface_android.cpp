@@ -26,7 +26,7 @@ string Interface::callPlatformFunction(string functionName, string jsonContent)
     JniMethodInfo callPlatformFunc;//定义Jni函数信息结构体
     
     //getStaticMethodInfo 次函数返回一个bool值表示是否找到此函数
-    bool isHave1 = JniHelper::getStaticMethodInfo(callPlatformFunc,"com/sg/android/platform/Platform_android","callPlatformFunc", "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;");
+    bool isHave1 = JniHelper::getStaticMethodInfo(callPlatformFunc,"org/cocos2dx/cpp/Platform_android","callPlatformFunc", "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;");
     
     if (!isHave1)
     {

@@ -69,6 +69,18 @@ bool AppDelegate::applicationDidFinishLaunching() {
         gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_SaveData, str);
         scene = MainMenuScene::createScene();
     }
+    
+    //友盟广告开关
+    if (gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_GetUMParams, "AdSwitch") == "open") {
+        
+        gGlobal->isHomeAdSwitch = true;
+        
+    }else{
+        
+        gGlobal->isHomeAdSwitch = false;
+        
+    }
+    
     // run
     director->runWithScene(scene);
  

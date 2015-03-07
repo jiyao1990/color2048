@@ -41,7 +41,7 @@ Lump* Lump::createLump(const colorType colorType, const int level, const int row
     lump->setPosition(Vec2(lump->getContentSize().width * (0.5 + col), lump->getContentSize().height * (0.5 + row)));
     pr->addChild(lump);
     lump->setScale(0.f);
-    lump->runAction(Sequence::create(CCDelayTime::create(0.2f), Spawn::create(EaseBackOut::create(ScaleTo::create(0.1f, 1)), FadeOut::create(0.1f), NULL), NULL));
+    lump->runAction(Sequence::create(CCDelayTime::create(0.2f), Spawn::create(EaseBackOut::create(ScaleTo::create(0.1f, 1)), FadeOut::create(0.1f), nullptr), nullptr));
     
     lump->setLocalZOrder(1);
     //更改地图数据
@@ -111,11 +111,11 @@ void Lump::doAction(ActionInterval *action , MyActionType actionType)
             
         case MyActionType_Fade:
             this->setLocalZOrder(0);
-            this->runAction(Sequence::create(action, CallFunc::create(CC_CALLBACK_0(Lump::removeSelf, this)), NULL));
+            this->runAction(Sequence::create(action, CallFunc::create(CC_CALLBACK_0(Lump::removeSelf, this)), nullptr));
             break;
             
         case MyActionType_LvUp:
-            this->runAction(Sequence::create(action, CallFunc::create(CC_CALLBACK_0(Lump::changeColor, this, m_Level + 1)), NULL));
+            this->runAction(Sequence::create(action, CallFunc::create(CC_CALLBACK_0(Lump::changeColor, this, m_Level + 1)), nullptr));
             break;
     }
 }

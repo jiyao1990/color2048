@@ -262,6 +262,11 @@ static AppDelegate s_sharedApplication;
     return value;
 }
 
++ (NSString*)getUMParams:(NSString*)key
+{
+    return [MobClick getConfigParams:@"AdSwitch"];
+}
+
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
     return  [UMSocialSnsService handleOpenURL:url];

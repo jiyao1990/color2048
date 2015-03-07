@@ -185,16 +185,16 @@ void TipLayer::okCallBack(Ref* pSender)
 {
     switch (m_Type) {
         case TipType_BackToHome:
-            this->runAction(Sequence::create(FadeTo::create(0.2f, 0),CallFunc::create(CC_CALLBACK_0(MainMenuScene::backHome, m_MainMenu)),RemoveSelf::create(), NULL));
+            this->runAction(Sequence::create(FadeTo::create(0.2f, 0),CallFunc::create(CC_CALLBACK_0(MainMenuScene::backHome, m_MainMenu)),RemoveSelf::create(), nullptr));
             bg->runAction(MoveTo::create(0.2f, Vec2((gWinSize.width - bg->getContentSize().width)/2, - bg->getContentSize().height)));
             break;
             
         case TipType_GameOver:
-            this->runAction(Sequence::create(FadeTo::create(0.2f, 0),CallFunc::create(CC_CALLBACK_0(MainMenuScene::resetGame, m_MainMenu)),RemoveSelf::create(), NULL));
+            this->runAction(Sequence::create(FadeTo::create(0.2f, 0),CallFunc::create(CC_CALLBACK_0(MainMenuScene::resetGame, m_MainMenu)),RemoveSelf::create(), nullptr));
             bg->runAction(MoveTo::create(0.2f, Vec2((gWinSize.width - bg->getContentSize().width)/2, - bg->getContentSize().height)));
             break;
         case TipType_GameWin:
-            this->runAction(Sequence::create(FadeTo::create(0.2f, 0),CallFunc::create(CC_CALLBACK_0(MainMenuScene::resetGame, m_MainMenu)),RemoveSelf::create(), NULL));
+            this->runAction(Sequence::create(FadeTo::create(0.2f, 0),CallFunc::create(CC_CALLBACK_0(MainMenuScene::resetGame, m_MainMenu)),RemoveSelf::create(), nullptr));
             bg->runAction(MoveTo::create(0.2f, Vec2((gWinSize.width - bg->getContentSize().width)/2, - bg->getContentSize().height)));
             break;
         case TipType_Tips:
@@ -208,7 +208,7 @@ void TipLayer::removeSelf(Ref* pSender)
     switch (m_Type) {
         case TipType_BackToHome:
         {
-            this->runAction(Sequence::create(FadeTo::create(0.2f, 0),RemoveSelf::create(), NULL));
+            this->runAction(Sequence::create(FadeTo::create(0.2f, 0),RemoveSelf::create(), nullptr));
             bg->runAction(MoveTo::create(0.2f, Vec2((gWinSize.width - bg->getContentSize().width)/2, - bg->getContentSize().height)));
         }
             break;
@@ -296,7 +296,7 @@ void TipLayer::removeSelf(Ref* pSender)
             break;
         case TipType_Tips:
         {
-            this->runAction(Sequence::create(FadeTo::create(0.2f, 0),RemoveSelf::create(), NULL));
+            this->runAction(Sequence::create(FadeTo::create(0.2f, 0),RemoveSelf::create(), nullptr));
             bg->runAction(MoveTo::create(0.2f, Vec2((gWinSize.width - bg->getContentSize().width)/2, - bg->getContentSize().height)));
         }
             break;
