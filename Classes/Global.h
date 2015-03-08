@@ -23,6 +23,8 @@
 #define Data_HighScore          "score"
 #define Data_LoginCount         "LoginCount"
 
+#define INVALID_VALUE_STR       "-1"
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace  rapidjson;
@@ -68,7 +70,11 @@ public:
 
     static Global* getInstance();
     static Color4B colorMap[colorType_Size][maxLevel];
-    static string shareText[][maxLevel + 1][TextCount];
+//    static string shareText[][maxLevel + 1][TextCount];
+    static string shareText1[];
+    static string shareText2[];
+    static string shareText3[];
+    static string shareText4[];
     
     colorType _colorType;
     map< int, Node* > lumpMap;
@@ -95,8 +101,16 @@ public:
      */
     string trim(string str, string::size_type pos = 0);
     
-private:
+    string getSecretText();
     
+    //读取文字内容
+    void loadTextMap();
+    
+private:
+
+    
+    void loadMap(string *str, int size, int count);
+    map< int, vector<string> > textMap[4];
     
     //------variable----------
     static Global* _instance;

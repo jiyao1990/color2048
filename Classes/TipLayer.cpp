@@ -110,7 +110,7 @@ bool TipLayer::init(TipType type, MainMenuScene* mainMenu)
             bg->addChild(scoreTTF);
             scoreTTF->enableShadow();
             contentTTF->setString("游戏结束");
-            contentTTF->setSystemFontSize(bg->getContentSize().width / 18.75);
+            contentTTF->setSystemFontSize(bg->getContentSize().width / 9.375);
             btnTTF1->setString("炫耀一下");
             btnTTF2->setString("重新开始");
         }
@@ -135,35 +135,37 @@ bool TipLayer::init(TipType type, MainMenuScene* mainMenu)
         {
             this->runAction(FadeTo::create(0.1f, 100));
             
-            shareText.append("今天");
-            for (int row = 0; row < MapMaxLength; row ++) {
-                for (int col = 0; col < MapMaxLength ; col ++) {
-                    
-                    int id = 0 ;
-                    if (gGameMap->getDataLevel(row, col) == 0) {
-                        id =  random(0, 4);
-                    }else{
-                        id = gGameMap->getDataId(row, col) % TextCount;
-                    }
-                    
-                    shareText.append(gGlobal->shareText[col][gGameMap->getDataLevel(row, col)][id]);
-                }
-                switch (row) {
-                    case 0:
-                        shareText.append(",然后");
-                        break;
-                    case 1:
-                        shareText.append(",之后");
-                        break;
-                    case 2:
-                        shareText.append(",最后");
-                        break;
-                    case 3:
-                        
-                        break;
-                }
-            }
-            shareText.append("。真是有意义的一天啊!");
+//            shareText.append("今天");
+//            for (int row = 0; row < MapMaxLength; row ++) {
+//                for (int col = 0; col < MapMaxLength ; col ++) {
+//                    
+//                    int id = 0 ;
+//                    if (gGameMap->getDataLevel(row, col) == 0) {
+//                        id =  random(0, 4);
+//                    }else{
+//                        id = gGameMap->getDataId(row, col) % TextCount;
+//                    }
+//                    
+//                    shareText.append(gGlobal->shareText[col][gGameMap->getDataLevel(row, col)][id]);
+//                }
+//                switch (row) {
+//                    case 0:
+//                        shareText.append(",然后");
+//                        break;
+//                    case 1:
+//                        shareText.append(",之后");
+//                        break;
+//                    case 2:
+//                        shareText.append(",最后");
+//                        break;
+//                    case 3:
+//                        
+//                        break;
+//                }
+//            }
+//            shareText.append("。真是有意义的一天啊!");
+            
+            shareText = gGlobal->getSecretText();
             
             contentTTF->setString("你得到的方块秘密:\n\n" + shareText + "\n\n点击炫耀一下可以分享到微博哦~");
             contentTTF->setSystemFontSize(bg->getContentSize().width / 18.75);
@@ -216,37 +218,38 @@ void TipLayer::removeSelf(Ref* pSender)
         case TipType_GameOver:
         {
             if (shareText == "") {
-                shareText.append("今天");
-                for (int row = 0; row < MapMaxLength; row ++) {
-                    for (int col = 0; col < MapMaxLength ; col ++) {
-                        
-                        int id = 0 ;
-                        if (gGameMap->getDataLevel(row, col) == 0) {
-                            id =  random(0, 4);
-                        }else{
-                            id = gGameMap->getDataId(row, col) % TextCount;
-                        }
-                        
-                        
-                        shareText.append(gGlobal->shareText[col][gGameMap->getDataLevel(row, col)][id]);
-                    }
-                    switch (row) {
-                        case 0:
-                            shareText.append(",然后");
-                            break;
-                        case 1:
-                            shareText.append(",之后");
-                            break;
-                        case 2:
-                            shareText.append(",最后");
-                            break;
-                        case 3:
-                            
-                            break;
-                    }
-                }
-                shareText.append("。真是有意义的一天啊!");
+//                shareText.append("今天");
+//                for (int row = 0; row < MapMaxLength; row ++) {
+//                    for (int col = 0; col < MapMaxLength ; col ++) {
+//                        
+//                        int id = 0 ;
+//                        if (gGameMap->getDataLevel(row, col) == 0) {
+//                            id =  random(0, 4);
+//                        }else{
+//                            id = gGameMap->getDataId(row, col) % TextCount;
+//                        }
+//                        
+//                        
+//                        shareText.append(gGlobal->shareText[col][gGameMap->getDataLevel(row, col)][id]);
+//                    }
+//                    switch (row) {
+//                        case 0:
+//                            shareText.append(",然后");
+//                            break;
+//                        case 1:
+//                            shareText.append(",之后");
+//                            break;
+//                        case 2:
+//                            shareText.append(",最后");
+//                            break;
+//                        case 3:
+//                            
+//                            break;
+//                    }
+//                }
+//                shareText.append("。真是有意义的一天啊!");
                 
+                shareText = gGlobal->getSecretText();
                 shareText.append("————我的得分为" + toString(gGlobal->score) + "分，via 方块密码:2048");
                 
                 
@@ -258,36 +261,37 @@ void TipLayer::removeSelf(Ref* pSender)
         case TipType_GameWin:
         {
             if (shareText == "") {
-                shareText.append("今天");
-                for (int row = 0; row < MapMaxLength; row ++) {
-                    for (int col = 0; col < MapMaxLength ; col ++) {
-                        
-                        int id = 0 ;
-                        if (gGameMap->getDataLevel(row, col) == 0) {
-                            id =  random(0, 4);
-                        }else{
-                            id = gGameMap->getDataId(row, col) % TextCount;
-                        }
-                        
-                        
-                        shareText.append(gGlobal->shareText[col][gGameMap->getDataLevel(row, col)][id]);
-                    }
-                    switch (row) {
-                        case 0:
-                            shareText.append(",然后");
-                            break;
-                        case 1:
-                            shareText.append(",之后");
-                            break;
-                        case 2:
-                            shareText.append(",最后");
-                            break;
-                        case 3:
-                            
-                            break;
-                    }
-                }
-                shareText.append("。真是有意义的一天啊!");
+//                shareText.append("今天");
+//                for (int row = 0; row < MapMaxLength; row ++) {
+//                    for (int col = 0; col < MapMaxLength ; col ++) {
+//                        
+//                        int id = 0 ;
+//                        if (gGameMap->getDataLevel(row, col) == 0) {
+//                            id =  random(0, 4);
+//                        }else{
+//                            id = gGameMap->getDataId(row, col) % TextCount;
+//                        }
+//                        
+//                        
+//                        shareText.append(gGlobal->shareText[col][gGameMap->getDataLevel(row, col)][id]);
+//                    }
+//                    switch (row) {
+//                        case 0:
+//                            shareText.append(",然后");
+//                            break;
+//                        case 1:
+//                            shareText.append(",之后");
+//                            break;
+//                        case 2:
+//                            shareText.append(",最后");
+//                            break;
+//                        case 3:
+//                            
+//                            break;
+//                    }
+//                }
+//                shareText.append("。真是有意义的一天啊!");
+                shareText = gGlobal->getSecretText();
                 
                 shareText.append("————小伙伴们颤抖吧！我已经成功黑化了！我的得分为" + toString(gGlobal->score) + "分！求超越！via 方块密码:2048");
             }

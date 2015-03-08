@@ -53,6 +53,7 @@ public class JYGameActivity extends Cocos2dxActivity {
 	UMSocialService mController;
 	private InterstitialAd interstitial;
 	private int adCounts = 0;
+	public String isShowAds;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Platform_android.mContext = this;
@@ -176,11 +177,13 @@ public class JYGameActivity extends Cocos2dxActivity {
 	
 	  // Invoke displayInterstitial() when you are ready to display an interstitial.
 	public void displayInterstitial() {
-
+		isShowAds = "1";
 		Runnable RunThread = new Runnable() {
 			public void run() {
 				if (interstitial.isLoaded()) {
 					interstitial.show();
+				}else{
+					isShowAds = "0";
 				}
 			}
 		};

@@ -88,6 +88,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 #endif
     
+    gGlobal->loadTextMap();
+    
     // run
     director->runWithScene(scene);
  

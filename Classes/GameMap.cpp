@@ -41,7 +41,7 @@ void GameMap::resetMapData()
             
         }
     }
-    
+    gGlobal->currentID = 0;
     printf("------------------------------\n");
     for (int i = MapMaxLength - 1; i >= 0; i--) {
         printf("|%d,%d,%d,%d|====|%d,%d,%d,%d|\n",MapData[i][0].level,MapData[i][1].level,MapData[i][2].level,MapData[i][3].level,MapData[i][0].ID,MapData[i][1].ID,MapData[i][2].ID,MapData[i][3].ID);

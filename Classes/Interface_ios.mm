@@ -44,10 +44,16 @@ string Interface::callPlatformFunction(string functionName, string jsonContent)
         }
         return "";
     }else if(INTERFACE_CALL_FUNCNAME_GetUMParams == functionName){
-        NSString* nsStr1 = [NSString stringWithUTF8String:jsonContent.c_str()];
-        NSString* nsStr2 = [AppController getUMParams:nsStr1];
-        string str = [nsStr2 UTF8String];
-        return str;
+        NSString* param = [NSString stringWithCString:jsonContent.c_str() encoding:[NSString defaultCStringEncoding]];
+        NSString* state = [AppController getUMParams:param];
+        std::string state_str = "";
+        
+        if (state != nil)
+        {
+            state_str = [state UTF8String];
+        }
+        
+        return state_str;
     }
     return "";
 }
