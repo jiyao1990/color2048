@@ -8,3 +8,5 @@ proj.android/gen
 proj.android/libs/armeabi
  
 *.xcbkptlist
+
+proj.ios_mac/MyCppGame.xcodeproj/project.xcworkspace/xcuserdata/jiyao.xcuserdatad/UserInterfaceState.xcuserstate
