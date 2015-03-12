@@ -712,11 +712,10 @@ string Global::shareText3[] = {
     "记录了",
     "讲述了",
     "构思了",
-    "趴在了"
+    "爬上了"
     INVALID_VALUE_STR,
     "幻想了",
     "拒绝了",
-    "跪在了"
     INVALID_VALUE_STR,
 };
 string Global::shareText4[] = {
@@ -729,7 +728,7 @@ string Global::shareText4[] = {
     "一次飞机",
     "一只小猫",
     "一坨大便",
-    "一个都比",
+    "一个逗比",
     "一顿美餐",
     "一个逗比",
     "一包洗衣粉",
@@ -1033,4 +1032,20 @@ void Global::loadMap(string *str, int size, int count)
     }
 }
 
+
+Rect Global::getNodeRect(Node* node)
+{
+    
+    assert(node != nullptr);
+    Rect rect ;
+    
+    Vec2 ap = node->getAnchorPoint();
+    float x = node->getPositionX() - (node->getContentSize().width) * ap.x;
+    float y = node->getPositionY() - (node->getContentSize().height) * ap.y;
+    float width = node->getContentSize().width;
+    float height = node->getContentSize().height;
+    rect = Rect(x, y, width, height);
+    
+    return rect;
+}
 

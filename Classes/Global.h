@@ -106,6 +106,9 @@ public:
     //读取文字内容
     void loadTextMap();
     
+    //获取node的Rect
+    cocos2d::Rect getNodeRect(Node* node);
+    
 private:
 
     

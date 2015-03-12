@@ -35,6 +35,8 @@ bool MainMenuScene::init()
         return false;
     }
     gameOverCount = 0;
+    touchTime = 0;
+    touchLevel = 0;
     isFail = false;
 //    this->initWithColor(Color4B(66, 66, 66, 255), gWinSize.width, gWinSize.height);
     this->initWithColor(Color4B(45,45,45,255), Color4B(65,65,65,255));
@@ -141,6 +143,23 @@ void MainMenuScene::startGame(Ref* pSender)
         if (gGameMap->isWin || isFail) {
             return false;
         }
+        
+        schedule(CC_SCHEDULE_SELECTOR(MainMenuScene::touchTimeAdd));
+        
+        Vec2 pos  = gameBg->convertTouchToNodeSpace(touch);
+        for (map< int, Node* >::iterator it = gGlobal->lumpMap.begin(); it != gGlobal->lumpMap.end(); it ++) {
+            Lump* lump = (Lump *)it->second;
+            Rect rect = gGlobal->getNodeRect(lump);
+            if(rect.containsPoint(pos)){
+                
+                touchLevel = lump->getLevel();
+                break;
+                
+            }
+            
+        }
+        
+        //同种颜色显示
         return true;
     };
     
@@ -151,6 +170,17 @@ void MainMenuScene::startGame(Ref* pSender)
     
     myListener->onTouchEnded = [=](Touch* touch,Event* event)
     {
+        //恢复
+        for (map< int, Node* >::iterator it = gGlobal->lumpMap.begin(); it != gGlobal->lumpMap.end(); it ++) {
+            Lump* lump = (Lump *)it->second;
+            
+            lump->getChildByTag(Tag_Tile)->setOpacity(255);
+            
+        }
+        touchTime = 0;
+        touchLevel = 0;
+        unschedule(CC_SCHEDULE_SELECTOR(MainMenuScene::touchTimeAdd));
+        
         Vec2 startPos = touch->getStartLocation();
         Vec2 endPos   = touch->getLocation();
         
@@ -199,6 +229,7 @@ void MainMenuScene::startGame(Ref* pSender)
 
 void MainMenuScene::createNewLump(int num)
 {
+
     int level;
     int row;
     int col;
@@ -421,3 +452,19 @@ void MainMenuScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
     }
 }
 
+void MainMenuScene::touchTimeAdd(float dt)
+{
+    touchTime += dt;
+    if (touchTime >= 1) {
+        
+        for (map< int, Node* >::iterator it = gGlobal->lumpMap.begin(); it != gGlobal->lumpMap.end(); it ++) {
+            Lump* lump = (Lump *)it->second;
+            if (touchLevel != 0) {
+                if (touchLevel != lump->getLevel()) {
+                    lump->getChildByTag(Tag_Tile)->setOpacity(150);
+                }
+            }
+        }
+        
+    }
+}

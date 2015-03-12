@@ -50,9 +50,13 @@ private:
     void resetData();
     void gameOver();
     void gameWin();
+    //按下时间
+    void touchTimeAdd(float dt);
     
     int gameOverCount;
     bool isFail;
+    float touchTime;
+    int touchLevel;
     //menu
     LayerColor* startBg;
     MenuItem* startItem;

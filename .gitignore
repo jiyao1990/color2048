@@ -1,12 +1,13 @@
 
-proj.android/bin
-proj.android/obj
-proj.android/res
-proj.android/assets
-proj.android/gen
+proj.*/bin
+proj.*/obj
+proj.*/res
+proj.*/assets
+proj.*/gen
 
-proj.android/libs/armeabi
+proj.*/libs/armeabi
  
 *.xcbkptlist
 
 proj.ios_mac/MyCppGame.xcodeproj/project.xcworkspace/xcuserdata/jiyao.xcuserdatad/UserInterfaceState.xcuserstate
+
