@@ -50,6 +50,7 @@ private:
     void resetData();
     void gameOver();
     void gameWin();
+    void showAd();
     //按下时间
     void touchTimeAdd(float dt);
     

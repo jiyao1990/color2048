@@ -128,9 +128,9 @@ void MainMenuScene::startGame(Ref* pSender)
     
     
     startItem->setEnabled(false);
-    startBg->runAction(Sequence::create(MoveTo::create(0.4f, Vec2(startBg->getPositionX() , gWinSize.height)),Hide::create(),nullptr));
-    
-    gameBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(),MoveTo::create(0.4f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + gameBg->getContentSize().width / 12) ),nullptr));
+    startBg->runAction(Sequence::create(EaseBackOut::create(MoveTo::create(0.4f, Vec2(startBg->getPositionX() , gWinSize.height))),Hide::create(),nullptr));
+
+    gameBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(), EaseBackIn::create(MoveTo::create(0.4f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + gameBg->getContentSize().width / 12))) ,nullptr));
 
     
     myListener = EventListenerTouchOneByOne::create();
@@ -331,9 +331,9 @@ void MainMenuScene::backHome()
     btn_home->runAction(Sequence::create(FadeOut::create(0.2),Hide::create(),nullptr));
     
     startItem->setEnabled(true);
-    startBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(),MoveTo::create(0.4f, Vec2(gWinSize.width / 2 - startBg->getContentSize().width / 2, (gWinSize.height - startBg->getContentSize().height) / 2 + (gWinSize.height - startBg->getContentSize().height) / 5)),nullptr));
+    startBg->runAction(Sequence::create(DelayTime::create(0.4f),Show::create(),EaseBackIn::create(MoveTo::create(0.4f, Vec2(gWinSize.width / 2 - startBg->getContentSize().width / 2, (gWinSize.height - startBg->getContentSize().height) / 2 + (gWinSize.height - startBg->getContentSize().height) / 5))),nullptr));
     
-    gameBg->runAction(Sequence::create(MoveTo::create(0.4f, Vec2(gWinSize.width / 2 - gameBg->getContentSize().width / 2, gWinSize.height)),Hide::create(),nullptr));
+    gameBg->runAction(Sequence::create(EaseBackOut::create(MoveTo::create(0.4f, Vec2(gWinSize.width / 2 - gameBg->getContentSize().width / 2, gWinSize.height))),Hide::create(),nullptr));
     
     Director::getInstance()->getEventDispatcher()->removeEventListener(myListener);
 }
@@ -364,9 +364,9 @@ void MainMenuScene::setLumpColor()
 void MainMenuScene::resetGame()
 {
     gameBg->runAction(Sequence::create(
-                                       MoveTo::create(0.2f, Vec2(gWinSize.width / 2 - gameBg->getContentSize().width / 2, gWinSize.height)),
+                                       EaseBackOut::create(MoveTo::create(0.2f, Vec2(gWinSize.width / 2 - gameBg->getContentSize().width / 2, gWinSize.height))),
                                        CallFunc::create(CC_CALLBACK_0(MainMenuScene::resetData, this)),
-                                       MoveTo::create(0.2f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + gameBg->getContentSize().width / 12)),
+                                       EaseBackIn::create(MoveTo::create(0.2f, Vec2(gameBg->getPositionX(), (gWinSize.height - gameBg->getContentSize().height) / 2 + gameBg->getContentSize().width / 12))),
                                        nullptr));
     
  
@@ -395,12 +395,7 @@ void MainMenuScene::gameOver()
     gameOverCount ++;
     this->addChild(TipLayer::createLayer(TipType_GameOver, this));
     this->addChild(TipLayer::createLayer(TipType_Tips, this));
-    if (gameOverCount % 3 == 1) {
-        string flag = gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowAd, "");
-        if (flag == "0") {
-            gameOverCount --;
-        }
-    }
+    this->runAction(Sequence::create(DelayTime::create(0.5f), CallFunc::create(CC_CALLBACK_0(MainMenuScene::showAd, this)) ,nullptr));
 }
 
 void MainMenuScene::gameWin()
@@ -461,10 +456,20 @@ void MainMenuScene::touchTimeAdd(float dt)
             Lump* lump = (Lump *)it->second;
             if (touchLevel != 0) {
                 if (touchLevel != lump->getLevel()) {
-                    lump->getChildByTag(Tag_Tile)->setOpacity(150);
+                    lump->getChildByTag(Tag_Tile)->setOpacity(100);
                 }
             }
         }
         
+    }
+}
+
+void MainMenuScene::showAd()
+{
+    if (gameOverCount % 3 == 1) {
+        string flag = gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowAd, "");
+        if (flag == "0") {
+            gameOverCount --;
+        }
     }
 }
