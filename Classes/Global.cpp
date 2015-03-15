@@ -640,29 +640,6 @@ string Global::getSecretText()
 
 void Global::loadTextMap()
 {
-    //    int aryNum = sizeof(shareText1) / sizeof(string*);
-    //
-    //    int level = -1;
-    //    vector< string > tmpVec;
-    //
-    //    for (int i = 0; i < aryNum; i ++)
-    //    {
-    //        if (shareText1[i] == INVALID_VALUE_STR) //表尾
-    //        {
-    //            level ++;
-    //            CCAssert(level != -1 && tmpVec.size() != 0, "");
-    //            textMap[0].insert( make_pair(level, tmpVec) );
-    //            level = -1;
-    //            tmpVec.clear();
-    //        }
-    //        else //表数据
-    //        {
-    //            // 读取表
-    //            string str = shareText1[i];
-    //            tmpVec.push_back( str );
-    //
-    //        }
-    //    }
     loadMap(shareText1, sizeof(shareText1) / sizeof(shareText1[0]), 0);
     loadMap(shareText2, sizeof(shareText2) / sizeof(shareText2[0]), 1);
     loadMap(shareText3, sizeof(shareText3) / sizeof(shareText3[0]), 2);
@@ -689,7 +666,6 @@ void Global::loadMap(string *str, int size, int count)
         else //表数据
         {
             // 读取表
-            //            string str = str[i];
             tmpVec.push_back( str[i] );
             
         }

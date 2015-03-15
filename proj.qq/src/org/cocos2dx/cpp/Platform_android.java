@@ -32,7 +32,7 @@ public class Platform_android {
 				}
 				
 				mContext.shareWeibo(imgPath, messageInfo);
-				
+
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -60,20 +60,18 @@ public class Platform_android {
 				e.printStackTrace();
 			}
 			
-			
 		}else if(functionName.equals("readData")){
 			
 			return mContext.readData(jsonContent);
 			
 		}else if(functionName.equals("showDialog")){
 			
-			Runnable RunThread = new Runnable(){
-				public void run(){
+			Runnable runThread = new Runnable() {
+				public void run() {
 					mContext.showDialog(jsonContent);
 				}
 			};
-			mContext.runOnUiThread(RunThread);
-			
+			mContext.runOnUiThread(runThread);		
 			
 		}else if(functionName.equals("geUMParams")){
 			

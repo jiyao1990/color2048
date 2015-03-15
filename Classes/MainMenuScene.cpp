@@ -107,6 +107,11 @@ bool MainMenuScene::init()
     highScoreBg->addChild(highScoreTTF);
     highScoreTTF->enableShadow();
     
+    auto keyListener = EventListenerKeyboard::create();
+    keyListener->setEnabled(true);
+    keyListener->onKeyReleased = CC_CALLBACK_2(MainMenuScene::onKeyReleased, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
+    
     return true;
 }
 
@@ -299,6 +304,7 @@ void MainMenuScene::createNewLump(int num)
 void MainMenuScene::colorItemCallBack(Ref* pSender)
 {
 //    gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowAd, "");
+    gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowDialog, "确定要退出游戏吗?");
     if (gGlobal->_colorType < colorType_Size - 1) {
         gGlobal->_colorType = (colorType)(gGlobal->_colorType + 1);
     }else{
@@ -443,7 +449,11 @@ void MainMenuScene::share(string text)
 void MainMenuScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
     if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
-        gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowDialog, "确定要退出游戏吗?");
+        if (startItem->isEnabled()) {
+            gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowDialog, "确定要退出游戏吗?");
+        }else{
+            homeCallBack(this);
+        }
     }
 }
 
