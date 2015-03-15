@@ -63,25 +63,25 @@ void Lump::move(GridDirection direction, int step, MyActionType actionType)
             
         case GridUp:
         {
-            move = MoveTo::create(0.2f,Vec2(this->getContentSize().width * (0.5 + m_Col), this->getContentSize().height * (0.5 + m_Row + step)));
+            move = MoveTo::create(0.1f,Vec2(this->getContentSize().width * (0.5 + m_Col), this->getContentSize().height * (0.5 + m_Row + step)));
             m_Row += step;
         }
             break;
         case GridDown:
         {
-            move = MoveTo::create(0.2f,Vec2(this->getContentSize().width * (0.5 + m_Col), this->getContentSize().height * (0.5 + m_Row - step)));
+            move = MoveTo::create(0.1f,Vec2(this->getContentSize().width * (0.5 + m_Col), this->getContentSize().height * (0.5 + m_Row - step)));
             m_Row -= step;
         }
             break;
         case GridLeft:
         {
-            move = MoveTo::create(0.2f,Vec2(this->getContentSize().width * (0.5 + m_Col - step), this->getContentSize().height * (0.5 + m_Row)));
+            move = MoveTo::create(0.1f,Vec2(this->getContentSize().width * (0.5 + m_Col - step), this->getContentSize().height * (0.5 + m_Row)));
             m_Col -= step;
         }
             break;
         case GridRight:
         {
-            move = MoveTo::create(0.2f,Vec2(this->getContentSize().width * (0.5 + m_Col + step), this->getContentSize().height * (0.5 + m_Row)));
+            move = MoveTo::create(0.1f,Vec2(this->getContentSize().width * (0.5 + m_Col + step), this->getContentSize().height * (0.5 + m_Row)));
             m_Col += step;
         }
             break;
