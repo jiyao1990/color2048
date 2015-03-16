@@ -304,7 +304,6 @@ void MainMenuScene::createNewLump(int num)
 void MainMenuScene::colorItemCallBack(Ref* pSender)
 {
 //    gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowAd, "");
-    gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowDialog, "确定要退出游戏吗?");
     if (gGlobal->_colorType < colorType_Size - 1) {
         gGlobal->_colorType = (colorType)(gGlobal->_colorType + 1);
     }else{
@@ -399,14 +398,12 @@ void MainMenuScene::resetData()
 void MainMenuScene::gameOver()
 {
     gameOverCount ++;
-    this->addChild(TipLayer::createLayer(TipType_GameOver, this));
     this->addChild(TipLayer::createLayer(TipType_Tips, this));
     this->runAction(Sequence::create(DelayTime::create(0.5f), CallFunc::create(CC_CALLBACK_0(MainMenuScene::showAd, this)) ,nullptr));
 }
 
 void MainMenuScene::gameWin()
 {
-    this->addChild(TipLayer::createLayer(TipType_GameWin, this));
     this->addChild(TipLayer::createLayer(TipType_Tips, this));
 }
 
@@ -449,11 +446,7 @@ void MainMenuScene::share(string text)
 void MainMenuScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
     if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
-        if (startItem->isEnabled()) {
-            gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowDialog, "确定要退出游戏吗?");
-        }else{
-            homeCallBack(this);
-        }
+        gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowDialog, "确定要退出游戏吗?");
     }
 }
 

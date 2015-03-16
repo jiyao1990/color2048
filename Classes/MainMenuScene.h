@@ -40,6 +40,8 @@ public:
     virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
 
     
+    bool isFail;
+    
 private:
     void startGame(Ref* pSender);
     void colorItemCallBack(Ref* pSender);
@@ -55,7 +57,6 @@ private:
     void touchTimeAdd(float dt);
     
     int gameOverCount;
-    bool isFail;
     float touchTime;
     int touchLevel;
     //menu
