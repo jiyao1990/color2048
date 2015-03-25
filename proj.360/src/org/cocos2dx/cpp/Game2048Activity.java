@@ -26,8 +26,6 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.cpp;
 
-import org.cocos2dx.lib.Cocos2dxActivity;
-
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
@@ -37,26 +35,24 @@ import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListene
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.UMSsoHandler;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
 import com.google.android.gms.ads.*;
 import com.jiyao.android.color2048.R;
 
-public class JYGameActivity extends Cocos2dxActivity {
+public class Game2048Activity extends JYGameActivity {
 
 	UMSocialService mController;
 	private InterstitialAd interstitial;
 	private int adCounts = 0;
-	public String isShowAds;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Platform_android.mContext = this;
 		super.onCreate(savedInstanceState);
 		// 友盟参数
 		MobclickAgent.updateOnlineConfig(this);
@@ -82,35 +78,21 @@ public class JYGameActivity extends Cocos2dxActivity {
 		MobclickAgent.onPause(this);
 	}
 
+	@Override
 	public void exitGame() {
 		this.finish();
 		MobclickAgent.onKillProcess(this);
 		android.os.Process.killProcess(android.os.Process.myPid());
 	}
 
+	@Override
 	public String getUMParams(String key) {
 		String value = MobclickAgent.getConfigParams(this, "AdSwitch");
 		return value;
 	}
 
-	public void showDialog(String pMessage) {
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("提示");
-		builder.setMessage(pMessage);
-		builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				JYGameActivity.this.exitGame();
-			}
-		});
-		builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				dialog.cancel();
-			}
-		});
-		builder.show();
-	}
-
+	@Override
 	public void shareWeibo(String imgPath, String text) {
 
 		// 设置分享内容
@@ -120,11 +102,11 @@ public class JYGameActivity extends Cocos2dxActivity {
 
 		Runnable RunThread = new Runnable() {
 			public void run() {
-				mController.postShare(JYGameActivity.this, SHARE_MEDIA.SINA,
+				mController.postShare(Game2048Activity.this, SHARE_MEDIA.SINA,
 						new SnsPostListener() {
 							@Override
 							public void onStart() {
-								Toast.makeText(JYGameActivity.this, "开始分享.",
+								Toast.makeText(Game2048Activity.this, "开始分享.",
 										Toast.LENGTH_SHORT).show();
 							}
 
@@ -132,14 +114,14 @@ public class JYGameActivity extends Cocos2dxActivity {
 							public void onComplete(SHARE_MEDIA platform,
 									int eCode, SocializeEntity entity) {
 								if (eCode == 200) {
-									Toast.makeText(JYGameActivity.this,
+									Toast.makeText(Game2048Activity.this,
 											"分享成功.", Toast.LENGTH_SHORT).show();
 								} else {
 									String eMsg = "";
 									if (eCode == -101) {
 										eMsg = "没有授权";
 									}
-									Toast.makeText(JYGameActivity.this,
+									Toast.makeText(Game2048Activity.this,
 											"分享失败[" + eCode + "] " + eMsg,
 											Toast.LENGTH_SHORT).show();
 								}
@@ -162,23 +144,30 @@ public class JYGameActivity extends Cocos2dxActivity {
 		}
 	}
 
-	public void saveData(String name, String value) {
-		SharedPreferences mySharedPreferences = getSharedPreferences("data",
-				Activity.MODE_PRIVATE);
-		SharedPreferences.Editor editor = mySharedPreferences.edit();
-		editor.putString(name, value);
-		editor.commit();
+	
+	
+	@Override
+	public void showDialog(String pMessage) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);  
+		builder.setMessage(pMessage)  
+		       .setCancelable(false)  
+		       .setPositiveButton("是", new DialogInterface.OnClickListener() {  
+		           public void onClick(DialogInterface dialog, int id) {  
+		        	   Game2048Activity.this.exitGame();  
+		           }  
+		       })  
+		       .setNegativeButton("否", new DialogInterface.OnClickListener() {  
+		           public void onClick(DialogInterface dialog, int id) {  
+		                dialog.cancel();  
+		           }  
+		       });  
+		builder.create(); 
+		builder.show();
+	
+		super.showDialog(pMessage);
 	}
 
-	public String readData(String name) {
-		SharedPreferences mySharedPreferences = getSharedPreferences("data",
-				Activity.MODE_PRIVATE);
-		String value = mySharedPreferences.getString(name, "");
-		return value;
-	}
-
-	// Invoke displayInterstitial() when you are ready to display an
-	// interstitial.
+	@Override
 	public void displayInterstitial() {
 		isShowAds = "1";
 		Runnable RunThread = new Runnable() {
@@ -194,6 +183,7 @@ public class JYGameActivity extends Cocos2dxActivity {
 
 	}
 
+	@Override
 	void loadAdmob() {
 		adCounts++;
 		String unitID;
@@ -228,5 +218,25 @@ public class JYGameActivity extends Cocos2dxActivity {
 		AdRequest adRequest = new AdRequest.Builder().build();
 		// Begin loading your interstitial.
 		interstitial.loadAd(adRequest);
+	}
+	
+	@Override
+	String getChannel() {
+        try{
+        	Object value = null;
+        	ApplicationInfo applicationInfo = this.getPackageManager().getApplicationInfo(Game2048Activity.this.getPackageName(), PackageManager.GET_META_DATA);
+            if (applicationInfo != null && applicationInfo.metaData != null){
+                value = applicationInfo.metaData.get("UMENG_CHANNEL");
+                if(value == null){
+                	return "";
+                }else{
+                	String channnel = value.toString();
+        			return channnel;
+                }
+            }
+        }catch(Exception e){
+        	e.printStackTrace();
+        }
+		return "";
 	}
 }

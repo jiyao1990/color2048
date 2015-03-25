@@ -410,7 +410,16 @@ void MainMenuScene::gameWin()
 void MainMenuScene::shareCallBack(Ref* pSender)
 {
     btn_weibo->setEnabled(false);
-    string text = "我的最高得分为" + gGlobal->highScore + "分,优雅的融合~可以获取到专属你玩到的秘密~快来一起玩吧~via 方块密码:2048";
+    string text;
+    if (gGlobal->channel == Channel_360) {
+        text = "我的最高得分为" + gGlobal->highScore + "分,优雅的融合~只属于你的秘密~快来一起玩吧~IOS:http://t.cn/RAZBRw9 安卓:http://t.cn/RAZBRwC";
+    }else if(gGlobal->channel == Channel_qq){
+        text = "我的最高得分为" + gGlobal->highScore + "分,优雅的融合~只属于你的秘密~快来一起玩吧~IOS:http://t.cn/RAZBRw9 安卓:http://t.cn/RAZBRwS";
+    }else if(gGlobal->channel == Channel_baidu){
+        text = "我的最高得分为" + gGlobal->highScore + "分,优雅的融合~只属于你的秘密~快来一起玩吧~IOS:http://t.cn/RAZBRw9 安卓:http://t.cn/RA2F06m";
+    }else{
+        text = "我的最高得分为" + gGlobal->highScore + "分,优雅的融合~只属于你的秘密~快来一起玩吧~IOS:http://t.cn/RAZBRw9 安卓:http://t.cn/RAZBRwS";
+    }
     auto callback = [=](const std::string& fullPath){
         
         CCLOG("Image saved %s", fullPath.c_str());

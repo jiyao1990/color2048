@@ -48,6 +48,7 @@ private:
     colorType m_ColorType;
     int m_Row;
     int m_Col;
+    Label* m_Num;
     
     
 };

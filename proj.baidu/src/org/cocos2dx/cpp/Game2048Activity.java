@@ -26,9 +26,8 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.cpp;
 
-import org.cocos2dx.lib.Cocos2dxActivity;
 
-import com.umeng.analytics.MobclickAgent;
+//import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -38,33 +37,32 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.UMSsoHandler;
 
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
-import com.google.android.gms.ads.*;
-import com.jiyao.android.color2048.R;
+import net.youmi.android.AdManager;
+import net.youmi.android.spot.SpotDialogListener;
+import net.youmi.android.spot.SpotManager;
 
-public class JYGameActivity extends Cocos2dxActivity {
+
+public class Game2048Activity extends JYGameActivity {
 
 	UMSocialService mController;
-	private InterstitialAd interstitial;
-	private int adCounts = 0;
-	public String isShowAds;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Platform_android.mContext = this;
 		super.onCreate(savedInstanceState);
 		//友盟参数
-		MobclickAgent.updateOnlineConfig( this );
-		MobclickAgent.getConfigParams( this, "AdSwitch" );
+//		MobclickAgent.updateOnlineConfig( this );
+//		MobclickAgent.getConfigParams( this, "AdSwitch" );
 		//友盟分享
 		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 		
-
+		
 		this.loadAdmob();
 
 	}
@@ -73,29 +71,57 @@ public class JYGameActivity extends Cocos2dxActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		MobclickAgent.onResume(this);
+//		MobclickAgent.onResume(this);
 	}
 
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		MobclickAgent.onPause(this);
+//		MobclickAgent.onPause(this);
 	}	
 	
+	public void onBackPressed() {
+
+	    // 如果有需要，可以点击后退关闭插播广告。
+	    if (!SpotManager.getInstance(this).disMiss()) {
+	        // 弹出退出窗口，可以使用自定义退屏弹出和回退动画,参照demo,若不使用动画，传入-1
+	        super.onBackPressed();
+	    }
+	}
+
+	@Override
+
+	protected void onStop() {
+
+	    // 如果不调用此方法，则按home键的时候会出现图标无法显示的情况。
+	    SpotManager.getInstance(this).onStop();
+	    super.onStop();
+	}
+
+	@Override
+
+	protected void onDestroy() {
+
+	    SpotManager.getInstance(this).onDestroy();
+	    super.onDestroy();
+	}
+	
+	@Override
 	public void exitGame() {
 		this.finish();
-		MobclickAgent.onKillProcess(this);
+//		MobclickAgent.onKillProcess(this);
 		android.os.Process.killProcess(android.os.Process.myPid());
 	}
 
+	@Override
 	public String getUMParams(String key)
 	{
-		String value = MobclickAgent.getConfigParams( this, "AdSwitch");
-		return value;
+//		String value = MobclickAgent.getConfigParams( this, "AdSwitch");
+		return "open";
 	}
 
-	
+	@Override
 	public void showDialog(String pMessage) {
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);  
@@ -103,7 +129,7 @@ public class JYGameActivity extends Cocos2dxActivity {
 		       .setCancelable(false)  
 		       .setPositiveButton("是", new DialogInterface.OnClickListener() {  
 		           public void onClick(DialogInterface dialog, int id) {  
-		                JYGameActivity.this.exitGame();  
+		                Game2048Activity.this.exitGame();  
 		           }  
 		       })  
 		       .setNegativeButton("否", new DialogInterface.OnClickListener() {  
@@ -112,8 +138,12 @@ public class JYGameActivity extends Cocos2dxActivity {
 		           }  
 		       });  
 		builder.create(); 
+		builder.show();
+		
+		super.showDialog(pMessage);
 	}
 	
+	@Override
 	public void shareWeibo(String imgPath, String text){
 		
 		// 设置分享内容
@@ -124,22 +154,22 @@ public class JYGameActivity extends Cocos2dxActivity {
 		
 		Runnable RunThread = new Runnable(){
 			public void run(){
-				mController.postShare(JYGameActivity.this,SHARE_MEDIA.SINA, 
+				mController.postShare(Game2048Activity.this,SHARE_MEDIA.SINA, 
 				        new SnsPostListener() {
 				                @Override
 				                public void onStart() {
-				                    Toast.makeText(JYGameActivity.this, "开始分享.", Toast.LENGTH_SHORT).show();
+				                    Toast.makeText(Game2048Activity.this, "开始分享.", Toast.LENGTH_SHORT).show();
 				                }
 				                @Override
 				                public void onComplete(SHARE_MEDIA platform, int eCode,SocializeEntity entity) {
 				                     if (eCode == 200) {
-				                         Toast.makeText(JYGameActivity.this, "分享成功.", Toast.LENGTH_SHORT).show();
+				                         Toast.makeText(Game2048Activity.this, "分享成功.", Toast.LENGTH_SHORT).show();
 				                     } else {
 				                          String eMsg = "";
 				                          if (eCode == -101){
 				                              eMsg = "没有授权";
 				                          }
-				                          Toast.makeText(JYGameActivity.this, "分享失败[" + eCode + "] " + 
+				                          Toast.makeText(Game2048Activity.this, "分享失败[" + eCode + "] " + 
 				                                             eMsg,Toast.LENGTH_SHORT).show();
 				                     }
 				              }
@@ -160,69 +190,63 @@ public class JYGameActivity extends Cocos2dxActivity {
 	    }
 	}
 	
-	public void saveData(String name, String value){
-		SharedPreferences mySharedPreferences= getSharedPreferences("data", 
-				Activity.MODE_PRIVATE); 
-		SharedPreferences.Editor editor = mySharedPreferences.edit(); 
-		editor.putString(name, value);
-		editor.commit(); 
-	}
-	
-	public String readData(String name){
-		SharedPreferences mySharedPreferences= getSharedPreferences("data", 
-				Activity.MODE_PRIVATE); 
-		String value = mySharedPreferences.getString(name, "");
-		return value;
-	}
-	
-	  // Invoke displayInterstitial() when you are ready to display an interstitial.
+	@Override
 	public void displayInterstitial() {
 		isShowAds = "1";
 		Runnable RunThread = new Runnable() {
 			public void run() {
-				if (interstitial.isLoaded()) {
-					interstitial.show();
-				}else{
-					isShowAds = "0";
-				}
+
+					SpotManager.getInstance(Game2048Activity.this).showSpotAds(Game2048Activity.this);
+					SpotManager.getInstance(Game2048Activity.this).showSpotAds(Game2048Activity.this, new SpotDialogListener() {
+					    @Override
+					    public void onShowSuccess() {
+					        Log.i("Youmi", "onShowSuccess");
+					    }
+
+					    @Override
+					    public void onShowFailed() {
+					        Log.i("Youmi", "onShowFailed");
+					    }
+
+					    @Override
+					    public void onSpotClosed() {
+					        Log.e("sdkDemo", "closed");
+//					        loadAdmob();
+					    }
+					});
 			}
 		};
 		this.runOnUiThread(RunThread);
 
 	}
 	
+	@Override
 	void loadAdmob() {
-		adCounts ++;
-		String unitID;
-	    if (adCounts % 2 == 0) {
-	    	unitID = this.getString(R.string.ad_unit_id_p);
-	    }else{
-	    	unitID = this.getString(R.string.ad_unit_id_m);
-	    }
-		interstitial = new InterstitialAd(this);
+		AdManager.getInstance(this).init("eb81b2541d7f4ef9", "7eb6edec2b141512", false);
+		SpotManager.getInstance(this).loadSpotAds();
+		SpotManager.getInstance(this).setSpotOrientation(
+	            SpotManager.ORIENTATION_PORTRAIT);
+		SpotManager.getInstance(this).setAnimationType(SpotManager.ANIM_NONE);
 		
-		interstitial.setAdUnitId(unitID);
-		interstitial.setAdListener(new AdListener() {
-
-			@Override
-			public void onAdClosed() {
-				loadAdmob();
-				super.onAdClosed();
-			}
-
-			@Override
-			public void onAdFailedToLoad(int errorCode) {
-				if(errorCode == AdRequest.ERROR_CODE_INTERNAL_ERROR || errorCode == AdRequest.ERROR_CODE_NETWORK_ERROR){
-					loadAdmob();
-				}
-				super.onAdFailedToLoad(errorCode);
-			}
-
-		});
-
-		// Create ad request.
-		AdRequest adRequest = new AdRequest.Builder().build();
-		// Begin loading your interstitial.
-		interstitial.loadAd(adRequest);
+	}
+	
+	@Override
+	String getChannel() {
+        try{
+        	Object value = null;
+        	ApplicationInfo applicationInfo = this.getPackageManager().getApplicationInfo(Game2048Activity.this.getPackageName(), PackageManager.GET_META_DATA);
+            if (applicationInfo != null && applicationInfo.metaData != null){
+                value = applicationInfo.metaData.get("UMENG_CHANNEL");
+                if(value == null){
+                	return "";
+                }else{
+                	String channnel = value.toString();
+        			return channnel;
+                }
+            }
+        }catch(Exception e){
+        	e.printStackTrace();
+        }
+		return "";
 	}
 }

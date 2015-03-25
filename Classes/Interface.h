@@ -23,6 +23,7 @@
 #define INTERFACE_CALL_FUNCNAME_ReadData     "readData"
 #define INTERFACE_CALL_FUNCNAME_ShowDialog   "showDialog"
 #define INTERFACE_CALL_FUNCNAME_GetUMParams  "geUMParams"
+#define INTERFACE_CALL_FUNCNAME_GetChannel   "getChannel"
 
 
 using namespace std;

@@ -190,7 +190,19 @@ void TipLayer::removeSelf(Ref* pSender)
             if (shareText == "") {
                 
                 shareText = gGlobal->getSecretText();
-                shareText.append("————我的得分为" + toString(gGlobal->score) + "分，via 方块密码:2048");
+                
+                string text;
+                if (gGlobal->channel == Channel_360) {
+                    text = "————我的得分为" + toString(gGlobal->score) + "分,快来一起玩吧~IOS:http://t.cn/RAZBRw9 安卓:http://t.cn/RAZBRwC";
+                }else if(gGlobal->channel == Channel_qq){
+                    text = "————我的得分为" + toString(gGlobal->score) + "分,快来一起玩吧~IOS:http://t.cn/RAZBRw9 安卓:http://t.cn/RAZBRwS";
+                }else if(gGlobal->channel == Channel_baidu){
+                    text = "————我的得分为" + toString(gGlobal->score) + "分,快来一起玩吧~IOS:http://t.cn/RAZBRw9 安卓:http://t.cn/RA2F06m";
+                }else{
+                    text = "————我的得分为" + toString(gGlobal->score) + "分,快来一起玩吧~IOS:http://t.cn/RAZBRw9 安卓:http://t.cn/RAZBRwS";
+                }
+                
+                shareText.append(text);
                 
             }
             m_MainMenu->share(shareText);
@@ -202,7 +214,17 @@ void TipLayer::removeSelf(Ref* pSender)
             if (shareText == "") {
                 
                 shareText = gGlobal->getSecretText();
-                shareText.append("————小伙伴们颤抖吧！我已经成功黑化了！我的得分为" + toString(gGlobal->score) + "分！求超越！via 方块密码:2048");
+                string text;
+                if (gGlobal->channel == Channel_360) {
+                    text = "————小伙伴们颤抖吧！我已经成功黑化了！我的得分为" + toString(gGlobal->score) + "分！求超越！IOS:http://t.cn/RAZBRw9 安卓:http://t.cn/RAZBRwC";
+                }else if(gGlobal->channel == Channel_qq){
+                    text = "————小伙伴们颤抖吧！我已经成功黑化了！我的得分为" + toString(gGlobal->score) + "分！求超越！IOS:http://t.cn/RAZBRw9 安卓:http://t.cn/RAZBRwS";
+                }else if(gGlobal->channel == Channel_baidu){
+                    text = "————小伙伴们颤抖吧！我已经成功黑化了！我的得分为" + toString(gGlobal->score) + "分！求超越！IOS:http://t.cn/RAZBRw9 安卓:http://t.cn/RA2F06m";
+                }else{
+                    text = "————小伙伴们颤抖吧！我已经成功黑化了！我的得分为" + toString(gGlobal->score) + "分！求超越！IOS:http://t.cn/RAZBRw9 安卓:http://t.cn/RAZBRwS";
+                }
+                shareText.append(text);
             }
             m_MainMenu->share(shareText);
         }

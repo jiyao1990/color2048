@@ -54,6 +54,8 @@ string Interface::callPlatformFunction(string functionName, string jsonContent)
         }
         
         return state_str;
+    }else if (INTERFACE_CALL_FUNCNAME_GetChannel == functionName){
+        return "ios";
     }
     return "";
 }

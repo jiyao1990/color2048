@@ -25,6 +25,11 @@
 
 #define INVALID_VALUE_STR       "-1"
 
+#define Channel_360           "360"
+#define Channel_qq            "qq"
+#define Channel_baidu         "baidu"
+#define Channel_IOS           "ios"
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace  rapidjson;
@@ -84,6 +89,7 @@ public:
     int score;
     
     string highScore;
+    string channel;
     
     bool isHomeAdSwitch;
     

@@ -37,6 +37,16 @@ Lump* Lump::createLump(const colorType colorType, const int level, const int row
     LayerColor* tile = LayerColor::create(gGlobal->colorMap[gGlobal->_colorType][level - 1], size.width, size.height);
     lump->addChild(tile);
     tile->setTag(Tag_Tile);
+    
+    
+    
+    float numSize = tile->getContentSize().width / 3;
+    lump->m_Num = Label::createWithSystemFont(toString(lump->m_Level).c_str(), "黑体", numSize);
+    lump->m_Num->setColor(Color3B(255, 255, 255));
+    
+    tile->addChild(lump->m_Num);
+    lump->m_Num->setPosition(tile->getContentSize()/2);
+    
 
     lump->setPosition(Vec2(lump->getContentSize().width * (0.5 + col), lump->getContentSize().height * (0.5 + row)));
     pr->addChild(lump);
@@ -99,6 +109,10 @@ void Lump::changeColor(int level)
         return;
     }
     this->getChildByTag(Tag_Tile)->runAction(TintTo::create(0.2f, gGlobal->colorMap[gGlobal->_colorType][m_Level - 1].r, gGlobal->colorMap[gGlobal->_colorType][m_Level - 1].g, gGlobal->colorMap[gGlobal->_colorType][m_Level - 1].b));
+    
+    m_Num->setString(toString(m_Level).c_str());
+    m_Num->setScale(1.5);
+    m_Num->runAction(ScaleTo::create(0.2f, 1));
     
 }
 
