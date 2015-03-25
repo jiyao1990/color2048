@@ -92,6 +92,7 @@ public:
     string channel;
     
     bool isHomeAdSwitch;
+    bool isContinue;
     
     void saveScreenshot(Node* node, const std::string& fileName,const std::function<void(const std::string&)>& callback = NULL);
     

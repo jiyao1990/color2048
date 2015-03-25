@@ -128,7 +128,7 @@ bool TipLayer::init(TipType type, MainMenuScene* mainMenu)
             contentTTF->setString("厉害!完成!佩服!");
             contentTTF->setSystemFontSize(bg->getContentSize().width / 9.375);
             btnTTF1->setString("炫耀一下");
-            btnTTF2->setString("重新开始");
+            btnTTF2->setString("继续");
         }
             break;
         case TipType_Tips:
@@ -166,7 +166,8 @@ void TipLayer::okCallBack(Ref* pSender)
             bg->runAction(MoveTo::create(0.2f, Vec2((gWinSize.width - bg->getContentSize().width)/2, - bg->getContentSize().height)));
             break;
         case TipType_GameWin:
-            this->runAction(Sequence::create(FadeTo::create(0.2f, 0),CallFunc::create(CC_CALLBACK_0(MainMenuScene::resetGame, m_MainMenu)),RemoveSelf::create(), nullptr));
+            gGlobal->isContinue = true;
+            this->runAction(Sequence::create(FadeTo::create(0.2f, 0),RemoveSelf::create(), nullptr));
             bg->runAction(MoveTo::create(0.2f, Vec2((gWinSize.width - bg->getContentSize().width)/2, - bg->getContentSize().height)));
             break;
         case TipType_Tips:
@@ -242,4 +243,3 @@ void TipLayer::removeSelf(Ref* pSender)
             break;
     }
 }
-

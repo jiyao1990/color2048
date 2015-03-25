@@ -30,6 +30,7 @@ public:
 private:
     void okCallBack(Ref* pSender);
     void removeSelf(Ref* pSender);
+    void continueGame(Ref* pSender);
     bool init(TipType type, MainMenuScene* mainMenu);
     
     TipType m_Type;

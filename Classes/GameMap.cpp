@@ -101,7 +101,7 @@ int GameMap::changeMapByDirection(GridDirection dir)
                                     Lump* lump2 = (Lump *)gGlobal->lumpMap.find(MapData[row][col].ID)->second;
                                     lump2->changeColor(MapData[row][col].level);
                                     
-                                    gGlobal->score += MapData[i][col].level;
+                                    gGlobal->score += pow(2, MapData[i][col].level);
                                     
                                     MapData[i][col].level = 0;
                                     MapData[i][col].ID = 0;
@@ -178,7 +178,7 @@ int GameMap::changeMapByDirection(GridDirection dir)
                                     Lump* lump2 = (Lump *)gGlobal->lumpMap.find(MapData[row][col].ID)->second;
                                     lump2->changeColor(MapData[row][col].level);
                                     
-                                    gGlobal->score += MapData[i][col].level;
+                                    gGlobal->score += pow(2, MapData[i][col].level);
                                     
                                     MapData[i][col].level = 0;
                                     MapData[i][col].ID = 0;
@@ -251,7 +251,7 @@ int GameMap::changeMapByDirection(GridDirection dir)
                                     Lump* lump2 = (Lump *)gGlobal->lumpMap.find(MapData[row][col].ID)->second;
                                     lump2->changeColor(MapData[row][col].level);
                                     
-                                    gGlobal->score += MapData[row][i].level;
+                                    gGlobal->score += pow(2, MapData[row][i].level);
                                     
                                     MapData[row][i].level = 0;
                                     MapData[row][i].ID = 0;
@@ -323,7 +323,7 @@ int GameMap::changeMapByDirection(GridDirection dir)
                                     Lump* lump2 = (Lump *)gGlobal->lumpMap.find(MapData[row][col].ID)->second;
                                     lump2->changeColor(MapData[row][col].level);
                                     
-                                    gGlobal->score += MapData[row][i].level;
+                                    gGlobal->score += pow(2, MapData[row][i].level);
                                     
                                     MapData[row][i].level = 0;
                                     MapData[row][i].ID = 0;
@@ -488,7 +488,11 @@ bool GameMap::isFail()
 
 int GameMap::getDataLevel(int row, int col)
 {
-    return MapData[row][col].level;
+    if (MapData[row][col].level > maxLevel) {
+        return maxLevel;
+    }else{
+        return MapData[row][col].level;
+    }
 }
 
 int GameMap::getDataId(int row, int col)

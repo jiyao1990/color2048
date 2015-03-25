@@ -41,7 +41,7 @@ Lump* Lump::createLump(const colorType colorType, const int level, const int row
     
     
     float numSize = tile->getContentSize().width / 3;
-    lump->m_Num = Label::createWithSystemFont(toString(lump->m_Level).c_str(), "黑体", numSize);
+    lump->m_Num = Label::createWithSystemFont(toString(pow(2, lump->m_Level)).c_str(), "黑体", numSize);
     lump->m_Num->setColor(Color3B(255, 255, 255));
     
     tile->addChild(lump->m_Num);
@@ -108,9 +108,13 @@ void Lump::changeColor(int level)
     }else{
         return;
     }
-    this->getChildByTag(Tag_Tile)->runAction(TintTo::create(0.2f, gGlobal->colorMap[gGlobal->_colorType][m_Level - 1].r, gGlobal->colorMap[gGlobal->_colorType][m_Level - 1].g, gGlobal->colorMap[gGlobal->_colorType][m_Level - 1].b));
+    if (m_Level >= maxLevel) {
+        this->getChildByTag(Tag_Tile)->runAction(TintTo::create(0.2f, gGlobal->colorMap[gGlobal->_colorType][maxLevel - 1].r, gGlobal->colorMap[gGlobal->_colorType][maxLevel - 1].g, gGlobal->colorMap[gGlobal->_colorType][maxLevel - 1].b));
+    }else{
+        this->getChildByTag(Tag_Tile)->runAction(TintTo::create(0.2f, gGlobal->colorMap[gGlobal->_colorType][m_Level - 1].r, gGlobal->colorMap[gGlobal->_colorType][m_Level - 1].g, gGlobal->colorMap[gGlobal->_colorType][m_Level - 1].b));
+    }
     
-    m_Num->setString(toString(m_Level).c_str());
+    m_Num->setString(toString(pow(2, m_Level)).c_str());
     m_Num->setScale(1.5);
     m_Num->runAction(ScaleTo::create(0.2f, 1));
     

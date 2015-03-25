@@ -145,7 +145,7 @@ void MainMenuScene::startGame(Ref* pSender)
     
     myListener->onTouchBegan = [=](Touch* touch,Event* event)
     {
-        if (gGameMap->isWin || isFail) {
+        if ((gGameMap->isWin && !gGlobal->isContinue) || isFail) {
             return false;
         }
         
@@ -279,7 +279,7 @@ void MainMenuScene::createNewLump(int num)
         
     }
     
-    if (gGameMap->isWin && !this->getActionByTag(1000)) {
+    if (gGameMap->isWin && !this->getActionByTag(1000) && !gGlobal->isContinue) {
         gGlobal->saveScreenshot(this, screenShotImageName);
         if (atoi(gGlobal->highScore.c_str()) < gGlobal->score) {
             gGlobal->highScore = toString(gGlobal->score);
@@ -361,8 +361,11 @@ void MainMenuScene::setLumpColor()
     for (map< int, Node* >::iterator it = gGlobal->lumpMap.begin(); it != gGlobal->lumpMap.end(); it ++) {
         Lump* lump = (Lump *)it->second;
         lump->stopAllActions();
-        lump->getChildByTag(Tag_Tile)->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][lump->getLevel() - 1]));
-        
+        if (lump->getLevel() >= maxLevel) {
+            lump->getChildByTag(Tag_Tile)->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][maxLevel - 1]));
+        }else{
+            lump->getChildByTag(Tag_Tile)->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][lump->getLevel() - 1]));
+        }
     }
 }
 
@@ -393,6 +396,7 @@ void MainMenuScene::resetData()
     sprintf(buffer,"当前得分:%d",gGlobal->score);
     scoreTTF->setString(buffer);
     isFail = false;
+    gGlobal->isContinue = false;
 }
 
 void MainMenuScene::gameOver()

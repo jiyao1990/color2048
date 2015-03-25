@@ -466,6 +466,7 @@ Global::Global()
     score = 0;
     highScore = "0";
     isHomeAdSwitch = false;
+    isContinue = false;
     lumpMap.clear();
     channel = gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_GetChannel, "");
 }
