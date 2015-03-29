@@ -1,6 +1,6 @@
 //
 //  Global.cpp
-//  MyCppGame
+//  CppGame
 //
 //  Created by Jiyao on 15/1/30.
 //
@@ -170,6 +170,110 @@ string Global::shareText1[] =
     INVALID_VALUE_STR,
 };
 
+string Global::shareText1_en[] = {
+    
+    "I killed",
+    "I rubbed",
+    "I liked",
+    "I smoked",
+    INVALID_VALUE_STR,
+    "I pulled out",
+    "I forgive",
+    "I bit",
+    "I annoyed",
+    "I attacked",
+    "I baked",
+    "I beat",
+    "I beged",
+    "I blowed",
+    "I bothered",
+    INVALID_VALUE_STR,
+    "I brushed",
+    "I burnt",
+    "I buried",
+    "I bought",
+    "I eated",
+    "I called",
+    "I kissed",
+    "I carried",
+    "I cheered",
+    INVALID_VALUE_STR,
+    "I steped on",
+    "I licked",
+    "I played",
+    "I stealed",
+    "I cooked",
+    "I copied",
+    "I cuted",
+    "I cured",
+    "I damaged",
+    INVALID_VALUE_STR,
+    "I laughed at",
+    "I spit",
+    "I fall in love with",
+    "I kicked",
+    "I brought",
+    "I destroyed",
+    "I dug",
+    "I fucked",
+    "I ride",
+    INVALID_VALUE_STR,
+    "I discoveried",
+    "I did",
+    "I drank",
+    "I draw",
+    "I drown",
+    "I enjoy",
+    "I envied",
+    "I punish",
+    "I push",
+    "I pull",
+    INVALID_VALUE_STR,
+    "I fetched",
+    "I feed",
+    "I find",
+    "I looked at",
+    "I fill",
+    "I forgot",
+    "I freeze",
+    "I protect",
+    INVALID_VALUE_STR,
+    "I fry",
+    "I gain",
+    "I get",
+    "I give",
+    "I grow",
+    "I hear",
+    "I press",
+    INVALID_VALUE_STR,
+    "I help",
+    "I hold",
+    "I hurt",
+    "I joke",
+    "I knock",
+    "I recall",
+    INVALID_VALUE_STR,
+    "I lead",
+    "I liberate",
+    "I lay",
+    "I lift",
+    "I cosplay",
+    "I point",
+    INVALID_VALUE_STR,
+    "I make love",
+    "I marry",
+    "I mend",
+    "I miss",
+    "I pick",
+    "I place",
+    INVALID_VALUE_STR,
+    "I nail",
+    "I need",
+    "I open",
+    "I paint",
+    INVALID_VALUE_STR,
+};
+
 string Global::shareText2[] = {
     
     "满心欢喜地",
@@ -250,6 +354,100 @@ string Global::shareText2[] = {
     "发春着",
     INVALID_VALUE_STR,
 };
+
+string Global::shareText2_en[] = {
+    
+    " my shoe",
+    " my dog",
+    " my face",
+    INVALID_VALUE_STR,
+    " my coat",
+    " my underwear",
+    " my underwear",
+    " my slippers",
+    " my socks",
+    " my long Johns",
+    " my bikini",
+    " my bra",
+    " my pants",
+    INVALID_VALUE_STR,
+    " my math teacher",
+    " my physics teacher",
+    " my political teacher",
+    " my chemistry teacher",
+    " my Chinese teacher",
+    " my English teacher",
+    " my PE teacher",
+    " my geography teacher",
+    " my history teacher",
+    " my computer teacher",
+    INVALID_VALUE_STR,
+    " my left hand",
+    " my right hand",
+    " my forehead",
+    " my stomach",
+    " my legs",
+    " my toes",
+    " my ass",
+    " my eye",
+    " my little tintin",
+    INVALID_VALUE_STR,
+    " my predecessor",
+    " my boss",
+    " my cat",
+    " my good friend",
+    " my idol",
+    " my shit",
+    " my knee",
+    INVALID_VALUE_STR,
+    " my boyfriend",
+    " my girlfriend",
+    " my dad",
+    " my mama",
+    " my uncle",
+    " my penis",
+    INVALID_VALUE_STR,
+    " a pond",
+    " a big beauty",
+    " a spoiled lori",
+    " a snappy plane",
+    " a sprout of cat",
+    INVALID_VALUE_STR,
+    " a funny man",
+    " a bag of laundry detergent",
+    " a fly puppy",
+    " a head tree sows",
+    " a single dog",
+    " a bunch of straight",
+    " a lump of shit",
+    " a silly roe deer",
+    INVALID_VALUE_STR,
+    " my deskmate",
+    " my front desk",
+    " my schoolmate",
+    " my colleagues",
+    " my little darling",
+    INVALID_VALUE_STR,
+    " friend's little brother",
+    " friend's brother",
+    " friend's sister",
+    " friend's big aunt",
+    " friend's leg",
+    " friend's butt",
+    " friend's right hand",
+    INVALID_VALUE_STR,
+    " my bed",
+    " my chest",
+    " my eggs",
+    " my phone",
+    INVALID_VALUE_STR,
+    " my urinal",
+    " my diaper",
+    " my sweater",
+    " my shorts",
+    INVALID_VALUE_STR,
+};
+
 string Global::shareText3[] = {
     
     "干掉了",
@@ -341,6 +539,103 @@ string Global::shareText3[] = {
     "拒绝了",
     INVALID_VALUE_STR,
 };
+
+string Global::shareText3_en[] =
+{
+    " with Aceily",
+    " with Adam",
+    " with Alcatraz",
+    " with Anna",
+    " with Anne",
+    INVALID_VALUE_STR,
+    " with Superman",
+    " with Gates",
+    " with Clinton",
+    " wtth Cyclops",
+    " with Black Widow",
+    " with lron Man",
+    " with The Flash",
+    " with The Thing",
+    " with Colossus",
+    " with Savage Dragon",
+    INVALID_VALUE_STR,
+    " with Spider Man",
+    " with Green Arrow",
+    " with Hawkeye",
+    " with Doctor Fate",
+    " with Batman",
+    " with Hulk",
+    " with Ms.Marvel",
+    " with Celestial Archer",
+    " with Captain America",
+    " with Mickey Mouse",
+    " with Donald Duck",
+    " with Buzz Lightyear",
+    INVALID_VALUE_STR,
+    " with Sheriff Woody",
+    " with Homer Simpson",
+    " with Marge Simpson",
+    " with Bart Simpson",
+    " with Tom",
+    " with Jerry",
+    " with Lady GaGa",
+    " with Justin Bieber",
+    " with Katy Perry",
+    INVALID_VALUE_STR,
+    " with Shakira",
+    " with Kim Kardashian",
+    " with Britney Spears",
+    " with Rihanna",
+    " with Obama",
+    " with Taylor Swift",
+    INVALID_VALUE_STR,
+    " with Selena Gomez",
+    " with Mace Windu",
+    " with Obi-Wan Kenobi",
+    " with Luke Skywalker",
+    " with Anakin",
+    " with Avatar",
+    INVALID_VALUE_STR,
+    " with Baymax",
+    " with Cooper",
+    " with Optimus Prime",
+    " with Decepticon",
+    " with Autobot",
+    INVALID_VALUE_STR,
+    " with Starscream",
+    " with Cybertron",
+    " with Harry James Potter",
+    " with Ron Weasley",
+    " with Hermione Granger",
+    INVALID_VALUE_STR,
+    " with Lord Voldemort",
+    " with Dumbledore",
+    " with Gandalf",
+    " with Aragorn",
+    " with Théoden",
+    INVALID_VALUE_STR,
+    " with Sam",
+    " with Baggins",
+    " with Pippin",
+    " with Merry",
+    " with Denethor",
+    INVALID_VALUE_STR,
+    " with Gollum",
+    " with Saruman",
+    " with Sauron",
+    " with Boromir",
+    " with Faramir",
+    INVALID_VALUE_STR,
+    " with Legolas Greenleaf",
+    " with Arwen",
+    " with Galadriel",
+    " with Elrond",
+    " with Gimli",
+    " with Glóin",
+    " with Treebeard",
+    INVALID_VALUE_STR,
+};
+
 string Global::shareText4[] = {
     
     "我的滑板鞋~时尚时尚最时尚~",
@@ -459,6 +754,123 @@ string Global::shareText4[] = {
     INVALID_VALUE_STR,
 };
 
+string Global::shareText4_en[] = {
+    
+    
+    " in the sea",
+    " in the air",
+    " in New York",
+    INVALID_VALUE_STR,
+    " at my sister’s",
+    " at my doctor’s",
+    " at my hotel",
+    " in my bedroom",
+    " on my sofa",
+    " on my stool",
+    " on my desk",
+    " in my cupboard",
+    " in my office",
+    " in my elevator",
+    " in my dining room",
+    " in my bathhouse",
+    " on my bed",
+    " in my dormitory",
+    INVALID_VALUE_STR,
+    " in Canberra",
+    " in Mexico",
+    " in Berlin",
+    " in Paris",
+    " in Barcelona",
+    " in Tokyo",
+    " in London",
+    " in Moscow",
+    " in the Sahara",
+    INVALID_VALUE_STR,
+    " in the park",
+    " in the desert",
+    " in the square",
+    " in the street",
+    " in the market",
+    " in the mall",
+    " in the football field",
+    " on the basketball court",
+    " in the ballpark",
+    " in the tennis court",
+    INVALID_VALUE_STR,
+    " in the moon",
+    " in Mars",
+    " in Mercury",
+    " in Venus",
+    " in Jupiter",
+    " in Neptune",
+    " in Pandora",
+    " in Uranus",
+    INVALID_VALUE_STR,
+    " in Japan",
+    " in the U.S",
+    " in the UK",
+    " in Germany",
+    " in France",
+    " in Italy",
+    " in Australia",
+    " in China",
+    " in Korea",
+    " in Mexico",
+    " in Spain",
+    " in Portugal",
+    " in Russia",
+    INVALID_VALUE_STR,
+    " under the bed",
+    " on the roof",
+    " in the bath",
+    " in the closet",
+    " in the doghouse",
+    " under the table",
+    " under the statue of liberty",
+    " on the bridge",
+    INVALID_VALUE_STR,
+    " in the pyramid",
+    " on the Great Wall",
+    " in the Colosseum in Rome",
+    " on the Eiffel Tower",
+    " in the White House",
+    " under the Leaning Tower of Pisa",
+    " in cologne cathedral",
+    " in the acropolis",
+    " in the taj mahal",
+    INVALID_VALUE_STR,
+    " at my aunt's",
+    " at my grandfather's",
+    " at my grandma's",
+    " at my friend's",
+    " at my girlfriend's",
+    " at my boyfriend's",
+    " at my father's",
+    " at my boss's",
+    INVALID_VALUE_STR,
+    " in the concert",
+    " in the exhibition hall",
+    " at the fair",
+    " on the pitch",
+    " in the music conference",
+    " in the hall",
+    INVALID_VALUE_STR,
+    " in my hand",
+    " in my ass",
+    " in my lap",
+    " at my feet",
+    " in my stomach",
+    " in my body",
+    INVALID_VALUE_STR,
+    " on my way home",
+    " on my way to school",
+    " on my way to eat",
+    " on the way to work",
+    " in the way of travel",
+    " on the way to play",
+    INVALID_VALUE_STR,
+};
+
 Global::Global()
 {
     _colorType = colorType_green;
@@ -469,6 +881,12 @@ Global::Global()
     isContinue = false;
     lumpMap.clear();
     channel = gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_GetChannel, "");
+    
+    if (Application::getInstance()->getCurrentLanguage() == LanguageType::CHINESE) {
+        isChinese = true;
+    }else{
+        isChinese = false;
+    }
 }
 
 Global::~Global()
@@ -590,7 +1008,7 @@ string Global::getJsonStr(JsonPair* jsonPair, ...)
 
 std::string Global::trim(std::string str, std::string::size_type pos/* = 0*/)
 {
-    std::string delim = " \n\r\t";
+    std::string delim = "\n\r\t";
     pos = str.find_first_of(delim, pos);
     if (pos == std::string::npos)
         return str;
@@ -599,7 +1017,12 @@ std::string Global::trim(std::string str, std::string::size_type pos/* = 0*/)
 
 string Global::getSecretText()
 {
-    string shareText = "今天";
+    string shareText;
+    if (isChinese) {
+        shareText = "今天";
+    }else{
+        shareText = "Today,";
+    }
     for (int row = 0; row < MapMaxLength; row ++) {
         for (int col = 0; col < MapMaxLength ; col ++) {
             
@@ -621,13 +1044,25 @@ string Global::getSecretText()
         
         switch (row) {
             case 0:
-                shareText.append(",然后");
+                if (isChinese) {
+                    shareText.append(",然后");
+                }else{
+                    shareText.append(".And then ");
+                }
                 break;
             case 1:
-                shareText.append(",之后");
+                if (isChinese) {
+                    shareText.append(",之后");
+                }else{
+                    shareText.append(".Then ");
+                }
                 break;
             case 2:
-                shareText.append(",最后");
+                if (isChinese) {
+                    shareText.append(",最后");
+                }else{
+                    shareText.append(".At last ");
+                }
                 break;
             case 3:
                 
@@ -635,17 +1070,31 @@ string Global::getSecretText()
         }
         
     }
-    shareText.append("。真是有意义的一天啊!");
+    if (isChinese) {
+        
+        shareText.append("。真是有意义的一天啊!");
+    }else{
+        shareText.append(".Today is a amazing day!");
+    }
     
     return shareText;
 }
 
 void Global::loadTextMap()
 {
-    loadMap(shareText1, sizeof(shareText1) / sizeof(shareText1[0]), 0);
-    loadMap(shareText2, sizeof(shareText2) / sizeof(shareText2[0]), 1);
-    loadMap(shareText3, sizeof(shareText3) / sizeof(shareText3[0]), 2);
-    loadMap(shareText4, sizeof(shareText4) / sizeof(shareText4[0]), 3);
+    if (isChinese) {
+        
+        loadMap(shareText1, sizeof(shareText1) / sizeof(shareText1[0]), 0);
+        loadMap(shareText2, sizeof(shareText2) / sizeof(shareText2[0]), 1);
+        loadMap(shareText3, sizeof(shareText3) / sizeof(shareText3[0]), 2);
+        loadMap(shareText4, sizeof(shareText4) / sizeof(shareText4[0]), 3);
+    }else{
+        
+        loadMap(shareText1_en, sizeof(shareText1_en) / sizeof(shareText1_en[0]), 0);
+        loadMap(shareText2_en, sizeof(shareText2_en) / sizeof(shareText2_en[0]), 1);
+        loadMap(shareText3_en, sizeof(shareText3_en) / sizeof(shareText3_en[0]), 2);
+        loadMap(shareText4_en, sizeof(shareText4_en) / sizeof(shareText4_en[0]), 3);
+    }
 }
 
 void Global::loadMap(string *str, int size, int count)
@@ -689,5 +1138,111 @@ Rect Global::getNodeRect(Node* node)
     rect = Rect(x, y, width, height);
     
     return rect;
+}
+
+string Global::getDateNow(){
+    
+    struct timeval nowTimeval;
+    gettimeofday(&nowTimeval, NULL);
+    struct tm * tm;
+    time_t time_sec ;
+    time_sec = nowTimeval.tv_sec;
+    tm = localtime(&time_sec);
+    int m_year = tm->tm_year;
+    int m_mon = tm->tm_mon;
+    int m_mday = tm->tm_mday;
+    int m_wek = tm->tm_wday;
+    
+    string yearStr = toString(1900 + m_year);
+    
+    string monStr;
+    switch (m_mon) {
+        case 0:
+            monStr = "Jan.";
+            break;
+        case 1:
+            monStr = "Feb.";
+            break;
+        case 2:
+            monStr = "Mar.";
+            break;
+        case 3:
+            monStr = "Apr.";
+            break;
+        case 4:
+            monStr = "May.";
+            break;
+        case 5:
+            monStr = "Jun.";
+            break;
+        case 6:
+            monStr = "Jul.";
+            break;
+        case 7:
+            monStr = "Aug.";
+            break;
+        case 8:
+            monStr = "Sept.";
+            break;
+        case 9:
+            monStr = "Oct.";
+            break;
+        case 10:
+            monStr = "Nov.";
+            break;
+        case 11:
+            monStr = "Dec.";
+            break;
+    }
+    
+    string mdayStr;
+    switch (m_mday % 10) {
+        case 1:
+            mdayStr = toString(m_mday)+"st";
+            break;
+            
+        case 2:
+            mdayStr = toString(m_mday)+"nd";
+            break;
+            
+        default:
+            mdayStr = toString(m_mday)+"th";
+            break;
+    }
+
+    
+    
+    
+    string wekStr;
+    switch (m_wek) {
+        case 0:
+            wekStr = "Sunday";
+            break;
+        case 1:
+            wekStr = "Monday";
+            break;
+        case 2:
+            wekStr = "Tuesday";
+            break;
+        case 3:
+            wekStr = "Wednesday";
+            break;
+        case 4:
+            wekStr = "Thursday";
+            break;
+        case 5:
+            wekStr = "Friday";
+            break;
+        case 6:
+            wekStr = "Saturday";
+            break;
+    }
+    
+    
+    string weatherStr = "Sunny";
+    
+    string dateStr = wekStr + " " + monStr + mdayStr + " " + yearStr + "     " + weatherStr;
+    CCLOG("%s",dateStr.c_str());
+    return dateStr;
 }
 

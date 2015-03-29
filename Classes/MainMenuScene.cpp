@@ -45,7 +45,13 @@ bool MainMenuScene::init()
     this->addChild(startBg);
     startBg->setPosition(Vec2(gWinSize.width / 2 - startBg->getContentSize().width / 2, (gWinSize.height - startBg->getContentSize().height) / 2 + (gWinSize.height - startBg->getContentSize().height) / 5));
     
-    auto startTTF = Label::createWithSystemFont("开始", "黑体", startBg->getContentSize().width / 7);
+    string startStr;
+    if (gGlobal->isChinese) {
+        startStr = "开始";
+    }else{
+        startStr = "Start!";
+    }
+    auto startTTF = Label::createWithSystemFont(startStr, "黑体", startBg->getContentSize().width / 7);
     startTTF->setTextColor(Color4B(44, 44, 44, 255));
     startBg->addChild(startTTF);
     startTTF->setPosition(Vec2(startBg->getContentSize().width / 2, startBg->getContentSize().height / 2));
@@ -66,7 +72,11 @@ bool MainMenuScene::init()
     
     //分数
     char buffer[64];
-    sprintf(buffer,"当前得分:%d",gGlobal->score);
+    if (gGlobal->isChinese) {
+        sprintf(buffer,"当前得分:%d",gGlobal->score);
+    }else{
+        sprintf(buffer,"Score:%d",gGlobal->score);
+    }
     scoreTTF = Label::createWithSystemFont(buffer, "黑体", gameBg->getContentSize().width / 14);
     scoreTTF->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
     gameBg->addChild(scoreTTF);
@@ -100,8 +110,13 @@ bool MainMenuScene::init()
     this->addChild(highScoreBg);
     highScoreBg->setPosition(Vec2(0, menuDownBg->getContentSize().height));
     
-    
-    highScoreTTF = Label::createWithSystemFont("您的最高得分:" + gGlobal->highScore, "黑体", gameBg->getContentSize().width / 15);
+    string highScoreStr;
+    if (gGlobal->isChinese) {
+        highScoreStr = "您的最高得分:";
+    }else{
+        highScoreStr = "Your Best:";
+    }
+    highScoreTTF = Label::createWithSystemFont(highScoreStr + gGlobal->highScore, "黑体", gameBg->getContentSize().width / 15);
     highScoreTTF->setPosition(highScoreBg->getContentSize()/2);
     highScoreTTF->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
     highScoreBg->addChild(highScoreTTF);
@@ -225,7 +240,11 @@ void MainMenuScene::startGame(Ref* pSender)
         }
         
         char buffer[64];
-        sprintf(buffer,"当前得分:%d",gGlobal->score);
+        if (gGlobal->isChinese) {
+            sprintf(buffer,"当前得分:%d",gGlobal->score);
+        }else{
+            sprintf(buffer,"Score:%d",gGlobal->score);
+        }
         scoreTTF->setString(buffer);
     };
     
@@ -259,10 +278,23 @@ void MainMenuScene::createNewLump(int num)
     
     if (gGameMap->isFail() && !this->getActionByTag(1000)) {
         isFail = true;
-        gGlobal->saveScreenshot(this, screenShotImageName);
+        if (gGlobal->isChinese) {
+            
+            gGlobal->saveScreenshot(this, screenShotImageName);
+        }else{
+            
+            Node* secretNode = TipLayer::createLayer(TipType_Diary, this);
+            gGlobal->saveScreenshot(secretNode, screenShotImageName);
+        }
         if (atoi(gGlobal->highScore.c_str()) < gGlobal->score) {
             gGlobal->highScore = toString(gGlobal->score);
-            highScoreTTF->setString("您的最高得分:" + gGlobal->highScore);
+            string highScoreStr;
+            if (gGlobal->isChinese) {
+                highScoreStr = "您的最高得分:";
+            }else{
+                highScoreStr = "Your Best:";
+            }
+            highScoreTTF->setString(highScoreStr + gGlobal->highScore);
             
             string str = gGlobal->getJsonStr(JsonPair::create("name", Data_HighScore),
                                              JsonPair::create("value", gGlobal->highScore),
@@ -280,10 +312,23 @@ void MainMenuScene::createNewLump(int num)
     }
     
     if (gGameMap->isWin && !this->getActionByTag(1000) && !gGlobal->isContinue) {
-        gGlobal->saveScreenshot(this, screenShotImageName);
+        if (gGlobal->isChinese) {
+            
+            gGlobal->saveScreenshot(this, screenShotImageName);
+        }else{
+            
+            Node* secretNode = TipLayer::createLayer(TipType_Diary, this);
+            gGlobal->saveScreenshot(secretNode, screenShotImageName);
+        }
         if (atoi(gGlobal->highScore.c_str()) < gGlobal->score) {
             gGlobal->highScore = toString(gGlobal->score);
-            highScoreTTF->setString("您的最高得分:" + gGlobal->highScore);
+            string highScoreStr;
+            if (gGlobal->isChinese) {
+                highScoreStr = "您的最高得分:";
+            }else{
+                highScoreStr = "Your Best:";
+            }
+            highScoreTTF->setString(highScoreStr + gGlobal->highScore);
             
             string str = gGlobal->getJsonStr(JsonPair::create("name", Data_HighScore),
                                              JsonPair::create("value", gGlobal->highScore),
@@ -393,7 +438,11 @@ void MainMenuScene::resetData()
     
     gGlobal->score = 0;
     char buffer[64];
-    sprintf(buffer,"当前得分:%d",gGlobal->score);
+    if (gGlobal->isChinese) {
+        sprintf(buffer,"当前得分:%d",gGlobal->score);
+    }else{
+        sprintf(buffer,"Score:%d",gGlobal->score);
+    }
     scoreTTF->setString(buffer);
     isFail = false;
     gGlobal->isContinue = false;
@@ -422,7 +471,12 @@ void MainMenuScene::shareCallBack(Ref* pSender)
     }else if(gGlobal->channel == Channel_baidu){
         text = "我的最高得分为" + gGlobal->highScore + "分,优雅的融合~只属于你的秘密~快来一起玩吧~IOS:http://t.cn/RAZBRw9 安卓:http://t.cn/RA2F06m";
     }else{
-        text = "我的最高得分为" + gGlobal->highScore + "分,优雅的融合~只属于你的秘密~快来一起玩吧~IOS:http://t.cn/RAZBRw9 安卓:http://t.cn/RAZBRwS";
+        if (gGlobal->isChinese) {
+            text = "我的最高得分为" + gGlobal->highScore + "分,优雅的融合~只属于你的秘密~快来一起玩吧~IOS:http://t.cn/RAZBRw9 安卓:http://t.cn/RAZBRwS";
+        }else{
+            text = "My Best:" + gGlobal->highScore + ",Come on and play together!Download:http://t.cn/RAZBRw9";
+        }
+        
     }
     auto callback = [=](const std::string& fullPath){
         
@@ -437,6 +491,7 @@ void MainMenuScene::shareCallBack(Ref* pSender)
         
         btn_weibo->setEnabled(true);
     };
+    
     gGlobal->saveScreenshot(this, screenShotImageName, callback);
 }
 
@@ -459,7 +514,11 @@ void MainMenuScene::share(string text)
 void MainMenuScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
     if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
-        gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowDialog, "确定要退出游戏吗?");
+        if (gGlobal->isChinese) {
+            gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowDialog, "确定要退出游戏吗?");
+        }else{
+            gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowDialog, "Are you sure you would like to quit the game?");
+        }
     }
 }
 
@@ -483,9 +542,6 @@ void MainMenuScene::touchTimeAdd(float dt)
 void MainMenuScene::showAd()
 {
     if (gameOverCount % 3 == 1) {
-        string flag = gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowAd, "");
-        if (flag == "0") {
-            gameOverCount --;
-        }
+        gInterface->callPlatformFunction(INTERFACE_CALL_FUNCNAME_ShowAd, "");
     }
 }

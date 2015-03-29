@@ -21,6 +21,7 @@ enum TipType{
     TipType_GameOver,
     TipType_GameWin,
     TipType_Tips,
+    TipType_Diary,
 };
 
 class TipLayer : public LayerColor

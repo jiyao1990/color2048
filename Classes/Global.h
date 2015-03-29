@@ -81,6 +81,11 @@ public:
     static string shareText3[];
     static string shareText4[];
     
+    static string shareText1_en[];
+    static string shareText2_en[];
+    static string shareText3_en[];
+    static string shareText4_en[];
+    
     colorType _colorType;
     map< int, Node* > lumpMap;
     
@@ -115,6 +120,11 @@ public:
     
     //获取node的Rect
     cocos2d::Rect getNodeRect(Node* node);
+    
+    //是否为中文
+    bool isChinese;
+    
+    string getDateNow();
     
 private:
 

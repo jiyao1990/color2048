@@ -26,7 +26,11 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.cpp;
 
-import com.umeng.analytics.MobclickAgent;
+import net.youmi.android.AdManager;
+import net.youmi.android.spot.SpotDialogListener;
+import net.youmi.android.spot.SpotManager;
+
+import com.umeng.analytics.game.UMGameAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -41,6 +45,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 import com.google.android.gms.ads.*;
 import com.jiyao.android.color2048.R;
@@ -50,13 +55,13 @@ public class Game2048Activity extends JYGameActivity {
 	UMSocialService mController;
 	private InterstitialAd interstitial;
 	private int adCounts = 0;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// 友盟参数
-		MobclickAgent.updateOnlineConfig(this);
-		MobclickAgent.getConfigParams(this, "AdSwitch");
+		UMGameAgent.updateOnlineConfig(this);
+		UMGameAgent.getConfigParams(this, "AdSwitch");
 		// 友盟分享
 		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 
@@ -68,29 +73,28 @@ public class Game2048Activity extends JYGameActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		MobclickAgent.onResume(this);
+		UMGameAgent.onResume(this);
 	}
 
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		MobclickAgent.onPause(this);
+		UMGameAgent.onPause(this);
 	}
 
 	@Override
 	public void exitGame() {
 		this.finish();
-		MobclickAgent.onKillProcess(this);
+		UMGameAgent.onKillProcess(this);
 		android.os.Process.killProcess(android.os.Process.myPid());
 	}
 
 	@Override
 	public String getUMParams(String key) {
-		String value = MobclickAgent.getConfigParams(this, "AdSwitch");
+		String value = UMGameAgent.getConfigParams(this, "AdSwitch");
 		return value;
 	}
-
 
 	@Override
 	public void shareWeibo(String imgPath, String text) {
@@ -146,34 +150,52 @@ public class Game2048Activity extends JYGameActivity {
 
 	@Override
 	public void showDialog(String pMessage) {
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);  
-		builder.setMessage(pMessage)  
-		       .setCancelable(false)  
-		       .setPositiveButton("是", new DialogInterface.OnClickListener() {  
-		           public void onClick(DialogInterface dialog, int id) {  
-		        	   Game2048Activity.this.exitGame();  
-		           }  
-		       })  
-		       .setNegativeButton("否", new DialogInterface.OnClickListener() {  
-		           public void onClick(DialogInterface dialog, int id) {  
-		                dialog.cancel();  
-		           }  
-		       });  
-		builder.create(); 
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(pMessage).setCancelable(false)
+				.setPositiveButton("是", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						Game2048Activity.this.exitGame();
+					}
+				})
+				.setNegativeButton("否", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+		builder.create();
 		builder.show();
 	}
-	
-	
+
 	@Override
 	public void displayInterstitial() {
-		isShowAds = "1";
 		Runnable RunThread = new Runnable() {
 			public void run() {
 				if (interstitial.isLoaded()) {
 					interstitial.show();
 				} else {
-					isShowAds = "0";
+
+					SpotManager.getInstance(Game2048Activity.this).showSpotAds(
+							Game2048Activity.this);
+					SpotManager.getInstance(Game2048Activity.this).showSpotAds(
+							Game2048Activity.this, new SpotDialogListener() {
+								@Override
+								public void onShowSuccess() {
+									Log.i("Youmi", "onShowSuccess");
+								}
+
+								@Override
+								public void onShowFailed() {
+									Log.i("Youmi", "onShowFailed");
+								}
+
+								@Override
+								public void onSpotClosed() {
+									Log.e("sdkDemo", "closed");
+									// loadAdmob();
+								}
+							});
+
 				}
 			}
 		};
@@ -203,10 +225,6 @@ public class Game2048Activity extends JYGameActivity {
 
 			@Override
 			public void onAdFailedToLoad(int errorCode) {
-				if (errorCode == AdRequest.ERROR_CODE_INTERNAL_ERROR
-						|| errorCode == AdRequest.ERROR_CODE_NETWORK_ERROR) {
-					loadAdmob();
-				}
 				super.onAdFailedToLoad(errorCode);
 			}
 
@@ -216,25 +234,35 @@ public class Game2048Activity extends JYGameActivity {
 		AdRequest adRequest = new AdRequest.Builder().build();
 		// Begin loading your interstitial.
 		interstitial.loadAd(adRequest);
+
+		// load youmi
+		AdManager.getInstance(this).init("eb81b2541d7f4ef9",
+				"7eb6edec2b141512", false);
+		SpotManager.getInstance(this).loadSpotAds();
+		SpotManager.getInstance(this).setSpotOrientation(
+				SpotManager.ORIENTATION_PORTRAIT);
+		SpotManager.getInstance(this).setAnimationType(SpotManager.ANIM_NONE);
 	}
-	
+
 	@Override
 	String getChannel() {
-        try{
-        	Object value = null;
-        	ApplicationInfo applicationInfo = this.getPackageManager().getApplicationInfo(Game2048Activity.this.getPackageName(), PackageManager.GET_META_DATA);
-            if (applicationInfo != null && applicationInfo.metaData != null){
-                value = applicationInfo.metaData.get("UMENG_CHANNEL");
-                if(value == null){
-                	return "";
-                }else{
-                	String channnel = value.toString();
-        			return channnel;
-                }
-            }
-        }catch(Exception e){
-        	e.printStackTrace();
-        }
+		try {
+			Object value = null;
+			ApplicationInfo applicationInfo = this.getPackageManager()
+					.getApplicationInfo(Game2048Activity.this.getPackageName(),
+							PackageManager.GET_META_DATA);
+			if (applicationInfo != null && applicationInfo.metaData != null) {
+				value = applicationInfo.metaData.get("UMENG_CHANNEL");
+				if (value == null) {
+					return "";
+				} else {
+					String channnel = value.toString();
+					return channnel;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "";
 	}
 }

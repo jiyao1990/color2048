@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  MyCppGame
+
+  Created by Jiyao on 15/3/6.
+
+*/
+CFBundleDisplayName = "Diary:2048";

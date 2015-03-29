@@ -27,7 +27,7 @@ THE SOFTWARE.
 package org.cocos2dx.cpp;
 
 
-//import com.umeng.analytics.MobclickAgent;
+import com.umeng.analytics.game.UMGameAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -57,8 +57,8 @@ public class Game2048Activity extends JYGameActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//友盟参数
-//		MobclickAgent.updateOnlineConfig( this );
-//		MobclickAgent.getConfigParams( this, "AdSwitch" );
+		UMGameAgent.updateOnlineConfig( this );
+		UMGameAgent.getConfigParams( this, "AdSwitch" );
 		//友盟分享
 		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 		
@@ -71,14 +71,14 @@ public class Game2048Activity extends JYGameActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-//		MobclickAgent.onResume(this);
+		UMGameAgent.onResume(this);
 	}
 
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-//		MobclickAgent.onPause(this);
+		UMGameAgent.onPause(this);
 	}	
 	
 	public void onBackPressed() {
@@ -110,15 +110,15 @@ public class Game2048Activity extends JYGameActivity {
 	@Override
 	public void exitGame() {
 		this.finish();
-//		MobclickAgent.onKillProcess(this);
+		UMGameAgent.onKillProcess(this);
 		android.os.Process.killProcess(android.os.Process.myPid());
 	}
 
 	@Override
 	public String getUMParams(String key)
 	{
-//		String value = MobclickAgent.getConfigParams( this, "AdSwitch");
-		return "open";
+		String value = UMGameAgent.getConfigParams( this, "AdSwitch");
+		return value;
 	}
 
 	@Override
@@ -192,7 +192,6 @@ public class Game2048Activity extends JYGameActivity {
 	
 	@Override
 	public void displayInterstitial() {
-		isShowAds = "1";
 		Runnable RunThread = new Runnable() {
 			public void run() {
 
@@ -211,7 +210,6 @@ public class Game2048Activity extends JYGameActivity {
 					    @Override
 					    public void onSpotClosed() {
 					        Log.e("sdkDemo", "closed");
-//					        loadAdmob();
 					    }
 					});
 			}

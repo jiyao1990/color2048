@@ -31,6 +31,7 @@
 #import "UMSocial_Sdk_Extra_Frameworks/Sina/UMSocialSinaHandler.h"
 #import "UMSocial_Sdk_Extra_Frameworks/UMSocial_ScreenShot_Sdk/UMSocialScreenShoter.h"
 #import "../../Classes/MainMenuScene.h"
+#import "ConfigHeader.h"
 
 @implementation AppController
 
@@ -105,7 +106,12 @@ static AppDelegate s_sharedApplication;
     //微博sso
     [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
     
-    [NSThread sleepForTimeInterval:1.0];   //设置进程停止2秒
+    [NSThread sleepForTimeInterval:1.0];   //设置进程停止1秒
+    
+    //初始化有米
+    [YouMiNewSpot initYouMiDeveloperParams:@"ceb691b5a2423ca2" YM_SecretId:@"fce90660104f61e8"];
+    [YouMiNewSpot initYouMiDeveLoperSpot:kSPOTSpotTypePortrait];
+    
     return YES;
 }
 
@@ -181,13 +187,19 @@ static AppDelegate s_sharedApplication;
     [super dealloc];
 }
 
-+ (BOOL)showInterstitial {
++ (void)showInterstitial {
 
     if ([interstitial isReady]) {
         [interstitial presentFromRootViewController:viewController];
-        return YES;
     }else{
-        return NO;
+        [YouMiNewSpot showYouMiSpotAction:^(BOOL flag){
+            if (flag) {
+                NSLog(@"log添加展示成功的逻辑");
+            }
+            else{
+                NSLog(@"log添加展示失败的逻辑");
+            }
+        }];
     }
 }
 
@@ -245,8 +257,16 @@ static AppDelegate s_sharedApplication;
     
 
     [[UMSocialControllerService defaultControllerService] setShareText:text shareImage:img socialUIDelegate:self];
-    //设置分享内容和回调对象
-    [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(viewController,[UMSocialControllerService defaultControllerService],YES);
+    if (gGlobal->isChinese) {
+        
+        //设置分享内容和回调对象
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(viewController,[UMSocialControllerService defaultControllerService],YES);
+    }else
+    {
+        
+        //设置分享内容和回调对象
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToTwitter].snsClickHandler(viewController,[UMSocialControllerService defaultControllerService],YES);
+    }
 }
 
 + (void)screenShot
