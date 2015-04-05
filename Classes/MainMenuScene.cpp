@@ -96,7 +96,13 @@ bool MainMenuScene::init()
     btn_home->setEnabled(false);
     btn_home->setOpacity(0);
     
-    btn_weibo = MenuItemImage::create("res/weibo.png", "res/weibo.png", CC_CALLBACK_1(MainMenuScene::shareCallBack, this));
+    if (gGlobal->isChinese) {
+        
+        btn_weibo = MenuItemImage::create("res/weibo.png", "res/weibo.png", CC_CALLBACK_1(MainMenuScene::shareCallBack, this));
+    }else{
+        
+        btn_weibo = MenuItemImage::create("res/twitter.png", "res/twitter.png", CC_CALLBACK_1(MainMenuScene::shareCallBack, this));
+    }
     btn_weibo->setPosition(Vec2(menuDownBg->getContentSize().width * 3 / 4, menuDownBg->getContentSize().height / 2));
     btn_weibo->setColor(Color3B(gGlobal->colorMap[gGlobal->_colorType][0]));
     btn_weibo->setEnabled(false);

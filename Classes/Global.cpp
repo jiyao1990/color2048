@@ -887,6 +887,8 @@ Global::Global()
     }else{
         isChinese = false;
     }
+    //test code
+    isChinese = true;
 }
 
 Global::~Global()
@@ -1158,55 +1160,55 @@ string Global::getDateNow(){
     string monStr;
     switch (m_mon) {
         case 0:
-            monStr = "Jan.";
+            monStr = isChinese ? "1月" : "Jan.";
             break;
         case 1:
-            monStr = "Feb.";
+            monStr = isChinese ? "2月" : "Feb.";
             break;
         case 2:
-            monStr = "Mar.";
+            monStr = isChinese ? "3月" : "Mar.";
             break;
         case 3:
-            monStr = "Apr.";
+            monStr = isChinese ? "4月" : "Apr.";
             break;
         case 4:
-            monStr = "May.";
+            monStr = isChinese ? "5月" : "May.";
             break;
         case 5:
-            monStr = "Jun.";
+            monStr = isChinese ? "6月" : "Jun.";
             break;
         case 6:
-            monStr = "Jul.";
+            monStr = isChinese ? "7月" : "Jul.";
             break;
         case 7:
-            monStr = "Aug.";
+            monStr = isChinese ? "8月" : "Aug.";
             break;
         case 8:
-            monStr = "Sept.";
+            monStr = isChinese ? "9月" : "Sept.";
             break;
         case 9:
-            monStr = "Oct.";
+            monStr = isChinese ? "10月" : "Oct.";
             break;
         case 10:
-            monStr = "Nov.";
+            monStr = isChinese ? "11月" : "Nov.";
             break;
         case 11:
-            monStr = "Dec.";
+            monStr = isChinese ? "12月" : "Dec.";
             break;
     }
     
     string mdayStr;
     switch (m_mday % 10) {
         case 1:
-            mdayStr = toString(m_mday)+"st";
+            mdayStr = isChinese ? toString(m_mday) + "号" : toString(m_mday)+"st";
             break;
             
         case 2:
-            mdayStr = toString(m_mday)+"nd";
+            mdayStr = isChinese ? toString(m_mday) + "号" : toString(m_mday)+"nd";
             break;
             
         default:
-            mdayStr = toString(m_mday)+"th";
+            mdayStr = isChinese ? toString(m_mday) + "号" : toString(m_mday)+"th";
             break;
     }
 
@@ -1216,32 +1218,39 @@ string Global::getDateNow(){
     string wekStr;
     switch (m_wek) {
         case 0:
-            wekStr = "Sunday";
+            wekStr = isChinese ? "星期天" : "Sunday";
             break;
         case 1:
-            wekStr = "Monday";
+            wekStr = isChinese ? "星期一" : "Monday";
             break;
         case 2:
-            wekStr = "Tuesday";
+            wekStr = isChinese ? "星期二" : "Tuesday";
             break;
         case 3:
-            wekStr = "Wednesday";
+            wekStr = isChinese ? "星期三" : "Wednesday";
             break;
         case 4:
-            wekStr = "Thursday";
+            wekStr = isChinese ? "星期四" : "Thursday";
             break;
         case 5:
-            wekStr = "Friday";
+            wekStr = isChinese ? "星期五" : "Friday";
             break;
         case 6:
-            wekStr = "Saturday";
+            wekStr = isChinese ? "星期六" : "Saturday";
             break;
     }
     
     
-    string weatherStr = "Sunny";
+    string weatherStr = isChinese ? "晴" : "Sunny";
+    string dateStr;
+    if (isChinese) {
+        
+        dateStr = yearStr + "年" + monStr + mdayStr + " " + wekStr + "         " + weatherStr;
+    }else{
+        
+        dateStr = wekStr + " " + monStr + mdayStr + " " + yearStr + "     " + weatherStr;
+    }
     
-    string dateStr = wekStr + " " + monStr + mdayStr + " " + yearStr + "     " + weatherStr;
     CCLOG("%s",dateStr.c_str());
     return dateStr;
 }

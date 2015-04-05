@@ -209,13 +209,9 @@ bool TipLayer::init(TipType type, MainMenuScene* mainMenu)
             this->setOpacity(200);
             shareText = gGlobal->getSecretText();
             
-            if (gGlobal->isChinese) {
-                contentTTF->setString("你得到的方块秘密:\n\n" + shareText + "\n\n点击炫耀一下可以分享到微博哦~");
-            }else{
-                string date = gGlobal->getDateNow();
-                
-                contentTTF->setString(date + "\n\n" + shareText );
-            }
+            string date = gGlobal->getDateNow();
+            
+            contentTTF->setString(date + "\n\n" + shareText );
             contentTTF->setSystemFontSize(bg->getContentSize().width / 18.75);
             btnBg2->setVisible(false);
             btnBg1->setVisible(false);

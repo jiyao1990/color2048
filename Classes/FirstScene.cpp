@@ -37,36 +37,53 @@ bool FirstScene::init()
     //    this->initWithColor(Color4B(66, 66, 66, 255), gWinSize.width, gWinSize.height);
     this->initWithColor(Color4B(45,45,45,255), Color4B(65,65,65,255));
     
-    auto firstSp1 = Sprite::create("res/first_1.png");
+    
+    Sprite* firstSp1;
+    if (gGlobal->isChinese) {
+        firstSp1 = Sprite::create("res/first_1.png");
+    }else{
+        firstSp1 = Sprite::create("res/first_1_en.png");
+    }
     this->addChild(firstSp1);
     firstSp1->setPosition(Vec2(gWinSize.width / 2, gWinSize.height / 2));
     firstSp1->setScale(gWinSize.width * 0.9 / firstSp1->getContentSize().width);
     
-    auto firstSp2 = Sprite::create("res/first_2.png");
+    
+    Sprite* firstSp2;
+    if (gGlobal->isChinese) {
+        firstSp2 = Sprite::create("res/first_2.png");
+    }else{
+        firstSp2 = Sprite::create("res/first_2_en.png");
+    }
     this->addChild(firstSp2);
     firstSp2->setPosition(Vec2(gWinSize.width * 3 / 2, gWinSize.height / 2));
     firstSp2->setScale(gWinSize.width * 0.9 / firstSp2->getContentSize().width);
     
     
-    auto firstSp3 = Sprite::create("res/first_3.png");
+    Sprite* firstSp3;
+    if (gGlobal->isChinese) {
+        firstSp3 = Sprite::create("res/first_3.png");
+    }else{
+        firstSp3 = Sprite::create("res/first_3_en.png");
+    }
     this->addChild(firstSp3);
     firstSp3->setPosition(Vec2(gWinSize.width * 5 / 2, gWinSize.height / 2));
     firstSp3->setScale(gWinSize.width * 0.9 / firstSp3->getContentSize().width);
     
     auto point1 = Sprite::create("res/first_point.png");
     this->addChild(point1);
-    point1->setPosition(Vec2(gWinSize.width / 2 - gWinSize.width / 10, gWinSize.height / 14));
+    point1->setPosition(Vec2(gWinSize.width / 2 - gWinSize.width / 10, (gWinSize.height / 2 - firstSp2->getContentSize().height * firstSp2->getScaleY() / 2) / 2));
     point1->setScale(gWinSize.width * 0.9 / firstSp1->getContentSize().width);
     
     auto point2 = Sprite::create("res/first_point.png");
     this->addChild(point2);
-    point2->setPosition(Vec2(gWinSize.width / 2, gWinSize.height / 14));
+    point2->setPosition(Vec2(gWinSize.width / 2, (gWinSize.height / 2 - firstSp2->getContentSize().height * firstSp2->getScaleY() / 2) / 2));
     point2->setScale(gWinSize.width * 0.9 / firstSp1->getContentSize().width);
     point2->setOpacity(130);
     
     auto point3 = Sprite::create("res/first_point.png");
     this->addChild(point3);
-    point3->setPosition(Vec2(gWinSize.width / 2 + gWinSize.width / 10, gWinSize.height / 14));
+    point3->setPosition(Vec2(gWinSize.width / 2 + gWinSize.width / 10, (gWinSize.height / 2 - firstSp2->getContentSize().height * firstSp2->getScaleY() / 2) / 2));
     point3->setScale(gWinSize.width * 0.9 / firstSp1->getContentSize().width);
     point3->setOpacity(130);
     
